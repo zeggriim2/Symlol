@@ -20,6 +20,9 @@
     "nikic/php-parser": {
         "version": "v4.11.0"
     },
+    "php": {
+        "version": "7.4"
+    },
     "psr/cache": {
         "version": "1.0.1"
     },
@@ -193,6 +196,9 @@
     },
     "symfony/twig-pack": {
         "version": "v1.0.1"
+    },
+    "symfony/ux-chartjs": {
+        "version": "v1.3.0"
     },
     "symfony/var-dumper": {
         "version": "v5.3.3"
