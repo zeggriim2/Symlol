@@ -24,20 +24,35 @@ class BaseApi
     protected $httpClient;
 
     /**
-     * BaseApi constructor.
-     * @param ApiClient $apiClient
+     * @var string
      */
-    public function __construct(ApiClient $apiClient)
+    protected $lang;
+
+    public function __construct(HttpClientInterface $httpClient)
     {
-        $this->apiClient = $apiClient;
-        $this->httpClient = HttpClient::create();
+        $this->httpClient = $httpClient;
+        $this->lang = "fr_FR";
     }
 
-    protected function callApi(string $url,string $method = 'GET')
+    protected function getLastVersion(): string
     {
-        $response = $this->httpClient->request($method,$url);
+        $url = "https://ddragon.leagueoflegends.com/api/versions.json";
+        return  $this->callApi($url)[0];
+    }
+
+    protected function callApi($url, $method = "GET", $options = []): array
+    {
+        $response = $this->httpClient->request($method, $url, $options);
         if ($response->getStatusCode() === 200){
             return $response->toArray();
         }
     }
+
+//    protected function callApi(string $url,string $method = 'GET')
+//    {
+//        $response = $this->httpClient->request($method,$url);
+//        if ($response->getStatusCode() === 200){
+//            return $response->toArray();
+//        }
+//    }
 }
