@@ -21,14 +21,13 @@ class ChampionApi extends BaseApi
     public function GetAllNameChampion()
     {
         $nameChampion = array_keys($this->GetAllChampion());
-        dd($nameChampion);
     }
 
     public function getChampion(string $name)
     {
         $name = ucfirst($name);
-        $champion = $this->GetAllChampion()[ucfirst($name)];
-        dd($champion);
+        return $this->GetAllChampion()[ucfirst($name)];
+
     }
 
     private function constructUrl(string $url, array $params)

@@ -3,7 +3,6 @@
 
 namespace App\Service\API\LOL;
 
-
 use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
@@ -26,11 +25,13 @@ class BaseApi
     /**
      * BaseApi constructor.
      * @param ApiClient $apiClient
+     * @param HttpClientInterface $client
      */
-    public function __construct(ApiClient $apiClient)
+    public function __construct(ApiClient $apiClient, HttpClientInterface $client)
     {
         $this->apiClient = $apiClient;
-        $this->httpClient = HttpClient::create();
+//        $this->httpClient = HttpClient::create();
+        $this->httpClient = $client;
     }
 
     protected function callApi(string $url,string $method = 'GET')
