@@ -16,80 +16,13 @@ use Symfony\UX\Chartjs\Model\Chart;
 class HomeController extends AbstractController
 {
     /**
-     * @var ApiClient
-     */
-    private $apiClient;
-    /**
-     * @var mixed
-     */
-    private $version;
-    /**
-     * @var HttpClient
-     */
-    private $httpClient;
-
-    /**
-     * HomeController constructor.
-     */
-    public function __construct()
-    {
-        $this->apiClient = new ApiClient($_ENV['APIKEY'],null,'fr_FR');
-//        $this->version = $this->apiClient->generalApi()->getLastVersion();
-    }
-
-
-    /**
      * @Route("/home", name="home")
      */
-    public function index(ChampionApi $api): Response
+    public function index(ChampionApi $championApi): Response
     {
-        $api->
-        $champions = $this->apiClient->championApi()->GetAllChampion();
-
+        $champions = $championApi->GetAllChampion()['data'];
         return $this->render('home/index.html.twig', [
             'champions' => $champions,
-            'version'   => $this->version
-        ]);
-    }
-
-    /**
-     * @Route("/static/{name}", name="stat_champ")
-     * @param string $name
-     * @return Response
-     */
-    public function statChampion(string $name, ChartBuilderInterface $chartBuilder)
-    {
-        $champion = $this->apiClient->championApi()->getChampion($name);
-        foreach ($champion['stats'] as $key => $data)
-        {
-            $label[] = $key;
-            $value[] = $data;
-        }
-
-        $chart = $chartBuilder->createChart(Chart::TYPE_PIE);
-        $chart->setData([
-            'labels' => $label,
-            'datasets' => [
-                [
-                    'label' => 'Life',
-                    'backgroundColor' => 'rgb(255, 99, 132)',
-                    'borderColor' => 'rgb(255, 99, 132)',
-                    'data' => $value,
-                ]
-            ],
-        ]);
-
-        $chart->setOptions([
-            'scales' => [
-                'yAxes' => [
-                    ['ticks' => ['min' => 0, 'max' => 800]],
-                ],
-            ],
-        ]);
-
-        return $this->render('champion/statistiqueChampion.html.twig',[
-            'champion'  => $champion,
-            'chart'     => $chart
         ]);
     }
 //    public function test(ChartBuilderInterface $chartBuilder)

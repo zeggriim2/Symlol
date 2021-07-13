@@ -4,31 +4,38 @@
 namespace App\Service\API\LOL;
 
 
+
 class ChampionApi extends BaseApi
 {
     const URL_CHAMPIONS = "http://ddragon.leagueoflegends.com/cdn/{version}/data/{lang}/champion.json";
+    const URL_CHAMPION = "http://ddragon.leagueoflegends.com/cdn/{version}/data/{lang}/champion/{name}.json";
 
-    public function GetAllChampion()
+    /**
+     * Retourne la liste complète des champions
+     * @return array
+     */
+    public function GetAllChampion(): array
     {
         $data = [
-            "version" => $this->apiClient->getVersion(),
-            "lang" => $this->apiClient->getLang()
+            "version"   => $this->getLastVersion(),
+            "lang"      => $this->lang
         ];
         $url = $this->constructUrl(self::URL_CHAMPIONS, $data);
-        return $this->callApi($url)['data'];
+        return $this->callApi($url);
     }
 
-    public function GetAllNameChampion()
+    public function GetChampion(string $name): array
     {
-        $nameChampion = array_keys($this->GetAllChampion());
+        $data = [
+            "version"   => $this->getLastVersion(),
+            "lang"      => $this->lang,
+            "name"      => $name
+        ];
+
+        $url = $this->constructUrl(self::URL_CHAMPION, $data);
+        return $this->callApi($url);
     }
 
-    public function getChampion(string $name)
-    {
-        $name = ucfirst($name);
-        return $this->GetAllChampion()[ucfirst($name)];
-
-    }
 
     private function constructUrl(string $url, array $params)
     {

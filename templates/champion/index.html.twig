@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des Champions{% endblock %}
+
+{% block body %}
+    {% set alphabets = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J",
+        "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"] %}
+
+
+    <div class="container">
+        <div class="row">
+            <div class="row">
+
+                <p>
+                    {% for alphabet in  alphabets %}
+                        <a href="#{{ alphabet | lower }}">{{ alphabet | upper }}</a>
+                    {% endfor %}
+                </p>
+            </div>
+            {% for champion in champions %}
+                {% set firstCharact = "" %}
+                <div class="col-3 mb-4 wprock-img-zoom-hover">
+                    <div class="card h-100" style="width: 18rem;">
+                        {% if champion.name|first != firstCharact %}
+                            {% set firstCharact = "" %}
+                        {% endif %}
+                        <img src="http://ddragon.leagueoflegends.com/cdn/img/champion/loading/{{ champion.id }}_0.jpg"
+                             class="card-img-top" alt="..." {% if champion.name|first|lower != firstCharact %} {% set firstCharact = champion.name|first|lower  %}id="{{ firstCharact }}" {% endif %}>
+                        <div class="card-body ">
+                            <h5 class="card-title">{{ champion.name }}</h5>
+                            <p class="card-text">{{ champion.blurb }}</p>
+                            <a href="{{ path('champions_showStat', {'name': champion.id }) }}" class="btn btn-primary">Voir
+                                les stats</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock %}
