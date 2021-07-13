@@ -46,12 +46,14 @@ class ChampionController extends AbstractController
 
         foreach ($champion['stats'] as $key => $value)
         {
-            $chartLabels[]  = $key;
-            $chartData[]    = $value;
-            $chartColor[]   = $this->random_color();
+            if(!strpos($key, "level")){
+                $chartLabels[]  = $key;
+                $chartData[]    = $value;
+                $chartColor[]   = $this->random_color();
+            }
         }
 
-        $chart = $chartBuilder->createChart(Chart::TYPE_DOUGHNUT);
+        $chart = $chartBuilder->createChart(Chart::TYPE_BAR);
         $chart->setData([
             'labels' => $chartLabels,
             'datasets' => [
