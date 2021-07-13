@@ -62,11 +62,11 @@ class GeneralApi extends BaseApi {
         return $this->callApi($url);
     }
 
-    public function getLastVersion()
-    {
-        $versions = $this->getVersions();
-        return $versions[0];
-    }
+//    public function getLastVersion()
+//    {
+//        $versions = $this->getVersions();
+//        return $versions[0];
+//    }
 
     private function buildUrlStatic(string $endUrl)
     {
