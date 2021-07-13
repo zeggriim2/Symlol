@@ -36,13 +36,50 @@ class ChampionController extends AbstractController
         ]);
     }
 
+//    /**
+//     * @Route("/champions/{name}", name="champions_showStat")
+//     */
+//    public function showStatDoctrine(string $name, ChartBuilderInterface $chartBuilder)
+//    {
+//        $VersionDoctrine = $this->championApi->GetChampionDoctrine($name);
+//        $champion = $this->championApi->GetChampion($name)['data'][$name];
+//
+//
+//        foreach ($champion['stats'] as $key => $value)
+//        {
+//            $chartLabels[]  = $key;
+//            $chartData[]    = $value;
+//            $chartColor[]   = $this->random_color();
+//        }
+//
+//        $chart = $chartBuilder->createChart(Chart::TYPE_DOUGHNUT);
+//        $chart->setData([
+//            'labels' => $chartLabels,
+//            'datasets' => [
+//                [
+//                    'label'             => 'My First dataset',
+//                    'backgroundColor'   => $chartColor,
+//                    'borderColor'       => "#f7f7f7",
+//                    'data' => $chartData,
+//                ],
+//            ],
+//        ]);
+//
+//        return $this->render('champion/showDoctrine.html.twig',[
+//            'champion'  => $VersionDoctrine,
+////            'chart'     => $chart
+//        ]);
+//    }
+
+
     /**
      * @Route("/champions/{name}", name="champions_showStat")
      */
     public function showStat(string $name, ChartBuilderInterface $chartBuilder)
     {
         $champion = $this->championApi->GetChampion($name)['data'][$name];
-//        dd($champion);
+        /** $champion @version  */
+
 
         foreach ($champion['stats'] as $key => $value)
         {

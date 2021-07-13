@@ -3,7 +3,8 @@
 
 namespace App\Service\API\LOL;
 
-use Symfony\Component\HttpClient\HttpClient;
+use Doctrine\ORM\EntityManager;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
 /**
@@ -12,11 +13,6 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
  */
 class BaseApi
 {
-    /**
-     * @var ApiClient
-     */
-    protected $apiClient;
-
     /**
      * @var HttpClientInterface
      */
@@ -27,10 +23,17 @@ class BaseApi
      */
     protected $lang;
 
-    public function __construct(HttpClientInterface $httpClient)
+    /**
+     * @var ManagerRegistry
+     */
+    protected $registry;
+
+    public function __construct(HttpClientInterface $httpClient, ManagerRegistry $registry)
     {
         $this->httpClient = $httpClient;
         $this->lang = "fr_FR";
+
+        $this->registry = $registry;
     }
 
     protected function getLastVersion(): string

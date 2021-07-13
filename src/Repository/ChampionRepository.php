@@ -19,6 +19,20 @@ class ChampionRepository extends ServiceEntityRepository
         parent::__construct($registry, Champion::class);
     }
 
+    public function existeChampion($version, $idLolChamp)
+    {
+        return $this->createQueryBuilder('champion')
+            ->join("champion.version", "version")
+            ->andWhere("version.version = :version")
+            ->andWhere("champion.id_lol = :idlol")
+            ->setParameter("version", $version)
+            ->setParameter("idlol", $idLolChamp)
+            ->setMaxResults(1)
+            ->getQuery()
+            ->getSingleResult()
+            ;
+    }
+
     // /**
     //  * @return Champion[] Returns an array of Champion objects
     //  */
