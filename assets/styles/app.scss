@@ -1,7 +1,6 @@
 @import "custom";
 @import "~bootstrap/scss/bootstrap";
 
-
 #rowChart{
   background-color: #f7f7f7;
 }
@@ -30,4 +29,12 @@
       }
     }
   }
+  
+.row {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.row > div[class*='col-'] {
+  display: flex;
 }

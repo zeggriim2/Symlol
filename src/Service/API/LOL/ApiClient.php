@@ -122,7 +122,7 @@ class ApiClient {
     {
         $this->apiKey = $apiKey;
         $this->region = $region ? $region : 'euw';
-        $this->version = $version ? $version : '11.11.1'  ;
+        $this->version = $version ? $version : "11.14.1"  ;
         $this->lang = $lang ? $lang : 'fr_FR';
     }
 
@@ -143,13 +143,13 @@ class ApiClient {
 
     public function championApi()
     {
-        return new ChampionApi($this);
+        return new ChampionApi();
     }
 
-//    public function generalApi()
-//    {
-//        return new GeneralApi($this);
-//    }
+    public function generalApi()
+    {
+        return new GeneralApi($this);
+    }
 
 
     /* PRIVATE FUNCTION */
