@@ -12,16 +12,19 @@
   .wprock-img-zoom {
     overflow: hidden;
     position: relative;
+
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
     }
+
     img {
       max-width: 100%;
       transition: all 0.8s;
     }
   }
+
   &:hover {
     .wprock-img-zoom {
       img {
@@ -29,6 +32,7 @@
       }
     }
   }
+}
   
 .row {
   display: flex;
