@@ -26,11 +26,16 @@ class BaseApi
      * @var string
      */
     protected $lang;
+    /**
+     * @var mixed
+     */
+    protected $apiKey;
 
     public function __construct(HttpClientInterface $httpClient)
     {
         $this->httpClient = $httpClient;
         $this->lang = "fr_FR";
+        $this->apiKey = $_ENV['APIKEY'];
     }
 
     protected function getLastVersion(): string
@@ -41,7 +46,9 @@ class BaseApi
 
     protected function callApi($url, $method = "GET", $options = []): array
     {
+
         $response = $this->httpClient->request($method, $url, $options);
+        dd($response->toArray());
         if ($response->getStatusCode() === 200){
             return $response->toArray();
         }
