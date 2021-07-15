@@ -48,7 +48,7 @@ class BaseApi
     {
 
         $response = $this->httpClient->request($method, $url, $options);
-        dd($response->toArray());
+//        dd($response->toArray());
         if ($response->getStatusCode() === 200){
             return $response->toArray();
         }
