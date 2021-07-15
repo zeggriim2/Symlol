@@ -17,6 +17,8 @@ class HomeController extends AbstractController
 {
     /**
      * @Route("/home", name="home")
+     * @param ChampionApi $championApi
+     * @return Response
      */
     public function index(ChampionApi $championApi): Response
     {
@@ -25,40 +27,4 @@ class HomeController extends AbstractController
             'champions' => $champions,
         ]);
     }
-//    public function test(ChartBuilderInterface $chartBuilder)
-//    {
-//        $nameArray = [];
-//        foreach($champions as $name => $data){
-//            $dataLife[] = $data['stats']['hp'];
-//            $dataArmor[] = $data['stats']['armor'];
-//            $nameArray[] = $name;
-//        }
-//
-//        $chart = $chartBuilder->createChart(Chart::TYPE_BAR);
-//        $chart->setData([
-//            'labels' => $nameArray,
-//            'datasets' => [
-//                [
-//                    'label' => 'Life',
-//                    'backgroundColor' => 'rgb(255, 99, 132)',
-//                    'borderColor' => 'rgb(255, 99, 132)',
-//                    'data' => $dataLife,
-//                ],
-//                [
-//                    'label' => 'Armor',
-//                    'backgroundColor' => 'rgb(255, 99, 255)',
-//                    'borderColor' => 'rgb(255, 99, 255)',
-//                    'data' => $dataArmor,
-//                ],
-//            ],
-//        ]);
-//
-//        $chart->setOptions([
-//            'scales' => [
-//                'yAxes' => [
-//                    ['ticks' => ['min' => 0, 'max' => 800]],
-//                ],
-//            ],
-//        ]);
-//    }
 }

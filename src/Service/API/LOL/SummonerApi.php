@@ -12,7 +12,7 @@ class SummonerApi extends BaseApi
     public function getSummoner(string $region,string $name)
     {
         $url = $this->constructUrl(self::URL, ['region' => $region, 'name' => $name]);
-        $this->callApi($url, "GET",  [
+        return $this->callApi($url, "GET",  [
             'headers' => [
                 'X-Riot-Token' => $this->apiKey,
             ]
