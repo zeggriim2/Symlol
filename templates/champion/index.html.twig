@@ -29,8 +29,8 @@
                         <div class="card-body ">
                             <h5 class="card-title">{{ champion.name }}</h5>
                             <p class="card-text">{{ champion.blurb }}</p>
-                            <a href="{{ path('champions_showStat', {'name': champion.id }) }}" class="btn btn-primary">Voir
-                                les stats</a>
+                            <a href="{{ path('champion_showStat', {'name': champion.id }) }}" class="btn btn-outline-primary btn-sm">Voir les stats</a>
+                            <a href="{{ path('champion_skins', {'name': champion.id }) }}" class="btn btn-outline-secondary btn-sm">Skins</a>
                         </div>
                     </div>
                 </div>

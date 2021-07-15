@@ -39,7 +39,7 @@ class ChampionController extends AbstractController
      */
     public function index(): Response
     {
-        $champions = $this->championApi->GetAllChampion()['data'];
+        $champions = $this->championApi->getAllChampion()['data'];
         if (!$champions){
             $this->logger->debug("Est ce que le log écrit",['champions' => $champions]);
         }
@@ -50,15 +50,43 @@ class ChampionController extends AbstractController
     }
 
     /**
-     * @Route("/champions/{name}", name="champions_showStat")
+     * @Route("/champion/skins/{name}", name="champion_skins")
+     * @param string $name
+     * @param ChartBuilderInterface $chartBuilder
+     * @return Response
+     */
+    public function skins(string $name, ChartBuilderInterface $chartBuilder)
+    {
+
+        // Vérification du Nom du champion
+        $val = $this->checkNameChampion($name);
+        if(!$val){
+            return $this->redirectToRoute("champions_index");
+        }
+
+        $champion = $this->championApi->getChampion($name)['data'][$name];
+
+        return $this->render('champion/skins.html.twig',[
+            'champion'  => $champion
+        ]);
+    }
+
+    /**
+     * @Route("/champion/stats/{name}", name="champion_showStat")
      * @param string $name
      * @param ChartBuilderInterface $chartBuilder
      * @return Response
      */
     public function showStat(string $name, ChartBuilderInterface $chartBuilder)
     {
-        $champion = $this->championApi->GetChampion($name)['data'][$name];
-        dd($champion);
+        // Vérification du Nom du champion
+        $val = $this->checkNameChampion($name);
+        if(!$val){
+            return $this->redirectToRoute("champions_index");
+        }
+
+        $champion = $this->championApi->getChampion($name)['data'][$name];
+//        dd($champion);
 
 
         foreach ($champion['stats'] as $key => $value)
@@ -76,7 +104,7 @@ class ChampionController extends AbstractController
             $chartColor[]   = $this->random_color();
         }
 
-        $chart = $chartBuilder->createChart(Chart::TYPE_BAR);
+        $chart = $chartBuilder->createChart(Chart::TYPE_RADAR);
         $chart->setData([
             'labels' => $chartLabels,
             'datasets' => [
@@ -103,5 +131,11 @@ class ChampionController extends AbstractController
     private function random_color() {
 //        rgba(255, 159, 64, 0.2);
         return "rgba(" . $this->random_color_part() . ", " . $this->random_color_part() . ", " . $this->random_color_part() . ", 0.2)";
+    }
+
+    private function checkNameChampion(string $name): bool
+    {
+        $nameChampion = $this->championApi->getAllNameChampion();
+        return in_array(ucfirst($name), $nameChampion) ? true : false;
     }
 }

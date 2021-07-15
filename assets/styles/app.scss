@@ -42,3 +42,9 @@
 .row > div[class*='col-'] {
   display: flex;
 }
+
+
+// A déplacer dans un fichier seul
+.card-rounded{
+  border-radius: 25px;
+}

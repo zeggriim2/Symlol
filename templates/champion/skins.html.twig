@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Statistique {{ champion.name }}{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row mb-5">
+            <div class="col">
+                {#                <h3>Liste des skin : "{{ champion.name }}"</h3>#}
+                <div id="carouselExampleIndicators" class="carousel slide carousel-fade mt-2" data-bs-ride="carousel">
+
+                    <div class="carousel-inner card-rounded">
+
+                        <div class="carousel-indicators">
+                            {% for skin in champion.skins %}
+                                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="{{ loop.index0 }}" {% if loop.first %}class="active" aria-current="true"{% endif %} aria-label="Slide {{ loop.index }}"></button>
+                            {% endfor %}
+                        </div>
+{#                                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>#}
+{#                                <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>#}
+
+                        {% for skin in champion.skins %}
+                            <div class="carousel-item {% if loop.first %}active{% endif %}">
+                                <img src="http://ddragon.leagueoflegends.com/cdn/img/champion/splash/{{ champion.name }}_{{ skin.num }}.jpg" class="d-block w-100" alt="...">
+                                <div class="carousel-caption d-none d-md-block">
+                                    <h5>{{ skin.name|capitalize }}</h5>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
