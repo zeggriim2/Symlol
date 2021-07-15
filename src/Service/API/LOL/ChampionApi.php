@@ -14,7 +14,7 @@ class ChampionApi extends BaseApi
      * Retourne la liste complète des champions
      * @return array
      */
-    public function GetAllChampion(): array
+    public function getAllChampion(): array
     {
         $data = [
             "version"   => $this->getLastVersion(),
@@ -24,7 +24,7 @@ class ChampionApi extends BaseApi
         return $this->callApi($url);
     }
 
-    public function GetChampion(string $name): array
+    public function getChampion(string $name): array
     {
         $data = [
             "version"   => $this->getLastVersion(),
@@ -34,6 +34,16 @@ class ChampionApi extends BaseApi
 
         $url = $this->constructUrl(self::URL_CHAMPION, $data);
         return $this->callApi($url);
+    }
+
+    public function getAllNameChampion(): array
+    {
+        $champions = $this->GetAllChampion();
+        foreach (array_keys($champions['data']) as $name)
+        {
+            $nameChampions[] = $name;
+        }
+        return $nameChampions;
     }
 
 
