@@ -16,7 +16,7 @@ class SummonerType extends AbstractType
     {
         $builder
             ->add('name', TextType::class)
-            ->add('region', ChoiceType::class,[
+            ->add('platform', ChoiceType::class,[
                     'choices'  => [
                         'EUW1' => "EUW1",
                         'BR1' => "BR1",

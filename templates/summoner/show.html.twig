@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {{ dump(summoner) }}
+<div class="container-fluid">
+    <div class="text-center">
+        <img src="https://ddragon.leagueoflegends.com/cdn/11.14.1/img/profileicon/{{ summoner.profileIconId }}.png" class="rounded-circle" alt="...">
+    </div>
+    <div class="card border-dark mb-3" style="max-width: 18rem;">
+        <div class="card-body text-dark">
+            <h5 class="card-title">{{ league.tier }} {{ league.rank }} <strong>{{ league.leaguePoints }}</strong> / {{ league.wins }}V {{ league.losses }}D</h5>
+            {#            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>#}
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block title %}
+
+{% endblock %}
+

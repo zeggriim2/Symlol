@@ -4,14 +4,18 @@
 namespace App\Service\API\LOL;
 
 
+use Psr\Log\LoggerInterface;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
+
 class SummonerApi extends BaseApi
 {
 
-    const URL = "https://{region}.api.riotgames.com/lol/summoner/v4/summoners/by-name/{name}";
+    const URL = "https://{platform}.api.riotgames.com/lol/summoner/v4/summoners/by-name/{name}";
 
-    public function getSummoner(string $region,string $name)
+
+    public function getSummoner(string $platform,string $name)
     {
-        $url = $this->constructUrl(self::URL, ['region' => $region, 'name' => $name]);
+        $url = $this->constructUrl(self::URL, ['platform' => $platform, 'name' => $name]);
         return $this->callApi($url, "GET",  [
             'headers' => [
                 'X-Riot-Token' => $this->apiKey,

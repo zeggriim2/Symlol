@@ -4,7 +4,6 @@
 namespace App\Service\API\LOL;
 
 use Psr\Log\LoggerInterface;
-use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
@@ -14,6 +13,8 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
  */
 class BaseApi
 {
+    const PLATFORM = ['BR1', 'EUN1', 'EUW1', 'JP1', 'KR', 'LA1', 'LA2', 'NA1', 'OC1', 'TR', 'RU'];
+
     const CODE_HTTP_INFO    = [100, 101, 102, 103];
     const CODE_HTTP_SUCCESS  = [200,201,202];
 
@@ -73,6 +74,11 @@ class BaseApi
             }
         }catch (TransportExceptionInterface $e) {
         }
+    }
+
+    protected function checkPlatform(string $platform)
+    {
+        return in_array($platform, self::PLATFORM);
     }
 
 //    protected function callApi(string $url,string $method = 'GET')

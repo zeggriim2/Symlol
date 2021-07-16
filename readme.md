@@ -10,3 +10,8 @@ Fonctionnalité :
   * Listing des Skins du champions
   * 
 * 
+
+
+
+A faire :
+* Crée un handle pour gérer ces propres Log
