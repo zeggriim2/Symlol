@@ -4,6 +4,7 @@
 namespace App\Service\API\LOL;
 
 use Psr\Log\LoggerInterface;
+use Symfony\Bridge\Monolog\Logger;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
 
@@ -39,14 +40,15 @@ class BaseApi
     /**
      * @var LoggerInterface
      */
-    protected $logger;
+    protected $apilogger;
 
-    public function __construct(HttpClientInterface $httpClient, LoggerInterface $logger)
+
+    public function __construct(HttpClientInterface $httpClient,LoggerInterface $apiLogger)
     {
         $this->httpClient   = $httpClient;
-        $this->logger       = $logger;
+        $this->apiLogger    = $apiLogger;
         $this->lang         = "fr_FR";
-        $this->apiKey       = $_ENV['APIKEY'];
+        $this->apiKey       = $_ENV['APIKEY'] ? $_ENV['APIKEY'] : null;
     }
 
     protected function getLastVersion(): string
@@ -61,13 +63,13 @@ class BaseApi
             $response = $this->httpClient->request($method, $url, $options);
             $codeHttp = $response->getStatusCode();
             if (in_array($codeHttp,self::CODE_HTTP_SUCCESS)){
-                $this->logger->info("API SUCCESS", [
+                $this->apiLogger->info("API SUCCESS", [
                     'code' => $codeHttp,
                     'url' => $url
                 ]);
                 return $response->toArray();
             }elseif (in_array($codeHttp,self::CODE_HTTP_INFO)){
-                $this->logger->info("API INFO", [
+                $this->apiLogger->info("API INFO", [
                     'code' => $codeHttp,
                     'url' => $url
                 ]);
