@@ -3,6 +3,6 @@ monolog:
   handlers:
     file_log:
       type: stream
-      path: "%kernel.project_dir%/log/%kernel.environment%api.log"
+      path: "%kernel.project_dir%/log/%kernel.environment%/api.log"
       level: debug
       channels: ['api']
