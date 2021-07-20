@@ -4,6 +4,15 @@
 
 {% block body %}
 <div class="container">
+    {% for message in app.flashes('summoner') %}
+        <div id="alert_message" class="alert alert-danger" role="alert">
+            {{ message }}
+        </div>
+    {% endfor %}
     {{ form(form) }}
 </div>
+{% endblock %}
+
+{% block javascripts %}
+
 {% endblock %}

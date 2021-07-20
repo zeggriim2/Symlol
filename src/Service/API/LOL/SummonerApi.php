@@ -11,7 +11,18 @@ class SummonerApi extends BaseApi
 {
 
     const URL = "https://{platform}.api.riotgames.com/lol/summoner/v4/summoners/by-name/{name}";
-
+    const PLATFORM = [
+        'EUW1'  => "EUW1", //Europe West
+        'BR1'   => "BR1", // Brazil
+        'EUN1'  => "EUN1", // Europe Nordic et East
+        'JP1'   => "JP1", // Japon
+        'KR'    => "KR", // Korea
+        'LA1'   => "LA1",
+        'LA2'   => "LA2",
+        'NA1'   => "NA1",
+        'OC1'   => "OC1",
+        'RU'    => "RU", // Russie
+    ];
 
     public function getSummoner(string $platform,string $name)
     {
