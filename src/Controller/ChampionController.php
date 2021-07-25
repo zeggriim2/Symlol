@@ -138,13 +138,13 @@ class ChampionController extends AbstractController
         ]);
     }
 
-    private function randomColorPart()
+    private function randomColorPart(): int
     {
 //        $rgb = str_pad( dechex( mt_rand( 0, 255 ) ), 2, '0', STR_PAD_LEFT);
-        return mt_rand(0, 255 );
+        return mt_rand(0, 255);
     }
 
-    private function randomColor()
+    private function randomColor(): string
     {
 //        rgba(255, 159, 64, 0.2);
         return "rgba(" . $this->randomColorPart() . ", " . $this->randomColorPart() . ", " . $this->randomColorPart() . ", 0.2)";

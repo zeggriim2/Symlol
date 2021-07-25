@@ -24,19 +24,35 @@ class SummonerApi extends BaseApi
         'RU'    => "RU", // Russie
     ];
 
-    public function getSummoner(string $platform,string $name)
+    /**
+     * @param string $platform
+     * @param string $name
+     * @return array<string
+|null
+     * @throws \Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface
+     * @throws \Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface
+     * @throws \Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface
+     * @throws \Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface
+     * @throws \Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface
+     */
+    public function getSummoner(string $platform, string $name)
     {
         $url = $this->constructUrl(self::URL, ['platform' => $platform, 'name' => $name]);
-        return $this->callApi($url, "GET",  [
+        return $this->callApi($url, "GET", [
             'headers' => [
                 'X-Riot-Token' => $this->apiKey,
             ]
         ]);
     }
 
+    /**
+     * @param string $url
+     * @param array<string> $params
+     * @return string
+     */
     private function constructUrl(string $url, array $params)
     {
-        foreach($params as $key => $param){
+        foreach ($params as $key => $param) {
             $url = str_replace("{{$key}}", $param, $url);
         }
         return $url;

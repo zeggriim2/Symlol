@@ -67,7 +67,7 @@ class SummonerController extends AbstractController
     /**
      * @Route("/summoner/{name}", name="summoner_show")
      */
-    public function show()
+    public function show(): Response
     {
 
         $platform = $this->session->get('platform');
@@ -77,7 +77,7 @@ class SummonerController extends AbstractController
 
             return $this->redirectToRoute('summoner_index');
         }
-        $league     = $this->leagueApi->getInforSummoner($platform, $summoner['id']);
+        $league     = $this->leagueApi->getInfoSummoner($platform, $summoner['id']);
 
         return $this->render('summoner/show.html.twig', [
             'summoner' => $summoner,
