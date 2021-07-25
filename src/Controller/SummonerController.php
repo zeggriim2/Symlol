@@ -43,11 +43,10 @@ class SummonerController extends AbstractController
 
     /**
      * @Route("/summoner", name="summoner_index")
-     * @param SummonerApi $summonerApi
      * @param Request $request
      * @return Response
      */
-    public function index(Request $request ): Response
+    public function index(Request $request): Response
     {
         $form = $this->createForm(SummonerType::class);
 

@@ -39,9 +39,9 @@ class ChampionApi extends BaseApi
     public function getAllNameChampion(): array
     {
         $champions = $this->GetAllChampion();
-        foreach (array_keys($champions['data']) as $name)
-        {
-            $nameChampions[] = $name;
+        $nameChampions = [];
+        foreach (array_keys($champions['data']) as $name) {
+            $chartData[] = $name;
         }
         return $nameChampions;
     }
@@ -49,7 +49,7 @@ class ChampionApi extends BaseApi
 
     private function constructUrl(string $url, array $params)
     {
-        foreach($params as $key => $param){
+        foreach ($params as $key => $param) {
             $url = str_replace("{{$key}}", $param, $url);
         }
         return $url;

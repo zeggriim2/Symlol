@@ -45,13 +45,13 @@ class ChampionController extends AbstractController
     ): Response
     {
         $champions = $this->championApi->getAllChampion()['data'];
-        if (!$champions){
-            $this->logger->debug("Est ce que le log écrit",['champions' => $champions]);
+        if (!$champions) {
+            $this->logger->debug("Est ce que le log écrit", ['champions' => $champions]);
         }
 
         $champPag = $paginator->paginate(
             $champions,
-            $request->query->getInt('page',1),
+            $request->query->getInt('page', 1),
             8
         );
 
@@ -72,13 +72,13 @@ class ChampionController extends AbstractController
 
         // Vérification du Nom du champion
         $val = $this->checkNameChampion($name);
-        if(!$val){
+        if (!$val) {
             return $this->redirectToRoute("champions_index");
         }
 
         $champion = $this->championApi->getChampion($name)['data'][$name];
 
-        return $this->render('champion/skins.html.twig',[
+        return $this->render('champion/skins.html.twig', [
             'champion'  => $champion
         ]);
     }
@@ -93,29 +93,32 @@ class ChampionController extends AbstractController
     {
         // Vérification du Nom du champion
         $val = $this->checkNameChampion($name);
-        if(!$val){
+        if (!$val) {
             return $this->redirectToRoute("champions_index");
         }
 
         $champion = $this->championApi->getChampion($name)['data'][$name];
 //        dd($champion);
 
-
-        foreach ($champion['stats'] as $key => $value)
-        {
-            if(!strpos($key, "level")){
+        $data = null;
+        foreach ($champion['stats'] as $key => $value) {
+            if (!strpos($key, "level")) {
                 $data[$key] = $value;
             }
         }
 
-        arsort($data);
-        foreach($data as $label => $value)
-        {
-            $chartLabels[]  = $label;
-            $chartData[]    = $value;
-            $chartColor[]   = $this->random_color();
+        if (!isset($data)) {
+            arsort($data);
         }
 
+        $chartLabels = [];
+        $chartColor = [];
+        $chartData = [];
+        foreach ($data as $label => $value) {
+            $chartLabels[]  = $label;
+            $chartData[]    = $value;
+            $chartColor[]   = $this->randomColor();
+        }
         $chart = $chartBuilder->createChart(Chart::TYPE_RADAR);
         $chart->setData([
             'labels' => $chartLabels,
@@ -129,20 +132,22 @@ class ChampionController extends AbstractController
             ],
         ]);
 
-        return $this->render('champion/show.html.twig',[
+        return $this->render('champion/show.html.twig', [
             'champion'  => $champion,
             'chart'     => $chart
         ]);
     }
 
-    private function random_color_part() {
+    private function randomColorPart()
+    {
 //        $rgb = str_pad( dechex( mt_rand( 0, 255 ) ), 2, '0', STR_PAD_LEFT);
         return mt_rand(0, 255 );
     }
 
-    private function random_color() {
+    private function randomColor()
+    {
 //        rgba(255, 159, 64, 0.2);
-        return "rgba(" . $this->random_color_part() . ", " . $this->random_color_part() . ", " . $this->random_color_part() . ", 0.2)";
+        return "rgba(" . $this->randomColorPart() . ", " . $this->randomColorPart() . ", " . $this->randomColorPart() . ", 0.2)";
     }
 
     private function checkNameChampion(string $name): bool
