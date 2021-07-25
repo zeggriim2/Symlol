@@ -3,8 +3,10 @@
 namespace App\Controller;
 
 use App\Service\API\LOL\ChampionApi;
+use Knp\Component\Pager\PaginatorInterface;
 use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\UX\Chartjs\Builder\ChartBuilderInterface;
@@ -37,15 +39,25 @@ class ChampionController extends AbstractController
     /**
      * @Route("/champions", name="champions_index")
      */
-    public function index(): Response
+    public function index(
+        PaginatorInterface $paginator,
+        Request $request
+    ): Response
     {
         $champions = $this->championApi->getAllChampion()['data'];
         if (!$champions){
             $this->logger->debug("Est ce que le log écrit",['champions' => $champions]);
         }
 
+        $champPag = $paginator->paginate(
+            $champions,
+            $request->query->getInt('page',1),
+            8
+        );
+
         return $this->render('champion/index.html.twig', [
-            'champions' => $champions,
+//            'champions' => $champions,
+            'champions' => $champPag,
         ]);
     }
 
