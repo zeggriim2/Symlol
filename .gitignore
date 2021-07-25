@@ -29,3 +29,8 @@ yarn-error.log
 ###< phpunit/phpunit ###
 
 log/
+
+###> squizlabs/php_codesniffer ###
+/.phpcs-cache
+/phpcs.xml.old
+###< squizlabs/php_codesniffer ###
