@@ -10,7 +10,6 @@
     <div class="container">
         <div class="row">
             <div class="row">
-
                 <p>
                     {% for alphabet in  alphabets %}
                         <a href="#{{ alphabet | lower }}">{{ alphabet | upper }}</a>
@@ -35,7 +34,8 @@
                     </div>
                 </div>
             {% endfor %}
-            {{ knp_pagination_render(champions, 'base/pagination.html.twig') }}
+            {{ knp_pagination_render(champions, 'pagination/pagination.html.twig') }}
+
         </div>
     </div>
 
