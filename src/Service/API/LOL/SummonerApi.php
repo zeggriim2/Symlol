@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Service\API\LOL;
-
 
 use Psr\Log\LoggerInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
@@ -10,8 +8,8 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 class SummonerApi extends BaseApi
 {
 
-    const URL = "https://{platform}.api.riotgames.com/lol/summoner/v4/summoners/by-name/{name}";
-    const PLATFORM = [
+    private const URL = "https://{platform}.api.riotgames.com/lol/summoner/v4/summoners/by-name/{name}";
+    public const PLATFORM = [
         'EUW1'  => "EUW1", //Europe West
         'BR1'   => "BR1", // Brazil
         'EUN1'  => "EUN1", // Europe Nordic et East
@@ -27,8 +25,7 @@ class SummonerApi extends BaseApi
     /**
      * @param string $platform
      * @param string $name
-     * @return array<string
-|null
+     * @return array<mixed>|null
      * @throws \Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface
      * @throws \Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface
      * @throws \Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface

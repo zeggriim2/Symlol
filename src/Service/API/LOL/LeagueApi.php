@@ -1,12 +1,10 @@
 <?php
 
-
 namespace App\Service\API\LOL;
-
 
 class LeagueApi extends BaseApi
 {
-    const URL = "https://{platform}.api.riotgames.com/lol/league/v4/entries/by-summoner/{encryptedSummonerId}";
+    private const URL = "https://{platform}.api.riotgames.com/lol/league/v4/entries/by-summoner/{encryptedSummonerId}";
 
     /**
      * @param string $platform
@@ -31,6 +29,11 @@ class LeagueApi extends BaseApi
         ]);
     }
 
+    /**
+     * @param string $url
+     * @param array<string> $params
+     * @return string
+     */
     private function constructUrl(string $url, array $params): string
     {
         foreach ($params as $key => $param) {

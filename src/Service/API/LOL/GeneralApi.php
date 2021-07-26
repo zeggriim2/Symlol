@@ -2,19 +2,20 @@
 
 namespace App\Service\API\LOL;
 
-class GeneralApi extends BaseApi {
+class GeneralApi extends BaseApi
+{
 
-    const BASE_URL_STATIC = "http://static.developer.riotgames.com/docs/lol/";
-    const API_URL_SEASONS = "seasons.json";
-    const API_URL_QUEUES = "queues.json";
-    const API_URL_MAPS = "maps.json";
-    const API_URL_GAMEMODES = "gameModes.json";
-    const API_URL_GAMETYPES = "gameTypes.json";
+    private const BASE_URL_STATIC = "http://static.developer.riotgames.com/docs/lol/";
+    private const API_URL_SEASONS = "seasons.json";
+    private const API_URL_QUEUES = "queues.json";
+    private const API_URL_MAPS = "maps.json";
+    private const API_URL_GAMEMODES = "gameModes.json";
+    private const API_URL_GAMETYPES = "gameTypes.json";
 
-    const BASE_URL_DDRAGON = "https://ddragon.leagueoflegends.com/api/";
-    const API_URL_VERSIONS = "versions.json";
+    private const BASE_URL_DDRAGON = "https://ddragon.leagueoflegends.com/api/";
+    private const API_URL_VERSIONS = "versions.json";
 
-    const LIEN_URL = [
+    public const LIEN_URL = [
         self::BASE_URL_STATIC => [
             self::API_URL_SEASONS,
             self::API_URL_QUEUES,
@@ -29,8 +30,7 @@ class GeneralApi extends BaseApi {
 
 
     /**
-     * @return array<string
-|null
+     * @return array<mixed>|null
      * @throws \Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface
      * @throws \Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface
      * @throws \Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface
@@ -44,8 +44,7 @@ class GeneralApi extends BaseApi {
     }
 
     /**
-     * @return array<string
-|null
+     * @return array<mixed>|null
      * @throws \Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface
      * @throws \Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface
      * @throws \Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface
@@ -59,8 +58,7 @@ class GeneralApi extends BaseApi {
     }
 
     /**
-     * @return array<string
-|null
+     * @return array<mixed>|null
      * @throws \Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface
      * @throws \Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface
      * @throws \Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface
@@ -74,8 +72,7 @@ class GeneralApi extends BaseApi {
     }
 
     /**
-     * @return array<string
-|null
+     * @return array<mixed>|null
      * @throws \Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface
      * @throws \Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface
      * @throws \Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface
@@ -88,8 +85,7 @@ class GeneralApi extends BaseApi {
     }
 
     /**
-     * @return array<string
-|null
+     * @return array<mixed>|null
      * @throws \Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface
      * @throws \Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface
      * @throws \Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface
@@ -102,8 +98,7 @@ class GeneralApi extends BaseApi {
     }
 
     /**
-     * @return array<string
-|null
+     * @return array<mixed>|null
      * @throws \Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface
      * @throws \Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface
      * @throws \Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface
@@ -131,5 +126,4 @@ class GeneralApi extends BaseApi {
     {
         return self::BASE_URL_DDRAGON . $endUrl;
     }
-
 }

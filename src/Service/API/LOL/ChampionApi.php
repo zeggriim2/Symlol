@@ -1,18 +1,15 @@
 <?php
 
-
 namespace App\Service\API\LOL;
-
-
 
 class ChampionApi extends BaseApi
 {
-    const URL_CHAMPIONS = "http://ddragon.leagueoflegends.com/cdn/{version}/data/{lang}/champion.json";
-    const URL_CHAMPION = "http://ddragon.leagueoflegends.com/cdn/{version}/data/{lang}/champion/{name}.json";
+    private const URL_CHAMPIONS = "http://ddragon.leagueoflegends.com/cdn/{version}/data/{lang}/champion.json";
+    private const URL_CHAMPION = "http://ddragon.leagueoflegends.com/cdn/{version}/data/{lang}/champion/{name}.json";
 
     /**
      * Retourne la liste complète des champions
-     * @return array
+     * @return array<mixed>|null
      */
     public function getAllChampion(): array
     {
@@ -24,6 +21,15 @@ class ChampionApi extends BaseApi
         return $this->callApi($url);
     }
 
+    /**
+     * @param string $name
+     * @return array<mixed>|null
+     * @throws \Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface
+     * @throws \Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface
+     * @throws \Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface
+     * @throws \Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface
+     * @throws \Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface
+     */
     public function getChampion(string $name): array
     {
         $data = [
@@ -47,6 +53,11 @@ class ChampionApi extends BaseApi
     }
 
 
+    /**
+     * @param string $url
+     * @param array<string> $params
+     * @return string|string[]
+     */
     private function constructUrl(string $url, array $params)
     {
         foreach ($params as $key => $param) {

@@ -52,12 +52,11 @@ class SummonerController extends AbstractController
 
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid())
-        {
+        if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
-            $this->session->set('platform',$data['platform']);
-            $this->session->set('name',$data['name']);
-            return $this->redirectToRoute("summoner_show",['name'=>$data['name']]);
+            $this->session->set('platform', $data['platform']);
+            $this->session->set('name', $data['name']);
+            return $this->redirectToRoute("summoner_show", ['name' => $data['name']]);
         }
         return $this->render('summoner/index.html.twig', [
             'form' => $form->createView(),
@@ -72,7 +71,7 @@ class SummonerController extends AbstractController
 
         $platform = $this->session->get('platform');
         $summoner   = $this->summonerApi->getSummoner($platform, $this->session->get('name'));
-        if (is_null($summoner)){
+        if (is_null($summoner)) {
             $this->addFlash('summoner', 'Summoners Non trouvé');
 
             return $this->redirectToRoute('summoner_index');

@@ -42,8 +42,7 @@ class ChampionController extends AbstractController
     public function index(
         PaginatorInterface $paginator,
         Request $request
-    ): Response
-    {
+    ): Response {
         $champions = $this->championApi->getAllChampion()['data'];
         if (!$champions) {
             $this->logger->debug("Est ce que le log écrit", ['champions' => $champions]);
