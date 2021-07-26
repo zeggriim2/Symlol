@@ -1,6 +1,11 @@
 # SymLol
 
+### Version des différents outils utilisé.
 
+PHP 7.4,
+YARN 1.14,
+NODE 14.17(LTS à ce jour), 
+BOOTSTRAP 5
 
 ------
 
@@ -14,4 +19,5 @@ Fonctionnalité :
 
 
 A faire :
-* Crée un handle pour gérer ces propres Log
+* Créer un handle pour gérer ces propres Log (Fait)
+* Réaliser un système de pagination dans la liste des champions

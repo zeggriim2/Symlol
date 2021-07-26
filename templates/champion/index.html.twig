@@ -9,14 +9,12 @@
 
     <div class="container">
         <div class="row">
-
 {#                <p>#}
 {#                    {% for alphabet in  alphabets %}#}
 {#                        <a href="#{{ alphabet | lower }}">{{ alphabet | upper }}</a>#}
 {#                    {% endfor %}#}
 {#                </p>#}
             {{ include('base/alphabet.html.twig') }}
-
             {% for champion in champions %}
                 {% set firstCharact = "" %}
                 <div class="col-3 mb-4 wprock-img-zoom-hover">
@@ -35,7 +33,8 @@
                     </div>
                 </div>
             {% endfor %}
-            {{ knp_pagination_render(champions, 'base/pagination.html.twig') }}
+            {{ knp_pagination_render(champions, 'pagination/pagination.html.twig') }}
+
         </div>
     </div>
 
