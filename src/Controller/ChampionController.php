@@ -106,7 +106,7 @@ class ChampionController extends AbstractController
             }
         }
 
-        if (!isset($data)) {
+        if (isset($data)) {
             arsort($data);
         }
 
@@ -118,13 +118,14 @@ class ChampionController extends AbstractController
             $chartData[]    = $value;
             $chartColor[]   = $this->randomColor();
         }
-        $chart = $chartBuilder->createChart(Chart::TYPE_RADAR);
+        $chart = $chartBuilder->createChart(Chart::TYPE_BAR);
         $chart->setData([
             'labels' => $chartLabels,
             'datasets' => [
                 [
                     'label'             => 'Stats ' . $champion['id'],
-                    'backgroundColor'   => $chartColor,
+//                    'backgroundColor'   => $chartColor,
+                    'backgroundColor'   => "#fffff",
                     'borderColor'       => "#f7f7f7",
                     'data' => $chartData,
                 ],

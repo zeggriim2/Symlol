@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Form\SummonerType;
 use App\Service\API\LOL\LeagueApi;
 use App\Service\API\LOL\SummonerApi;
-use phpDocumentor\Reflection\Types\This;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -55,7 +54,6 @@ class SummonerController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
             $this->session->set('platform', $data['platform']);
-            $this->session->set('name', $data['name']);
             return $this->redirectToRoute("summoner_show", ['name' => $data['name']]);
         }
         return $this->render('summoner/index.html.twig', [
@@ -66,11 +64,10 @@ class SummonerController extends AbstractController
     /**
      * @Route("/summoner/{name}", name="summoner_show")
      */
-    public function show(): Response
+    public function show(string $name): Response
     {
-
         $platform = $this->session->get('platform');
-        $summoner   = $this->summonerApi->getSummoner($platform, $this->session->get('name'));
+        $summoner   = $this->summonerApi->getSummoner($platform, $name);
         if (is_null($summoner)) {
             $this->addFlash('summoner', 'Summoners Non trouvé');
 
