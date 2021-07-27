@@ -8,6 +8,6 @@ body{
   flex-direction: column;
   min-height: 100vh;
 }
-.container{
+.container, .container-fluid{
   flex-grow: 1;
 }
