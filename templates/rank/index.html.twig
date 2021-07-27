@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello RankController!{% endblock %}
+
+{% block body %}
+<div class="container">
+    {{ form_start(formRank) }}
+    <div class="my-custom-class-for-errors">
+        {{ form_errors(formRank) }}
+    </div>
+
+    <div class="row">
+        <div class="col">
+            {{ form_row(formRank.queue) }}
+        </div>
+        <div class="col" id="some-custom-id">
+            {{ form_row(formRank.platform) }}
+        </div>
+    </div>
+    {{ form_end(formRank) }}
+</div>
+{% endblock %}

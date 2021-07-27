@@ -13,3 +13,13 @@ import { Tooltip, Toast, Popover } from 'bootstrap';
 
 // start the Stimulus application
 import './bootstrap';
+
+$(document).ready(function() {
+    $('#table_ladder').DataTable( {
+        "pageLength": 20,
+        "lengthMenu": [[10, 25, 50, -1], [10, 25, 50, "All"]],
+        "language": {
+            "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/French.json"
+        }
+    } );
+} );
