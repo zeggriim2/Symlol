@@ -1,20 +1,17 @@
 <?php
 
-
 namespace App\Service\API\LOL;
-
-
 
 class ChampionApi extends BaseApi
 {
-    const URL_CHAMPIONS = "http://ddragon.leagueoflegends.com/cdn/{version}/data/{lang}/champion.json";
-    const URL_CHAMPION = "http://ddragon.leagueoflegends.com/cdn/{version}/data/{lang}/champion/{name}.json";
+    private const URL_CHAMPIONS = "http://ddragon.leagueoflegends.com/cdn/{version}/data/{lang}/champion.json";
+    private const URL_CHAMPION = "http://ddragon.leagueoflegends.com/cdn/{version}/data/{lang}/champion/{name}.json";
 
     /**
      * Retourne la liste complète des champions
-     * @return array
+     * @return array<mixed>|null
      */
-    public function getAllChampion(): array
+    public function getAllChampion(): ?array
     {
         $data = [
             "version"   => $this->getLastVersion(),
@@ -24,7 +21,16 @@ class ChampionApi extends BaseApi
         return $this->callApi($url);
     }
 
-    public function getChampion(string $name): array
+    /**
+     * @param string $name
+     * @return array<mixed>|null
+     * @throws \Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface
+     * @throws \Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface
+     * @throws \Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface
+     * @throws \Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface
+     * @throws \Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface
+     */
+    public function getChampion(string $name): ?array
     {
         $data = [
             "version"   => $this->getLastVersion(),
@@ -39,17 +45,22 @@ class ChampionApi extends BaseApi
     public function getAllNameChampion(): array
     {
         $champions = $this->GetAllChampion();
-        foreach (array_keys($champions['data']) as $name)
-        {
-            $nameChampions[] = $name;
+        $nameChampions = [];
+        foreach (array_keys($champions['data']) as $name) {
+            $chartData[] = $name;
         }
         return $nameChampions;
     }
 
 
+    /**
+     * @param string $url
+     * @param array<string> $params
+     * @return string
+     */
     private function constructUrl(string $url, array $params)
     {
-        foreach($params as $key => $param){
+        foreach ($params as $key => $param) {
             $url = str_replace("{{$key}}", $param, $url);
         }
         return $url;

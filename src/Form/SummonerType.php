@@ -12,11 +12,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class SummonerType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('name', TextType::class)
-            ->add('platform', ChoiceType::class,[
+            ->add('platform', ChoiceType::class, [
                     'choices'  => [
                         'EUW1' => "EUW1",
                         'BR1' => "BR1",

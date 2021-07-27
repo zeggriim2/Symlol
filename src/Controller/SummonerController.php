@@ -43,22 +43,20 @@ class SummonerController extends AbstractController
 
     /**
      * @Route("/summoner", name="summoner_index")
-     * @param SummonerApi $summonerApi
      * @param Request $request
      * @return Response
      */
-    public function index(Request $request ): Response
+    public function index(Request $request): Response
     {
         $form = $this->createForm(SummonerType::class);
 
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid())
-        {
+        if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
-            $this->session->set('platform',$data['platform']);
-            $this->session->set('name',$data['name']);
-            return $this->redirectToRoute("summoner_show",['name'=>$data['name']]);
+            $this->session->set('platform', $data['platform']);
+            $this->session->set('name', $data['name']);
+            return $this->redirectToRoute("summoner_show", ['name' => $data['name']]);
         }
         return $this->render('summoner/index.html.twig', [
             'form' => $form->createView(),
@@ -68,17 +66,17 @@ class SummonerController extends AbstractController
     /**
      * @Route("/summoner/{name}", name="summoner_show")
      */
-    public function show()
+    public function show(): Response
     {
 
         $platform = $this->session->get('platform');
         $summoner   = $this->summonerApi->getSummoner($platform, $this->session->get('name'));
-        if (is_null($summoner)){
+        if (is_null($summoner)) {
             $this->addFlash('summoner', 'Summoners Non trouvé');
 
             return $this->redirectToRoute('summoner_index');
         }
-        $league     = $this->leagueApi->getInforSummoner($platform, $summoner['id']);
+        $league     = $this->leagueApi->getInfoSummoner($platform, $summoner['id']);
 
         return $this->render('summoner/show.html.twig', [
             'summoner' => $summoner,

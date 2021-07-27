@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Service\API\LOL;
-
 
 use Psr\Log\LoggerInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
@@ -10,8 +8,8 @@ use Symfony\Contracts\HttpClient\HttpClientInterface;
 class SummonerApi extends BaseApi
 {
 
-    const URL = "https://{platform}.api.riotgames.com/lol/summoner/v4/summoners/by-name/{name}";
-    const PLATFORM = [
+    private const URL = "https://{platform}.api.riotgames.com/lol/summoner/v4/summoners/by-name/{name}";
+    public const PLATFORM = [
         'EUW1'  => "EUW1", //Europe West
         'BR1'   => "BR1", // Brazil
         'EUN1'  => "EUN1", // Europe Nordic et East
@@ -24,19 +22,34 @@ class SummonerApi extends BaseApi
         'RU'    => "RU", // Russie
     ];
 
-    public function getSummoner(string $platform,string $name)
+    /**
+     * @param string $platform
+     * @param string $name
+     * @return array<mixed>|null
+     * @throws \Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface
+     * @throws \Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface
+     * @throws \Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface
+     * @throws \Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface
+     * @throws \Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface
+     */
+    public function getSummoner(string $platform, string $name)
     {
         $url = $this->constructUrl(self::URL, ['platform' => $platform, 'name' => $name]);
-        return $this->callApi($url, "GET",  [
+        return $this->callApi($url, "GET", [
             'headers' => [
                 'X-Riot-Token' => $this->apiKey,
             ]
         ]);
     }
 
+    /**
+     * @param string $url
+     * @param array<string> $params
+     * @return string
+     */
     private function constructUrl(string $url, array $params)
     {
-        foreach($params as $key => $param){
+        foreach ($params as $key => $param) {
             $url = str_replace("{{$key}}", $param, $url);
         }
         return $url;

@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Service\API\LOL;
 
 use Psr\Log\LoggerInterface;
@@ -19,16 +18,11 @@ use Throwable;
  */
 class BaseApi
 {
-    const PLATFORM = ['BR1', 'EUN1', 'EUW1', 'JP1', 'KR', 'LA1', 'LA2', 'NA1', 'OC1', 'TR', 'RU'];
+    private const PLATFORM = ['BR1', 'EUN1', 'EUW1', 'JP1', 'KR', 'LA1', 'LA2', 'NA1', 'OC1', 'TR', 'RU'];
 
-    const CODE_HTTP_INFO    = [100, 101, 102, 103];
-    const CODE_HTTP_SUCCESS = [200,201,202];
-    const CODE_HTTP_ERREUR  = [400, 401,402,403,404];
-
-    /**
-     * @var ApiClient
-     */
-    protected $apiClient;
+    private const CODE_HTTP_INFO    = [100, 101, 102, 103];
+    private const CODE_HTTP_SUCCESS = [200,201,202];
+    private const CODE_HTTP_ERREUR  = [400, 401,402,403,404];
 
     /**
      * @var HttpClientInterface
@@ -47,9 +41,13 @@ class BaseApi
      * @var LoggerInterface
      */
     protected $apilogger;
+    /**
+     * @var LoggerInterface
+     */
+    private $apiLogger;
 
 
-    public function __construct(HttpClientInterface $httpClient,LoggerInterface $apiLogger)
+    public function __construct(HttpClientInterface $httpClient, LoggerInterface $apiLogger)
     {
         $this->httpClient   = $httpClient;
         $this->apiLogger    = $apiLogger;
@@ -64,9 +62,9 @@ class BaseApi
     }
 
     /**
-     * @param $url
+     * @param string $url
      * @param string $method
-     * @param array $options
+     * @param array<mixed> $options
      * @return array|null
      * @throws ClientExceptionInterface
      * @throws TransportExceptionInterface
@@ -74,25 +72,25 @@ class BaseApi
      * @throws RedirectionExceptionInterface
      * @throws ServerExceptionInterface
      */
-    protected function callApi($url, $method = "GET", $options = []): ?array
+    protected function callApi(string $url, string $method = "GET", array $options = []): ?array
     {
         $response = $this->httpClient->request($method, $url, $options);
         $codeHttp = $response->getStatusCode();
-        if (in_array($codeHttp,self::CODE_HTTP_SUCCESS)){
+        if (in_array($codeHttp, self::CODE_HTTP_SUCCESS)) {
             $this->apiLogger->info("API SUCCESS", [
                 'code' => $codeHttp,
                 'url' => $url,
                 'options'   => $options
             ]);
             return $response->toArray();
-        }elseif (in_array($codeHttp,self::CODE_HTTP_INFO)){
+        } elseif (in_array($codeHttp, self::CODE_HTTP_INFO)) {
             $this->apiLogger->info("API INFO", [
                 'code' => $codeHttp,
                 'url' => $url,
                 'options'   => $options
             ]);
             return null;
-        }elseif (in_array($codeHttp,self::CODE_HTTP_ERREUR)){
+        } elseif (in_array($codeHttp, self::CODE_HTTP_ERREUR)) {
             $this->apiLogger->error("API ERREUR", [
                 'code' => $codeHttp,
                 'url' => $url,
@@ -100,6 +98,7 @@ class BaseApi
             ]);
             return null;
         }
+        return null;
     }
 
     protected function checkPlatform(string $platform)
