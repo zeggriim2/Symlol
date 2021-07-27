@@ -1,50 +1,13 @@
 @import "custom";
 @import "~bootstrap/scss/bootstrap";
 
-#rowChart{
-  //background-color: #f7f7f7;
-}
-
-/**
- * ZOOM IMAGE EFFECT ON HOVER // wpRock.fr
- */
-.wprock-img-zoom-hover {
-  .wprock-img-zoom {
-    overflow: hidden;
-    position: relative;
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    img {
-      max-width: 100%;
-      transition: all 0.8s;
-    }
-  }
-
-  &:hover {
-    .wprock-img-zoom {
-      img {
-        transform: scale(1.06);
-      }
-    }
-  }
-}
-  
-.row {
+// Fixer son footer en bas de page avec Flexbox
+body{
+  margin: 0;
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
+  min-height: 100vh;
 }
-
-.row > div[class*='col-'] {
-  display: flex;
-}
-
-
-// A déplacer dans un fichier seul
-.card-rounded{
-  border-radius: 25px;
+.container, .container-fluid{
+  flex-grow: 1;
 }
