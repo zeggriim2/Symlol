@@ -11,7 +11,7 @@ class ChampionApi extends BaseApi
      * Retourne la liste complète des champions
      * @return array<mixed>|null
      */
-    public function getAllChampion(): array
+    public function getAllChampion(): ?array
     {
         $data = [
             "version"   => $this->getLastVersion(),
@@ -30,7 +30,7 @@ class ChampionApi extends BaseApi
      * @throws \Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface
      * @throws \Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface
      */
-    public function getChampion(string $name): array
+    public function getChampion(string $name): ?array
     {
         $data = [
             "version"   => $this->getLastVersion(),
@@ -56,7 +56,7 @@ class ChampionApi extends BaseApi
     /**
      * @param string $url
      * @param array<string> $params
-     * @return string|string[]
+     * @return string
      */
     private function constructUrl(string $url, array $params)
     {
