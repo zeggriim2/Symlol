@@ -64,21 +64,21 @@ class RankController extends AbstractController
 
         $ladderChallengers = $this->rankApi->getChallenger($platform, $queue)['entries'];
 
-        $this->trieDescendant($ladderChallengers, 'leaguePoints');
+        $this->descendingSort($ladderChallengers, 'leaguePoints');
 
         return $this->render('rank/ladder.html.twig', [
             'ladderChallengers' => $ladderChallengers
         ]);
     }
 
-    private function trieAscendant(array &$data, string $field)
+    private function ascendingSort(array &$data, string $field)
     {
         usort($data, function ($item1, $item2) use ($field) {
             return $item1[$field] <=> $item2[$field];
         });
     }
 
-    private function trieDescendant(array &$data, string $field)
+    private function descendingSort(array &$data, string $field)
     {
         usort($data, function ($item1, $item2) use ($field) {
             return $item2[$field] <=> $item1[$field];
