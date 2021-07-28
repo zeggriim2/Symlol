@@ -47,7 +47,7 @@ class ChampionApi extends BaseApi
         $champions = $this->GetAllChampion();
         $nameChampions = [];
         foreach (array_keys($champions['data']) as $name) {
-            $chartData[] = $name;
+            $nameChampions[] = $name;
         }
         return $nameChampions;
     }

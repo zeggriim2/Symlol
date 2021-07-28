@@ -2,13 +2,13 @@
 
 namespace App\Service\API\LOL;
 
-class LeagueApi extends BaseApi
+class RankApi extends BaseApi
 {
-    private const URL = "https://{platform}.api.riotgames.com/lol/league/v4/entries/by-summoner/{encryptedSummonerId}";
-    private const URL_LEAGUE_ID = "https://{platform}.api.riotgames.com/lol/league/v4/leagues/{leagueId}";
+    private const URL = "https://{platform}.api.riotgames.com/lol/league/v4/challengerleagues/by-queue/{queue}";
+
     /**
      * @param string $platform
-     * @param string $encryptedSummonerId
+     * @param string $queue
      * @return array<mixed>|null
      * @throws \Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface
      * @throws \Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface
@@ -16,26 +16,12 @@ class LeagueApi extends BaseApi
      * @throws \Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface
      * @throws \Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface
      */
-    public function getInfoSummoner(string $platform, string $encryptedSummonerId): ?array
+    public function getChallenger(string $platform, string $queue): ?array
     {
         if (!$this->checkPlatform($platform)) {
             return null;
         }
-        $url = $this->constructUrl(self::URL, ['platform' => $platform, 'encryptedSummonerId' => $encryptedSummonerId]);
-        return $this->callApi($url, "GET", [
-            'headers' => [
-                'X-Riot-Token' => $this->apiKey,
-            ]
-        ]);
-    }
-
-    public function getLeagueId(string $platform, string $leagueId): ?array
-    {
-        if (!$this->checkPlatform($platform)) {
-            return null;
-        }
-
-        $url = $this->constructUrl(self::URL_LEAGUE_ID, ['platform' => $platform, 'leagueId' => $leagueId]);
+        $url = $this->constructUrl(self::URL, ['platform' => $platform, 'queue' => $queue]);
         return $this->callApi($url, "GET", [
             'headers' => [
                 'X-Riot-Token' => $this->apiKey,

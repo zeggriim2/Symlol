@@ -5,12 +5,11 @@ namespace App\Form;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class SummonerType extends AbstractType
+class RankType extends AbstractType
 {
     /**
      * @var RequestStack
@@ -28,12 +27,16 @@ class SummonerType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('name', TextType::class)
+            ->add('queue', ChoiceType::class, [
+                'choices'  => [
+                    'Ranked Solo' => "RANKED_SOLO_5x5",
+                ]
+            ])
             ->add('platform', ChoiceType::class, [
                     'choices'  => [
-                        'EUW1' => "EUW1",
                         'BR1' => "BR1",
                         'EUN1' => "EUN1",
+                        'EUW1' => "EUW1",
                         'KR' => "KR",
                         'LA1' => "LA1",
                         'LA2' => "LA2",
