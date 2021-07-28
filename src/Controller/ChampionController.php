@@ -124,8 +124,8 @@ class ChampionController extends AbstractController
             'datasets' => [
                 [
                     'label'             => 'Stats ' . $champion['id'],
-//                    'backgroundColor'   => $chartColor,
-                    'backgroundColor'   => "#fffff",
+                    'backgroundColor'   => $chartColor,
+//                    'backgroundColor'   => "#fffff",
                     'borderColor'       => "#f7f7f7",
                     'data' => $chartData,
                 ],
