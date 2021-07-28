@@ -6,16 +6,16 @@ use App\Form\RankType;
 use App\Service\API\LOL\RankApi;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 class RankController extends AbstractController
 {
     /**
-     * @var SessionInterface 
+     * @var RequestStack
      */
-    private $session;
+    private $requestStack;
 
     /**
      * @var RankApi
@@ -25,9 +25,9 @@ class RankController extends AbstractController
     /**
      * RankController constructor.
      */
-    public function __construct(SessionInterface $session, RankApi $rankApi)
+    public function __construct(RequestStack $requestStack, RankApi $rankApi)
     {
-        $this->session = $session;
+        $this->requestStack = $requestStack;
         $this->rankApi = $rankApi;
     }
 
@@ -43,8 +43,8 @@ class RankController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
             $keyData = array_keys($data);
-            $this->session->set($keyData[0], $data['queue']);
-            $this->session->set($keyData[1], $data['platform']);
+            $this->requestStack->getSession()->set($keyData[0], $data['queue']);
+            $this->requestStack->getSession()->set($keyData[1], $data['platform']);
             return $this->redirectToRoute("rank_ladder");
         }
 
@@ -59,8 +59,8 @@ class RankController extends AbstractController
      */
     public function ladder(): Response
     {
-        $queue = $this->session->get('queue');
-        $platform = $this->session->get('platform');
+        $queue = $this->requestStack->getSession()->get('queue');
+        $platform = $this->requestStack->getSession()->get('platform');
 
         $ladderChallengers = $this->rankApi->getChallenger($platform, $queue)['entries'];
 

@@ -7,8 +7,8 @@ use App\Service\API\LOL\LeagueApi;
 use App\Service\API\LOL\SummonerApi;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 class SummonerController extends AbstractController
@@ -19,9 +19,9 @@ class SummonerController extends AbstractController
     private $summonerApi;
 
     /**
-     * @var SessionInterface
+     * @var RequestStack
      */
-    private $session;
+    private $requestStack;
     /**
      * @var LeagueApi
      */
@@ -30,13 +30,14 @@ class SummonerController extends AbstractController
     /**
      * SummonerController constructor.
      * @param SummonerApi $summonerApi
-     * @param SessionInterface $session
+     * @param LeagueApi $leagueApi
+     * @param RequestStack $requestStack
      */
-    public function __construct(SummonerApi $summonerApi, LeagueApi $leagueApi, SessionInterface $session)
+    public function __construct(SummonerApi $summonerApi, LeagueApi $leagueApi, RequestStack $requestStack)
     {
         $this->summonerApi = $summonerApi;
         $this->leagueApi = $leagueApi;
-        $this->session = $session;
+        $this->requestStack = $requestStack;
     }
 
 
@@ -53,7 +54,7 @@ class SummonerController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
-            $this->session->set('platform', $data['platform']);
+            $this->requestStack->getSession()->set('platform', $data['platform']);
             return $this->redirectToRoute("summoner_show", ['name' => $data['name']]);
         }
         return $this->render('summoner/index.html.twig', [
@@ -66,7 +67,7 @@ class SummonerController extends AbstractController
      */
     public function show(string $name): Response
     {
-        $platform = $this->session->get('platform');
+        $platform = $this->requestStack->getSession()->get('platform');
         $summoner   = $this->summonerApi->getSummoner($platform, $name);
         if (is_null($summoner)) {
             $this->addFlash('summoner', 'Summoners Non trouvé');

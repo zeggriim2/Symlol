@@ -6,22 +6,22 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class RankType extends AbstractType
 {
     /**
-     * @var SessionInterface
+     * @var RequestStack
      */
-    private $session;
+    private $requestStack;
 
     /**
      * RankType constructor.
      */
-    public function __construct(SessionInterface $session)
+    public function __construct(RequestStack $requestStack)
     {
-        $this->session = $session;
+        $this->requestStack = $requestStack;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
@@ -45,7 +45,7 @@ class RankType extends AbstractType
                         'OC1' => "OC1",
                         'RU' => "RU",
                     ],
-                    "data" => $this->session->get('platform')
+                    "data" => $this->requestStack->getSession()->get('platform')
             ])
             ->add('Valider', SubmitType::class)
         ;
