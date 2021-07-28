@@ -58,7 +58,7 @@ class ChampionApi extends BaseApi
      * @param array<string> $params
      * @return string
      */
-    private function constructUrl(string $url, array $params)
+    protected function constructUrl(string $url, array $params)
     {
         foreach ($params as $key => $param) {
             $url = str_replace("{{$key}}", $param, $url);

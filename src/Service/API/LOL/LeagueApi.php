@@ -48,7 +48,7 @@ class LeagueApi extends BaseApi
      * @param array<string> $params
      * @return string
      */
-    private function constructUrl(string $url, array $params): string
+    protected function constructUrl(string $url, array $params): string
     {
         foreach ($params as $key => $param) {
             $url = str_replace("{{$key}}", $param, $url);

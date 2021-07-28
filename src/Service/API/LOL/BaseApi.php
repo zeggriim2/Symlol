@@ -106,6 +106,19 @@ class BaseApi
         return in_array($platform, self::PLATFORM);
     }
 
+    /**
+     * @param string $url
+     * @param array<string> $params
+     * @return string
+     */
+    protected function constructUrl(string $url, array $params)
+    {
+        foreach ($params as $key => $param) {
+            $url = str_replace("{{$key}}", $param, $url);
+        }
+        return $url;
+    }
+
 //    protected function callApi(string $url,string $method = 'GET')
 //    {
 //        $response = $this->httpClient->request($method,$url);
