@@ -74,11 +74,47 @@ class SummonerController extends AbstractController
 
             return $this->redirectToRoute('summoner_index');
         }
-        $league     = $this->leagueApi->getInfoSummoner($platform, $summoner['id']);
+        $infoSummonerleague = $this->leagueApi->getInfoSummoner($platform, $summoner['id']);
+        $leagueSummoner = $this->leagueApi->getLeagueId($platform, $infoSummonerleague[0]['leagueId']);
+        $leagues = $this->trieParRank($leagueSummoner['entries']);
+        $this->descendingSort($leagues[$infoSummonerleague[0]['rank']], "leaguePoints");
 
         return $this->render('summoner/show.html.twig', [
-            'summoner' => $summoner,
-            'league'    => $league[0]
+            'summoner'              => $summoner,
+            'infoSummonerleague'    => $infoSummonerleague[0],
+            'leagues'                => $leagues[$infoSummonerleague[0]['rank']]
         ]);
+    }
+
+    private function descendingSort(array &$data, string $field)
+    {
+        usort($data, function ($item1, $item2) use ($field) {
+            return $item2[$field] <=> $item1[$field];
+        });
+    }
+
+    private function trieParRank(array $datas): ?array
+    {
+        $league = [];
+        foreach ($datas as $key => $summonerRank) {
+            switch ($summonerRank['rank']) {
+                case "I":
+                    $league['I'][] = $summonerRank;
+                    break;
+                case "II":
+                    $league['II'][] = $summonerRank;
+                    break;
+                case "III":
+                    $league['III'][] = $summonerRank;
+                    break;
+                case "IV":
+                    $league['IV'][] = $summonerRank;
+                    break;
+            }
+        }
+        if (empty($league)) {
+            return null;
+        }
+        return $league;
     }
 }

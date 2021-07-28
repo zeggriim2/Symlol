@@ -1,18 +1,46 @@
 {% extends 'base.html.twig' %}
 
 {% block body %}
-    {{ dump(summoner) }}
-<div class="container-fluid">
-    <div class="text-center">
-        <img src="https://ddragon.leagueoflegends.com/cdn/11.14.1/img/profileicon/{{ summoner.profileIconId }}.png" class="rounded-circle" alt="...">
-    </div>
-    <div class="card border-dark mb-3" style="max-width: 18rem;">
-        <div class="card-body text-dark">
-            <h5 class="card-title">{{ league.tier }} {{ league.rank }} <strong>{{ league.leaguePoints }}</strong> / {{ league.wins }}V {{ league.losses }}D</h5>
-            {#            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>#}
+    {# {{ dump(summoner) }} #}
+    <div class="container-fluid">
+        <div class="text-center">
+            <img src="https://ddragon.leagueoflegends.com/cdn/11.14.1/img/profileicon/{{ summoner.profileIconId }}.png"
+                 class="rounded-circle" alt="...">
+        </div>
+        <div class="card border-dark mb-3" style="max-width: 18rem;">
+            <div class="card-body text-dark">
+                <h5 class="card-title">{{ infoSummonerleague.tier }} {{ infoSummonerleague.rank }}
+                    <strong>{{ infoSummonerleague.leaguePoints }}</strong> / {{ infoSummonerleague.wins }}
+                    V {{ infoSummonerleague.losses }}D</h5>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-4 mx-auto">
+                <table id="table_league_summoner" class="table table-striped" style="width:100%">
+                    <thead>
+                    <tr>
+                        <th scope="col">Place</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">LP</th>
+                        <th scope="col">Win </th>
+                        <th scope="col">Losses</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for league in leagues %}
+                        <tr>
+                            <th scope="row">{{ loop.index }}</th>
+                            <td>{{ league.summonerName }}</td>
+                            <td>{{ league.leaguePoints }}</td>
+                            <td>{{ league.wins }}</td>
+                            <td>{{ league.losses }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
-</div>
 {% endblock %}
 
 {% block title %}

@@ -23,3 +23,15 @@ $(document).ready(function() {
         }
     } );
 } );
+
+$(document).ready(function() {
+    $('#table_league_summoner').DataTable( {
+        "pageLength": -1,
+        "order": [[ 2, "desc" ]],
+        "paging":   false,
+        "info":     false,
+        "language": {
+            "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/French.json"
+        }
+    } );
+} );
