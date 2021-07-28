@@ -153,6 +153,6 @@ class ChampionController extends AbstractController
     private function checkNameChampion(string $name): bool
     {
         $nameChampion = $this->championApi->getAllNameChampion();
-        return in_array(ucfirst($name), $nameChampion) ? true : false;
+        return in_array(ucfirst($name), $nameChampion);
     }
 }

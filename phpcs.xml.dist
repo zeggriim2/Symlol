@@ -11,7 +11,7 @@
     <rule ref="PSR12"/>
 
     <file>src/</file>
-    <file>tests/</file>
+
 
     <exclude-pattern>src/Kernel.php</exclude-pattern>
 </ruleset>
