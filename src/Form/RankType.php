@@ -30,7 +30,9 @@ class RankType extends AbstractType
             ->add('queue', ChoiceType::class, [
                 'choices'  => [
                     'Ranked Solo' => "RANKED_SOLO_5x5",
-                ]
+                    'Ranked Flex' => "RANKED_FLEX_SR",
+                ],
+                "data" => "RANKED_SOLO_5x5"
             ])
             ->add('platform', ChoiceType::class, [
                     'choices'  => [

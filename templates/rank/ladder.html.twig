@@ -3,35 +3,54 @@
 {% block title %}Rank!{% endblock %}
 
 {% block body %}
-<div class="container mt-3">
-    <table id="table_ladder" class="table table-striped" style="width:100%">
-        <thead>
-        <tr>
-            <th scope="col">Place</th>
-            <th scope="col">Name</th>
-            <th scope="col">LP</th>
-            <th scope="col">Rank</th>
-            <th scope="col">Win Ratio</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for ladderChallenger in ladderChallengers %}
-{#            {{ dump(ladderChallenger) }}#}
+    {% set sessionQueue = app.session.get('queue') %}
+    {% set title =  '' %}
+    {% if sessionQueue %}
+        {% if sessionQueue == 'RANKED_SOLO_5x5'%}
+            {% set sessionQueue = 'Solo' %}
+        {% elseif  sessionQueue == 'RANKED_FLEX_SR' %}
+            {% set sessionQueue = 'Flex' %}
+        {% endif %}
+    {% endif %}
+    <div class="container mt-3">
+        <h2>Classement {{ sessionQueue }}</h2>
+        <table id="table_ladder" class="table " style="width:100%">
+            <thead>
             <tr>
-                <th scope="row">{{ loop.index }}</th>
-                <td><a class="link-info" href="{{ path('summoner_show',{'name': ladderChallenger.summonerName}) }}">{{ ladderChallenger.summonerName |capitalize }}</a></td>
-                <td>{{ ladderChallenger.leaguePoints }}</td>
-                <td>Challenger {{ ladderChallenger.rank }}</td>
-                {%  set total = ladderChallenger.wins + ladderChallenger.losses %}
-                {% set ratio = ((100 * ladderChallenger.wins) / total)|round%}
-                <td>
-                    <div class="progress">
-                        <div class="progress-bar progress-bar-striped" role="progressbar" style="width: {{ ratio }}%" aria-valuenow="{{ ratio }}" aria-valuemin="0" aria-valuemax="100">{{ ratio }}%</div>
-                    </div>
-                </td>
+                <th scope="col">Place</th>
+                <th scope="col">Name</th>
+                <th scope="col">LP</th>
+                <th scope="col">Rank</th>
+                <th scope="col">Wins</th>
+                <th scope="col">Losses</th>
+                <th scope="col">Win Ratio</th>
             </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-</div>
+            </thead>
+            <tbody>
+            {% for ladderChallenger in ladderChallengers %}
+                {# {{ dump(ladderChallenger) }} #}
+                <tr>
+                    <th scope="row">{{ loop.index }}</th>
+                    <td><a class="link-info"
+                           href="{{ path('summoner_show',{'name': ladderChallenger.summonerName}) }}">{{ ladderChallenger.summonerName |capitalize }}</a>
+                    </td>
+                    <td>{{ ladderChallenger.leaguePoints }}</td>
+                    <td>Challenger {{ ladderChallenger.rank }}</td>
+                    <td>{{ ladderChallenger.wins }}</td>
+                    <td>{{ ladderChallenger.losses }}</td>
+                    {% set total = ladderChallenger.wins + ladderChallenger.losses %}
+                    {% set ratio = ((100 * ladderChallenger.wins) / total)|round %}
+                    <td>
+                        <div class="progress">
+                            <div class="progress-bar progress-bar-striped" role="progressbar"
+                                 style="width: {{ ratio }}%" aria-valuenow="{{ ratio }}" aria-valuemin="0"
+                                 aria-valuemax="100">{{ ratio }}%
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
 {% endblock %}

@@ -34,7 +34,7 @@ class RankApi
         if (!$this->baseApi->checkPlatform($platform)) {
             return null;
         }
-        $url = $this->constructUrl(self::URL, ['platform' => $platform, 'queue' => $queue]);
+        $url = $this->constructUrl(self::URL, ['platform' => strtolower($platform), 'queue' => $queue]);
         return $this->baseApi->callApi($url, "GET", [
             'headers' => [
                 'X-Riot-Token' => $this->baseApi->apiKey,
