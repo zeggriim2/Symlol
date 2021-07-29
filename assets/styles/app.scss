@@ -1,7 +1,13 @@
-@import "custom";
-@import "~bootstrap/scss/bootstrap";
+// Variable
+$progress-red: #ee5a52;
+$primary: #f68d2a;
+// Variable
 
+@import "~bootstrap/scss/bootstrap";
+@import "custom";
 // Fixer son footer en bas de page avec Flexbox
+
+
 body{
   margin: 0;
   display: flex;
@@ -10,4 +16,8 @@ body{
 }
 .container, .container-fluid{
   flex-grow: 1;
+}
+
+.progress{
+  background-color: $progress-red;
 }

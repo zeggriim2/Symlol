@@ -10,3 +10,4 @@
 [2021-07-20T07:01:35.517801+00:00] api.INFO: API SUCCESS {"code":200,"url":"http://ddragon.leagueoflegends.com/cdn/11.14.1/data/fr_FR/champion.json","optins":[]} []
 [2021-07-20T07:01:35.653805+00:00] api.INFO: API SUCCESS {"code":200,"url":"https://ddragon.leagueoflegends.com/api/versions.json","optins":[]} []
 [2021-07-20T07:01:35.728454+00:00] api.INFO: API SUCCESS {"code":200,"url":"http://ddragon.leagueoflegends.com/cdn/11.14.1/data/fr_FR/champion/Blitzcrank.json","optins":[]} []
+[2021-07-27T15:13:28.455164+00:00] api.ERROR: API ERREUR {"code":404,"url":"https://LA2.api.riotgames.com/lol/summoner/v4/summoners/by-name/jarkalien","options":{"headers":{"X-Riot-Token":"RGAPI-26a61997-5fc5-41df-b38d-cbffe2f9e8f4"}}} []

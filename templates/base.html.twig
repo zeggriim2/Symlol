@@ -10,6 +10,9 @@
     {% endblock %}
 
     {% block javascripts %}
+        <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+        <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+        <script src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap5.min.js"></script>
         {{ encore_entry_script_tags('app') }}
     {% endblock %}
 </head>
@@ -24,20 +27,16 @@
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ path('summoner_index') }}">Summoner</a>
+                    <a class="nav-link " href="{{ path('summoner_index') }}">Summoner</a>
                 </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                       data-bs-toggle="dropdown" aria-expanded="false">
-                        League Of Legends
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <li><a class="dropdown-item" href="{{ path('champions_index') }}">Champions</a></li>
-                        <li>
-                            <hr class="dropdown-divider">
-                        </li>
-                        <li><a class="dropdown-item" href="#">Something else here</a></li>
-                    </ul>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('champions_index') }}">Champions</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('rank_index') }}">Classement</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('item_index') }}">Items</a>
                 </li>
             </ul>
         </div>
@@ -45,11 +44,11 @@
 </nav>
 {% block body %}{% endblock %}
 <!-- Footer -->
-<footer class="bg-light text-center text-lg-start mt-5 ">
+<footer class="text-center text-lg-start mt-5 ">
     <!-- Copyright -->
     <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
         © 2021 Copyright:
-        <a class="text-dark" href="#">Zeggriim.com</a>
+        <a class="text-primary" href="#">Zeggriim.com</a>
     </div>
     <!-- Copyright -->
 </footer>
