@@ -33,4 +33,4 @@ yarn-error.log
 /phpcs.xml.old
 ###< squizlabs/php_codesniffer ###
 
-/log
+/log/dev/api.log
