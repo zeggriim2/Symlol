@@ -32,5 +32,4 @@ yarn-error.log
 /.phpcs-cache
 /phpcs.xml.old
 ###< squizlabs/php_codesniffer ###
-
-./log/dev/api.log
+/log

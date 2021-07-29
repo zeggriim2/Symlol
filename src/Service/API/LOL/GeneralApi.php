@@ -2,7 +2,8 @@
 
 namespace App\Service\API\LOL;
 
-class GeneralApi extends BaseApi
+
+class GeneralApi
 {
 
     private const BASE_URL_STATIC = "http://static.developer.riotgames.com/docs/lol/";
@@ -27,6 +28,18 @@ class GeneralApi extends BaseApi
             self::API_URL_VERSIONS
         ]
     ];
+    /**
+     * @var BaseApi
+     */
+    private $baseApi;
+
+    /**
+     * GeneralApi constructor.
+     */
+    public function __construct(BaseApi $baseApi)
+    {
+        $this->baseApi = $baseApi;
+    }
 
 
     /**
@@ -40,7 +53,7 @@ class GeneralApi extends BaseApi
     public function getSeason(): ?array
     {
         $url = $this->buildUrlStatic(self::API_URL_SEASONS);
-        return $this->callApi($url);
+        return $this->baseApi->callApi($url);
     }
 
     /**
@@ -54,7 +67,7 @@ class GeneralApi extends BaseApi
     public function getQueues(): ?array
     {
         $url = $this->buildUrlStatic(self::API_URL_QUEUES);
-        return $this->callApi($url);
+        return $this->baseApi->callApi($url);
     }
 
     /**
@@ -68,7 +81,7 @@ class GeneralApi extends BaseApi
     public function getMaps(): ?array
     {
         $url = $this->buildUrlStatic(self::API_URL_MAPS);
-        return $this->callApi($url);
+        return $this->baseApi->callApi($url);
     }
 
     /**
@@ -81,7 +94,7 @@ class GeneralApi extends BaseApi
      */
     public function getsGameModes(): ?array
     {
-        return $this->callApi(self::API_URL_GAMEMODES);
+        return $this->baseApi->callApi(self::API_URL_GAMEMODES);
     }
 
     /**
@@ -94,7 +107,7 @@ class GeneralApi extends BaseApi
      */
     public function getsGameTypes()
     {
-        return $this->callApi(self::API_URL_GAMETYPES);
+        return $this->baseApi->callApi(self::API_URL_GAMETYPES);
     }
 
     /**
@@ -108,7 +121,7 @@ class GeneralApi extends BaseApi
     public function getVersions()
     {
         $url = $this->buildUrlDdragon(self::API_URL_VERSIONS);
-        return $this->callApi($url);
+        return $this->baseApi->callApi($url);
     }
 
 //    public function getLastVersion()

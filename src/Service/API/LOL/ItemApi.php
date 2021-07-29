@@ -2,9 +2,23 @@
 
 namespace App\Service\API\LOL;
 
-class ItemApi extends BaseApi
+class ItemApi
 {
     private const URL_ITEMS = "http://ddragon.leagueoflegends.com/cdn/{version}/data/{lang}/item.json";
+
+    /**
+     * @var BaseApi
+     */
+    private $baseApi;
+
+    /**
+     * ItemApi constructor.
+     */
+    public function __construct(BaseApi $baseApi)
+    {
+        $this->baseApi = $baseApi;
+    }
+
 
     /**
      * @return array|null
@@ -17,10 +31,10 @@ class ItemApi extends BaseApi
     public function getAllItem(): ?array
     {
         $data = [
-            'version'   => $this->getLastVersion(),
-            'lang'      => $this->lang
+            'version'   => $this->baseApi->getLastVersion(),
+            'lang'      => $this->baseApi->lang
         ];
-        $url = $this->constructUrl(self::URL_ITEMS, $data);
-        return $this->callApi($url);
+        $url = $this->baseApi->constructUrl(self::URL_ITEMS, $data);
+        return $this->baseApi->callApi($url);
     }
 }

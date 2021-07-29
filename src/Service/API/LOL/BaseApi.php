@@ -3,14 +3,12 @@
 namespace App\Service\API\LOL;
 
 use Psr\Log\LoggerInterface;
-use Symfony\Component\HttpClient\Exception\ClientException;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface;
 use Symfony\Contracts\HttpClient\HttpClientInterface;
-use Throwable;
 
 /**
  * Class BaseApi
@@ -32,11 +30,11 @@ class BaseApi
     /**
      * @var string
      */
-    protected $lang;
+    public $lang;
     /**
      * @var mixed
      */
-    protected $apiKey;
+    public $apiKey;
     /**
      * @var LoggerInterface
      */
@@ -47,15 +45,26 @@ class BaseApi
     private $apiLogger;
 
 
-    public function __construct(HttpClientInterface $httpClient, LoggerInterface $apiLogger)
-    {
+    /**
+     * BaseApi constructor.
+     * @param HttpClientInterface $httpClient
+     * @param LoggerInterface $apiLogger
+     * @param string $apiKey
+     */
+    public function __construct(
+        HttpClientInterface $httpClient,
+        LoggerInterface $apiLogger,
+        string $apiKey
+    ) {
         $this->httpClient   = $httpClient;
         $this->apiLogger    = $apiLogger;
+        $this->apiKey       = $apiKey;
         $this->lang         = "fr_FR";
-        $this->apiKey       = $_ENV['APIKEY'] ? $_ENV['APIKEY'] : null;
+//        $this->lang         = $lang;
+//        $this->apiKey       = $_ENV['APIKEY'] ? $_ENV['APIKEY'] : null;
     }
 
-    protected function getLastVersion(): string
+    public function getLastVersion(): string
     {
         $url = "https://ddragon.leagueoflegends.com/api/versions.json";
         return  $this->callApi($url)[0];
@@ -72,7 +81,7 @@ class BaseApi
      * @throws RedirectionExceptionInterface
      * @throws ServerExceptionInterface
      */
-    protected function callApi(string $url, string $method = "GET", array $options = []): ?array
+    public function callApi(string $url, string $method = "GET", array $options = []): ?array
     {
         $response = $this->httpClient->request($method, $url, $options);
         $codeHttp = $response->getStatusCode();
@@ -101,7 +110,7 @@ class BaseApi
         return null;
     }
 
-    protected function checkPlatform(string $platform)
+    public function checkPlatform(string $platform)
     {
         return in_array($platform, self::PLATFORM);
     }
@@ -111,19 +120,11 @@ class BaseApi
      * @param array<string> $params
      * @return string
      */
-    protected function constructUrl(string $url, array $params)
+    public function constructUrl(string $url, array $params)
     {
         foreach ($params as $key => $param) {
             $url = str_replace("{{$key}}", $param, $url);
         }
         return $url;
     }
-
-//    protected function callApi(string $url,string $method = 'GET')
-//    {
-//        $response = $this->httpClient->request($method,$url);
-//        if ($response->getStatusCode() === 200){
-//            return $response->toArray();
-//        }
-//    }
 }

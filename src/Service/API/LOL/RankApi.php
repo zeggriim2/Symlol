@@ -2,9 +2,22 @@
 
 namespace App\Service\API\LOL;
 
-class RankApi extends BaseApi
+class RankApi
 {
     private const URL = "https://{platform}.api.riotgames.com/lol/league/v4/challengerleagues/by-queue/{queue}";
+    /**
+     * @var BaseApi
+     */
+    private $baseApi;
+
+    /**
+     * RankApi constructor.
+     */
+    public function __construct(BaseApi $baseApi)
+    {
+        $this->baseApi = $baseApi;
+    }
+
 
     /**
      * @param string $platform
@@ -18,13 +31,13 @@ class RankApi extends BaseApi
      */
     public function getChallenger(string $platform, string $queue): ?array
     {
-        if (!$this->checkPlatform($platform)) {
+        if (!$this->baseApi->checkPlatform($platform)) {
             return null;
         }
         $url = $this->constructUrl(self::URL, ['platform' => $platform, 'queue' => $queue]);
-        return $this->callApi($url, "GET", [
+        return $this->baseApi->callApi($url, "GET", [
             'headers' => [
-                'X-Riot-Token' => $this->apiKey,
+                'X-Riot-Token' => $this->baseApi->apiKey,
             ]
         ]);
     }
