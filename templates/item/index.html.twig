@@ -4,45 +4,48 @@
 
 {% block body %}
 
-<div class="container">
+    <div class="container">
     <div class="input-group mb-3">
-        <input type="text" id="searchInput" class="form-control" placeholder="Name Item" aria-label="Name Item" aria-describedby="basic-addon1">
-        <div id="suggestions"></div>
+        <input type="text" id="searchInput" class="form-control" placeholder="Name Item" aria-label="Name Item"
+               aria-describedby="basic-addon1">
     </div>
+    <div id="suggestions"></div>
     <div class="row">
         {% for item in items.data %}
-        <div class="col-1 mx-3 mb-3">
-            <div class="card h-100" style="width: 8rem;">
-                <img src="https://ddragon.leagueoflegends.com/cdn/{{ items.version }}/img/item/{{ item.image.full }}" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h6 class="card-title">{{ item.name }}</h6>
+            <div class="col-1 mx-3 mb-3">
+                <div class="card h-100" style="width: 8rem;">
+                    <img src="https://ddragon.leagueoflegends.com/cdn/{{ items.version }}/img/item/{{ item.image.full }}"
+                         class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h6 class="card-title">{{ item.name }}</h6>
+                    </div>
                 </div>
             </div>
-        </div>
         {% endfor %}
-</div>
+    </div>
     <script>
-        let data = [{{ nameItems }}]
+        // Construction du tableau de recherche
+        let data = [];
+        {% for nameItem in nameItems %}
+        data.push({"name": '{{ nameItem }}'})
+        {% endfor %}
 
-        console.log(data)
         const searchInput = document.getElementById('searchInput');
-        searchInput.addEventListener('keyup', function() {
+        searchInput.addEventListener('keyup', function () {
             const input = searchInput.value;
 
             const result = data.filter(item => item.name.toLocaleLowerCase().includes(input.toLocaleLowerCase()))
 
             let suggestion = '';
-            if (input != '') {
+            if (input !== '') {
 
-            result.forEach(resultItem =>
-                suggestion += `
+                result.forEach(resultItem =>
+                    suggestion += `
                     <div class="suggestion">${resultItem.name}</div>
                 `
-            )
+                )
             }
             document.getElementById('suggestions').innerHTML = suggestion;
         })
-
-
     </script>
 {% endblock %}
