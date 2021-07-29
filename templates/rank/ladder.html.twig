@@ -13,7 +13,7 @@
         {% endif %}
     {% endif %}
     <div class="container mt-3">
-        <h2>Classement {{ sessionQueue }}</h2>
+        <h2>Classement {{ sessionQueue }} <span class="title_league">"{{ nameLeague|capitalize }}"</span></h2>
         <table id="table_ladder" class="table " style="width:100%">
             <thead>
             <tr>
@@ -35,7 +35,7 @@
                            href="{{ path('summoner_show',{'name': ladderChallenger.summonerName}) }}">{{ ladderChallenger.summonerName |capitalize }}</a>
                     </td>
                     <td>{{ ladderChallenger.leaguePoints }}</td>
-                    <td>Challenger {{ ladderChallenger.rank }}</td>
+                    <td>{{ nameLeague }} {{ ladderChallenger.rank }}</td>
                     <td>{{ ladderChallenger.wins }}</td>
                     <td>{{ ladderChallenger.losses }}</td>
                     {% set total = ladderChallenger.wins + ladderChallenger.losses %}

@@ -42,9 +42,9 @@ class RankController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
-            $keyData = array_keys($data);
-            $this->requestStack->getSession()->set($keyData[0], $data['queue']);
-            $this->requestStack->getSession()->set($keyData[1], $data['platform']);
+            foreach ($data as $key => $value) {
+                $this->requestStack->getSession()->set($key, $value);
+            }
             return $this->redirectToRoute("rank_ladder");
         }
 
@@ -61,13 +61,13 @@ class RankController extends AbstractController
     {
         $queue = $this->requestStack->getSession()->get('queue');
         $platform = $this->requestStack->getSession()->get('platform');
-
-        $ladderChallengers = $this->rankApi->getChallenger($platform, $queue)['entries'];
-
+        $league = $this->requestStack->getSession()->get('leagues');
+        $ladderChallengers = $this->rankApi->getLadder($platform, $queue, $league)['entries'];
         $this->descendingSort($ladderChallengers, 'leaguePoints');
 
         return $this->render('rank/ladder.html.twig', [
-            'ladderChallengers' => $ladderChallengers
+            'ladderChallengers' => $ladderChallengers,
+            'nameLeague'        => $league
         ]);
     }
 
