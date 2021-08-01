@@ -24,6 +24,8 @@ class RankController extends AbstractController
 
     /**
      * RankController constructor.
+     * @param RequestStack $requestStack
+     * @param RankApi $rankApi
      */
     public function __construct(RequestStack $requestStack, RankApi $rankApi)
     {
