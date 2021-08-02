@@ -20,4 +20,13 @@ body{
 
 .progress{
   background-color: $progress-red;
+  color: blue;
+}
+
+.progress-bar{
+  background-color: $blue;
+}
+
+.title_league{
+  color: $primary;
 }

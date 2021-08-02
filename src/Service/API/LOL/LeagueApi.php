@@ -2,7 +2,7 @@
 
 namespace App\Service\API\LOL;
 
-class LeagueApi 
+class LeagueApi
 {
     private const URL = "https://{platform}.api.riotgames.com/lol/league/v4/entries/by-summoner/{encryptedSummonerId}";
     private const URL_LEAGUE_ID = "https://{platform}.api.riotgames.com/lol/league/v4/leagues/{leagueId}";

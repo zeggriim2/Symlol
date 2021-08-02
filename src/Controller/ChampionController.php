@@ -38,6 +38,9 @@ class ChampionController extends AbstractController
 
     /**
      * @Route("/champions", name="champions_index")
+     * @param PaginatorInterface $paginator
+     * @param Request $request
+     * @return Response
      */
     public function index(
         PaginatorInterface $paginator,

@@ -24,6 +24,8 @@ class RankController extends AbstractController
 
     /**
      * RankController constructor.
+     * @param RequestStack $requestStack
+     * @param RankApi $rankApi
      */
     public function __construct(RequestStack $requestStack, RankApi $rankApi)
     {
@@ -34,40 +36,34 @@ class RankController extends AbstractController
 
     /**
      * @Route("/rank", name="rank_index")
+     * @param Request $request
+     * @return Response
+     * @throws \Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface
+     * @throws \Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface
+     * @throws \Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface
+     * @throws \Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface
+     * @throws \Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface
      */
     public function index(Request $request): Response
     {
         $form = $this->createForm(RankType::class);
         $form->handleRequest($request);
 
+        $ladderChallengers = [];
+        $data = [];
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
-            $keyData = array_keys($data);
-            $this->requestStack->getSession()->set($keyData[0], $data['queue']);
-            $this->requestStack->getSession()->set($keyData[1], $data['platform']);
-            return $this->redirectToRoute("rank_ladder");
+            $platform = $data['platform'];
+            $league = $data['league'];
+            $queue = $data['queue'];
+            $ladderChallengers = $this->rankApi->getLadder($platform, $queue, $league)['entries'];
+            $this->descendingSort($ladderChallengers, 'leaguePoints');
         }
 
         return $this->render('rank/index.html.twig', [
-            'formRank' => $form->createView(),
-        ]);
-    }
-
-    /**
-     *
-     * @Route("/rank/ladder", name="rank_ladder")
-     */
-    public function ladder(): Response
-    {
-        $queue = $this->requestStack->getSession()->get('queue');
-        $platform = $this->requestStack->getSession()->get('platform');
-
-        $ladderChallengers = $this->rankApi->getChallenger($platform, $queue)['entries'];
-
-        $this->descendingSort($ladderChallengers, 'leaguePoints');
-
-        return $this->render('rank/ladder.html.twig', [
-            'ladderChallengers' => $ladderChallengers
+            'formRank'          => $form->createView(),
+            'ladderChallengers' => $ladderChallengers,
+            'title'             => $data
         ]);
     }
 

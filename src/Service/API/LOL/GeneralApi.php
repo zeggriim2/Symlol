@@ -2,7 +2,6 @@
 
 namespace App\Service\API\LOL;
 
-
 class GeneralApi
 {
 
