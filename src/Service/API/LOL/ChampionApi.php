@@ -27,6 +27,7 @@ class ChampionApi
     {
         $data = [
             "version"   => $this->baseApi->getLastVersion(),
+//            "version"   => "10.20.1",
             "lang"      => $this->baseApi->lang
         ];
         $url = $this->constructUrl(self::URL_CHAMPIONS, $data);
