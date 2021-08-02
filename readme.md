@@ -28,3 +28,7 @@ BOOTSTRAP 5
 * Créer un handle pour gérer ces propres Log (Fait partiellement)
 * Réaliser un système de pagination dans la liste des champions
 * Grafique de tout les champions avec leur stats (Attaque , Defense, vitesse...)
+
+------
+#### Visuel
+![dashboard statistique](https://user-images.githubusercontent.com/51760726/127852433-3fb22009-8047-4984-b23f-363f49350b63.PNG)
