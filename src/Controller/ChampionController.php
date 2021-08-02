@@ -250,8 +250,7 @@ class ChampionController extends AbstractController
         $label,
         $datasetLabel,
         string $backgroundColor = '#000000'
-    ): Chart
-    {
+    ): Chart {
 
         $chart = new Chart($type);
         $chart->setData([
@@ -269,11 +268,10 @@ class ChampionController extends AbstractController
         $chart->setOptions([
             'scales' => [
                 'yAxes' => [
-                    ['ticks' => ['min' => 0, 'max' => round(max($data),0, PHP_ROUND_HALF_EVEN)]],
+                    ['ticks' => ['min' => 0, 'max' => round(max($data), 0, PHP_ROUND_HALF_EVEN)]],
                 ],
             ],
         ]);
         return $chart;
     }
-
 }
