@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.5.0/chart.min.js"></script>
+
+    <div class="container-fluid">
+        <div class="row">
+            {% if charts %}
+                {% for chart in charts%}
+                    <div class="col-6">
+                        {{ render_chart(chart) }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

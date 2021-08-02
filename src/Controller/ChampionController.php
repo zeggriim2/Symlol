@@ -128,7 +128,8 @@ class ChampionController extends AbstractController
             'labels' => $chartLabels,
             'datasets' => [
                 [
-                    'label'             => 'Stats ' . $champion['id'],
+//                    'label'             => 'Stats ' . $champion['id'],
+                    'label'             => ['stat','stat2'],
                     'backgroundColor'   => $chartColor,
 //                    'backgroundColor'   => "#fffff",
                     'borderColor'       => "#f7f7f7",
@@ -136,7 +137,7 @@ class ChampionController extends AbstractController
                 ],
             ],
         ]);
-        dd($chartData, $chartLabels);
+//        dd($chartData, $chartLabels, $champion['id']);
 
         return $this->render('champion/show.html.twig', [
             'champion'  => $champion,
@@ -156,16 +157,72 @@ class ChampionController extends AbstractController
 //        dd($champions);
         //Récupération des stats de chaque champion
         $nameChampion = [];
-        $stats = [];
+        $data = [];
         foreach ($champions as $champion) {
             $nameChampion[] = $champion['name'];
             foreach ($champion['stats'] as $label => $value) {
-                if (in_array($label, self::DATA_STATS)) {
-                    $stats[$label][] = $value;
+                if ($label === 'hp') {
+                    $data['HP'][] = $value;
+                } elseif ($label === 'armor') {
+                    $data['ARMOR'][] = $value;
+                } elseif ($label === 'attackrange') {
+                    $data['ATTACKRANGE'][] = $value;
+                } elseif ($label === 'attackdamage') {
+                    $data['ATTACKDOMMAGE'][] = $value;
+                } elseif ($label === 'mp') {
+                    $data['MP'][] = $value;
                 }
             }
         }
-        return $this->render('champion/index.html.twig', [
+        $charts = [];
+        $charts[] = $this->buildChart(
+            Chart::TYPE_BAR,
+            $data['HP'],
+            $nameChampion,
+            'HP',
+            '#3262a8'
+        );
+
+
+        $charts[] = $this->buildChart(
+            Chart::TYPE_BAR,
+            $data['ARMOR'],
+            $nameChampion,
+            'Armor',
+            '#d104ca'
+        );
+        $charts[] = $this->buildChart(
+            Chart::TYPE_BAR,
+            $data['ARMOR'],
+            $nameChampion,
+            'Armor',
+            '#d104ca'
+        );
+        $charts[] = $this->buildChart(
+            Chart::TYPE_BAR,
+            $data['ATTACKRANGE'],
+            $nameChampion,
+            'AttackRange',
+            '#22d6d0'
+        );
+        $charts[] = $this->buildChart(
+            Chart::TYPE_BAR,
+            $data['ATTACKDOMMAGE'],
+            $nameChampion,
+            'AttackDommage',
+            '#d62225'
+        );
+
+        $charts[] = $this->buildChart(
+            Chart::TYPE_BAR,
+            $data['MP'],
+            $nameChampion,
+            'MP',
+            '#d62225'
+        );
+
+        return $this->render('champion/statsAll.html.twig', [
+            'charts' => $charts
         ]);
     }
 
@@ -186,4 +243,37 @@ class ChampionController extends AbstractController
         $nameChampion = $this->championApi->getAllNameChampion();
         return in_array(ucfirst($name), $nameChampion);
     }
+
+    private function buildChart(
+        string $type,
+        array $data,
+        $label,
+        $datasetLabel,
+        string $backgroundColor = '#000000'
+    ): Chart
+    {
+
+        $chart = new Chart($type);
+        $chart->setData([
+            'labels' => $label,
+            'datasets' =>
+                [
+                    [
+                        'label'             => $datasetLabel,
+                        'backgroundColor'   => $backgroundColor,
+                        'data' => $data,
+                    ],
+                ],
+        ]);
+
+        $chart->setOptions([
+            'scales' => [
+                'yAxes' => [
+                    ['ticks' => ['min' => 0, 'max' => round(max($data),0, PHP_ROUND_HALF_EVEN)]],
+                ],
+            ],
+        ]);
+        return $chart;
+    }
+
 }
