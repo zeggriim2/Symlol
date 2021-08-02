@@ -14,6 +14,8 @@ use Symfony\UX\Chartjs\Model\Chart;
 
 class ChampionController extends AbstractController
 {
+    private const DATA_STATS = ['armor', 'hp', 'attackdamage', 'attackrange', 'mp', 'movespeed'];
+
     /**
      * @var ChampionApi
      */
@@ -86,7 +88,7 @@ class ChampionController extends AbstractController
     }
 
     /**
-     * @Route("/champion/stats/{name}", name="champion_showStat")
+     * @Route("/champion/stat/{name}", name="champion_showStat")
      * @param string $name
      * @param ChartBuilderInterface $chartBuilder
      * @return Response
@@ -134,6 +136,7 @@ class ChampionController extends AbstractController
                 ],
             ],
         ]);
+        dd($chartData, $chartLabels);
 
         return $this->render('champion/show.html.twig', [
             'champion'  => $champion,
@@ -141,9 +144,34 @@ class ChampionController extends AbstractController
         ]);
     }
 
+    /**
+     * @Route("/champion/stats", name="statAll")
+     * @param ChartBuilderInterface $chartBuilder
+     * @return Response
+     */
+    public function statAll(ChartBuilderInterface $chartBuilder): Response
+    {
+        // Récupere tous les champion de LOL
+        $champions = $this->championApi->getAllChampion()['data'];
+//        dd($champions);
+        //Récupération des stats de chaque champion
+        $nameChampion = [];
+        $stats = [];
+        foreach ($champions as $champion) {
+            $nameChampion[] = $champion['name'];
+            foreach ($champion['stats'] as $label => $value) {
+                if (in_array($label, self::DATA_STATS)) {
+                    $stats[$label][] = $value;
+                }
+            }
+        }
+        return $this->render('champion/index.html.twig', [
+        ]);
+    }
+
+
     private function randomColorPart(): int
     {
-//        $rgb = str_pad( dechex( mt_rand( 0, 255 ) ), 2, '0', STR_PAD_LEFT);
         return mt_rand(0, 255);
     }
 
