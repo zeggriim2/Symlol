@@ -128,12 +128,11 @@ class ChampionController extends AbstractController
             'labels' => $chartLabels,
             'datasets' => [
                 [
-//                    'label'             => 'Stats ' . $champion['id'],
-                    'label' => ['stat', 'stat2'],
-                    'backgroundColor' => $chartColor,
+                    'label'             => 'Stats ' . $champion['id'],
+                    'backgroundColor'   => $chartColor,
 //                    'backgroundColor'   => "#fffff",
-                    'borderColor' => "#f7f7f7",
-                    'data' => $chartData,
+                    'borderColor'       => "#f7f7f7",
+                    'data'              => $chartData,
                 ],
             ],
         ]);
@@ -211,11 +210,9 @@ class ChampionController extends AbstractController
         return mt_rand(0, 255);
     }
 
-    private function randomColor(bool $opacity = false): string
+    private function randomColor(int $opacity = 0): string
     {
-//        rgba(255, 159, 64, 0.2);
-//        return "rgba(" . $this->randomColorPart() . ", " . $this->randomColorPart() . ", " . $this->randomColorPart() . ", 0.2)";
-        $valOpacity = $opacity ? ',0.2' : '';
+        $valOpacity = $opacity ? ",$opacity" : "";
         return "rgba(" . $this->randomColorPart() . ", " . $this->randomColorPart() . ", " . $this->randomColorPart()
             . " $valOpacity)";
     }
