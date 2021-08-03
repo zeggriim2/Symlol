@@ -18,6 +18,8 @@ class BaseApi
 {
     private const PLATFORM = ['BR1', 'EUN1', 'EUW1', 'JP1', 'KR', 'LA1', 'LA2', 'NA1', 'OC1', 'TR', 'RU'];
 
+    private const URL_VERSION = "https://ddragon.leagueoflegends.com/api/versions.json";
+
     private const CODE_HTTP_INFO    = [100, 101, 102, 103];
     private const CODE_HTTP_SUCCESS = [200,201,202];
     private const CODE_HTTP_ERREUR  = [400, 401,402,403,404];
@@ -66,10 +68,14 @@ class BaseApi
 
     public function getLastVersion(): string
     {
-        $url = "https://ddragon.leagueoflegends.com/api/versions.json";
-        return  $this->callApi($url)[0];
+        return $this->getAllVersion()[0];
+//        return  $this->callApi(self::URL_VERSION)[0];
     }
 
+    public function getAllVersion(): array
+    {
+        return  $this->callApi(self::URL_VERSION);
+    }
     /**
      * @param string $url
      * @param string $method
