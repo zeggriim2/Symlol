@@ -13,6 +13,7 @@ class ChampionApi
 
     /**
      * ChampionApi constructor.
+     * @param BaseApi $baseApi
      */
     public function __construct(BaseApi $baseApi)
     {

@@ -111,9 +111,9 @@ class ChampionController extends AbstractController
             }
         }
 
-        if (isset($data)) {
-            arsort($data);
-        }
+//        if (isset($data)) {
+//            arsort($data);
+//        }
 
         $chartLabels = [];
         $chartColor = [];
@@ -121,9 +121,9 @@ class ChampionController extends AbstractController
         foreach ($data as $label => $value) {
             $chartLabels[] = $label;
             $chartData[] = $value;
-            $chartColor[] = $this->randomColor();
+            $chartColor[] = $this->randomColor(true);
         }
-        $chart = $chartBuilder->createChart(Chart::TYPE_BAR);
+        $chart = $chartBuilder->createChart(Chart::TYPE_POLAR_AREA);
         $chart->setData([
             'labels' => $chartLabels,
             'datasets' => [
