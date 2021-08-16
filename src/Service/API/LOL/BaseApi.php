@@ -2,7 +2,9 @@
 
 namespace App\Service\API\LOL;
 
+use phpDocumentor\Reflection\Types\This;
 use Psr\Log\LoggerInterface;
+use Symfony\Contracts\Cache\CacheInterface;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface;
@@ -45,6 +47,10 @@ class BaseApi
      * @var LoggerInterface
      */
     private $apiLogger;
+    /**
+     * @var CacheInterface
+     */
+    private $cache;
 
 
     /**
@@ -56,12 +62,14 @@ class BaseApi
     public function __construct(
         HttpClientInterface $httpClient,
         LoggerInterface $apiLogger,
-        string $apiKey
+        string $apiKey,
+        CacheInterface $cache
     ) {
         $this->httpClient   = $httpClient;
         $this->apiLogger    = $apiLogger;
         $this->apiKey       = $apiKey;
         $this->lang         = "fr_FR";
+        $this->cache        = $cache;
 //        $this->lang         = $lang;
 //        $this->apiKey       = $_ENV['APIKEY'] ? $_ENV['APIKEY'] : null;
     }
@@ -74,7 +82,10 @@ class BaseApi
 
     public function getAllVersion(): array
     {
-        return  $this->callApi(self::URL_VERSION);
+        return $this->callApi(self::URL_VERSION);
+//        return $this->cache->get('AllVersions', function () {
+//            return $this->callApi(self::URL_VERSION);
+//        });
     }
     /**
      * @param string $url
@@ -89,31 +100,34 @@ class BaseApi
      */
     public function callApi(string $url, string $method = "GET", array $options = []): ?array
     {
-        $response = $this->httpClient->request($method, $url, $options);
-        $codeHttp = $response->getStatusCode();
-        if (in_array($codeHttp, self::CODE_HTTP_SUCCESS)) {
-            $this->apiLogger->info("API SUCCESS", [
-                'code' => $codeHttp,
-                'url' => $url,
-                'options'   => $options
-            ]);
-            return $response->toArray();
-        } elseif (in_array($codeHttp, self::CODE_HTTP_INFO)) {
-            $this->apiLogger->info("API INFO", [
-                'code' => $codeHttp,
-                'url' => $url,
-                'options'   => $options
-            ]);
+        $hash = hash("sha256", $url);
+        return $this->cache->get($hash, function () use ($method, $options, $url) {
+            $response = $this->httpClient->request($method, $url, $options);
+            $codeHttp = $response->getStatusCode();
+            if (in_array($codeHttp, self::CODE_HTTP_SUCCESS)) {
+                $this->apiLogger->info("API SUCCESS", [
+                    'code' => $codeHttp,
+                    'url' => $url,
+                    'options'   => $options
+                ]);
+                return $response->toArray();
+            } elseif (in_array($codeHttp, self::CODE_HTTP_INFO)) {
+                $this->apiLogger->info("API INFO", [
+                    'code' => $codeHttp,
+                    'url' => $url,
+                    'options'   => $options
+                ]);
+                return null;
+            } elseif (in_array($codeHttp, self::CODE_HTTP_ERREUR)) {
+                $this->apiLogger->error("API ERREUR", [
+                    'code' => $codeHttp,
+                    'url' => $url,
+                    'options'   => $options
+                ]);
+                return null;
+            }
             return null;
-        } elseif (in_array($codeHttp, self::CODE_HTTP_ERREUR)) {
-            $this->apiLogger->error("API ERREUR", [
-                'code' => $codeHttp,
-                'url' => $url,
-                'options'   => $options
-            ]);
-            return null;
-        }
-        return null;
+        });
     }
 
     public function checkPlatform(string $platform)

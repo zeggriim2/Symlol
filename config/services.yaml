@@ -26,3 +26,4 @@ services:
     App\Service\API\LOL\BaseApi:
         arguments:
             $apiKey: "%env(APIKEY)%"
+
