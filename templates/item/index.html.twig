@@ -10,10 +10,14 @@
                aria-describedby="basic-addon1">
     </div>
     <div id="suggestions"></div>
+
+    <div class="case">
+    </div>
+
     <div class="row">
         {% for item in items.data %}
-            <div class="col-1 mx-3 mb-3">
-                <div class="card h-100" style="width: 8rem;">
+            <div class="col-1 mx-3 mb-3 case">
+                <div class="card h-100 base" style="width: 8rem;" draggable="true">
                     <img src="https://ddragon.leagueoflegends.com/cdn/{{ items.version }}/img/item/{{ item.image.full }}"
                          class="card-img-top" alt="...">
                     <div class="card-body">
@@ -24,6 +28,14 @@
         {% endfor %}
     </div>
     <script>
+        /* Start Dragger*/
+        const base = document.querySelector(".base");
+        const box = document.querySelectorAll(".case");
+
+        console.log(box);
+        /*End Dragger */
+
+        /* Start Block Search Javascript */
         // Construction du tableau de recherche
         let data = [];
         {% for nameItem in nameItems %}
@@ -47,5 +59,6 @@
             }
             document.getElementById('suggestions').innerHTML = suggestion;
         })
+        /* End Block Search Javascript */
     </script>
 {% endblock %}

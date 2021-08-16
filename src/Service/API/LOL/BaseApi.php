@@ -77,7 +77,6 @@ class BaseApi
     public function getLastVersion(): string
     {
         return $this->getAllVersion()[0];
-//        return  $this->callApi(self::URL_VERSION)[0];
     }
 
     public function getAllVersion(): array

@@ -13,7 +13,6 @@ class HomeController extends AbstractController
 {
     /**
      * @Route("/", name="home")
-     * @param ChampionApi $championApi
      * @return Response
      */
     public function index(): Response
@@ -23,12 +22,13 @@ class HomeController extends AbstractController
     }
 
     /**
-     *
+     * @param BaseApi $baseApi
+     * @return Response
      */
     public function headerNavbar(BaseApi $baseApi)
     {
         $versions = $baseApi->getAllVersion();
-        return $this->render( 'main/__navbar.html.twig', [
+        return $this->render('main/__navbar.html.twig', [
             'versions' => $versions
         ]);
     }

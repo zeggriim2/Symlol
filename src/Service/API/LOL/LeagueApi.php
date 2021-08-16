@@ -14,6 +14,7 @@ class LeagueApi
 
     /**
      * LeagueApi constructor.
+     * @param BaseApi $baseApi
      */
     public function __construct(BaseApi $baseApi)
     {
