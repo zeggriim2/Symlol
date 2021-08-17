@@ -1,4 +1,5 @@
 
+{% set sessionVersion = app.session.get("version") %}
 <nav class="navbar navbar-expand-lg navbar-light bg-primary mb-2 sticky-top">
     <div class="container-fluid">
         <a class="navbar-brand" href="{{ path('home') }}">APILOL</a>
@@ -31,9 +32,9 @@
                     </ul>
                 </li>
                 <select id="select-version" class="select-version form-select" aria-label="Default select example">#}
-                    <option selected>Version</option>
+{#                    <option selected>Version</option>#}
                     {% for version in versions %}
-                        <option value="{{ version }}">{{ version }}</option>
+                        <option value="{{ version }}" {% if sessionVersion == version %} selected {% endif %}>{{ version }}</option>
                     {% endfor %}
                 </select>
             </ul>

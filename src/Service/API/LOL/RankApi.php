@@ -34,6 +34,7 @@ class RankApi
         if (!$this->baseApi->checkPlatform($platform)) {
             return null;
         }
+
         $url = $this->constructUrl(self::URL, [
             'platform'  => strtolower($platform),
             'queue'     => $queue,

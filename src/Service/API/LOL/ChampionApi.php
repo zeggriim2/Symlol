@@ -32,7 +32,7 @@ class ChampionApi
             "lang"      => $this->baseApi->lang
         ];
         $url = $this->constructUrl(self::URL_CHAMPIONS, $data);
-        return $this->baseApi->callApi($url);
+        return $this->baseApi->callApiCache($url);
     }
 
     /**
@@ -53,7 +53,7 @@ class ChampionApi
         ];
 
         $url = $this->constructUrl(self::URL_CHAMPION, $data);
-        return $this->baseApi->callApi($url);
+        return $this->baseApi->callApiCache($url);
     }
 
     public function getAllNameChampion(): array

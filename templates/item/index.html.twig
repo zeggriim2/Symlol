@@ -10,18 +10,23 @@
                aria-describedby="basic-addon1">
     </div>
     <div id="suggestions"></div>
-
-    <div class="case">
+    <div class="row">
+        <div class="col-1 mx-3 mb-3 case">
+            <div class="card h-100 base" style="width: 8rem;">
+                <div>
+                    <p><i class="fas fa-plus"></i></p>
+                </div>
+            </div>
+        </div>
     </div>
-
     <div class="row">
         {% for item in items.data %}
-            <div class="col-1 mx-3 mb-3 case">
-                <div class="card h-100 base" style="width: 8rem;" draggable="true">
+            <div class="col-1 mx-3 mb-3 disabled">
+                <div class="card h-100 base" style="width: 8rem;">
                     <img src="https://ddragon.leagueoflegends.com/cdn/{{ items.version }}/img/item/{{ item.image.full }}"
-                         class="card-img-top" alt="...">
+                         class="card-img-top" alt="..." draggable="true">
                     <div class="card-body">
-                        <h6 class="card-title">{{ item.name }}</h6>
+                        <h6 class="card-title">{{ item.name }}  <i class="bi bi-plus-circle"></i></h6>
                     </div>
                 </div>
             </div>
@@ -29,10 +34,22 @@
     </div>
     <script>
         /* Start Dragger*/
-        const base = document.querySelector(".base");
+        const base = document.querySelectorAll(".base");
         const box = document.querySelectorAll(".case");
 
-        console.log(box);
+        for(var i = 0; i < base.length; i++) {
+            base[i].addEventListener('dragstart',dragStart)
+            base[i].addEventListener('dragend',dragEnd)
+        }
+
+        function dragStart() {
+            console.log("start")
+        }
+
+        function dragEnd() {
+            console.log("End")
+        }
+
         /*End Dragger */
 
         /* Start Block Search Javascript */
