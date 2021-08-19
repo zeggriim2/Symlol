@@ -71,11 +71,6 @@ class GeneralApi
 
     /**
      * @return array<mixed>|null
-     * @throws \Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface
-     * @throws \Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface
-     * @throws \Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface
-     * @throws \Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface
-     * @throws \Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface
      */
     public function getMaps(): ?array
     {
@@ -85,11 +80,6 @@ class GeneralApi
 
     /**
      * @return array<mixed>|null
-     * @throws \Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface
-     * @throws \Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface
-     * @throws \Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface
-     * @throws \Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface
-     * @throws \Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface
      */
     public function getsGameModes(): ?array
     {
@@ -98,11 +88,6 @@ class GeneralApi
 
     /**
      * @return array<mixed>|null
-     * @throws \Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface
-     * @throws \Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface
-     * @throws \Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface
-     * @throws \Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface
-     * @throws \Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface
      */
     public function getsGameTypes()
     {
@@ -111,23 +96,12 @@ class GeneralApi
 
     /**
      * @return array<mixed>|null
-     * @throws \Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface
-     * @throws \Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface
-     * @throws \Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface
-     * @throws \Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface
-     * @throws \Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface
      */
     public function getVersions()
     {
         $url = $this->buildUrlDdragon(self::API_URL_VERSIONS);
-        return $this->baseApi->callApi($url);
+        return $this->baseApi->callApiCache($url);
     }
-
-//    public function getLastVersion()
-//    {
-//        $versions = $this->getVersions();
-//        return $versions[0];
-//    }
 
     private function buildUrlStatic(string $endUrl): string
     {

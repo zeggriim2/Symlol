@@ -13,6 +13,7 @@ class ChampionApi
 
     /**
      * ChampionApi constructor.
+     * @param BaseApi $baseApi
      */
     public function __construct(BaseApi $baseApi)
     {
@@ -26,11 +27,13 @@ class ChampionApi
     public function getAllChampion(): ?array
     {
         $data = [
-            "version"   => $this->baseApi->getLastVersion(),
+            // "version"   => $this->baseApi->getLastVersion(),
+            "version"   => $this->baseApi->sessionVersion,
             "lang"      => $this->baseApi->lang
         ];
-        $url = $this->constructUrl(self::URL_CHAMPIONS, $data);
-        return $this->baseApi->callApi($url);
+
+        $url = $this->baseApi->constructUrl(self::URL_CHAMPIONS, $data);
+        return $this->baseApi->callApiCache($url);
     }
 
     /**
@@ -45,15 +48,20 @@ class ChampionApi
     public function getChampion(string $name): ?array
     {
         $data = [
-            "version"   => $this->baseApi->getLastVersion(),
+            "version"   => $this->baseApi->sessionVersion,
             "lang"      => $this->baseApi->lang,
             "name"      => $name
         ];
 
-        $url = $this->constructUrl(self::URL_CHAMPION, $data);
-        return $this->baseApi->callApi($url);
+        $url = $this->baseApi->constructUrl(self::URL_CHAMPION, $data);
+        return $this->baseApi->callApiCache($url);
     }
 
+    /**
+     * Récupère tout les noms de champions
+     *
+     * @return array
+     */
     public function getAllNameChampion(): array
     {
         $champions = $this->GetAllChampion();
@@ -62,19 +70,5 @@ class ChampionApi
             $nameChampions[] = $name;
         }
         return $nameChampions;
-    }
-
-
-    /**
-     * @param string $url
-     * @param array<string> $params
-     * @return string
-     */
-    protected function constructUrl(string $url, array $params)
-    {
-        foreach ($params as $key => $param) {
-            $url = str_replace("{{$key}}", $param, $url);
-        }
-        return $url;
     }
 }

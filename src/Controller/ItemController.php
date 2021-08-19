@@ -16,6 +16,7 @@ class ItemController extends AbstractController
 
     /**
      * ItemController constructor.
+     * @param ItemApi $itemApi
      */
     public function __construct(ItemApi $itemApi)
     {
@@ -31,10 +32,9 @@ class ItemController extends AbstractController
         $items = $this->itemApi->getAllItem();
         $nameItems = [];
         foreach ($items['data'] as $item) {
-//            $nameItems[] = ['name'  => $item['name']];
             $nameItems[] = $item['name'];
         }
-//        $nameItems = json_encode($nameItems, JSON_UNESCAPED_UNICODE );
+
         return $this->render('item/index.html.twig', [
             'items'     => $items,
             'nameItems' => $nameItems

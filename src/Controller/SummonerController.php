@@ -57,6 +57,7 @@ class SummonerController extends AbstractController
             $this->requestStack->getSession()->set('platform', $data['platform']);
             return $this->redirectToRoute("summoner_show", ['name' => $data['name']]);
         }
+
         return $this->render('summoner/index.html.twig', [
             'form' => $form->createView(),
         ]);

@@ -14,6 +14,8 @@ use Symfony\UX\Chartjs\Model\Chart;
 
 class ChampionController extends AbstractController
 {
+    private const DATA_STATS = ['armor', 'hp', 'attackdamage', 'attackrange', 'mp', 'movespeed'];
+
     /**
      * @var ChampionApi
      */
@@ -81,12 +83,12 @@ class ChampionController extends AbstractController
         $champion = $this->championApi->getChampion($name)['data'][$name];
 
         return $this->render('champion/skins.html.twig', [
-            'champion'  => $champion
+            'champion' => $champion
         ]);
     }
 
     /**
-     * @Route("/champion/stats/{name}", name="champion_showStat")
+     * @Route("/champion/stat/{name}", name="champion_showStat")
      * @param string $name
      * @param ChartBuilderInterface $chartBuilder
      * @return Response
@@ -109,19 +111,19 @@ class ChampionController extends AbstractController
             }
         }
 
-        if (isset($data)) {
-            arsort($data);
-        }
+//        if (isset($data)) {
+//            arsort($data);
+//        }
 
         $chartLabels = [];
         $chartColor = [];
         $chartData = [];
         foreach ($data as $label => $value) {
-            $chartLabels[]  = $label;
-            $chartData[]    = $value;
-            $chartColor[]   = $this->randomColor();
+            $chartLabels[] = $label;
+            $chartData[] = $value;
+            $chartColor[] = $this->randomColor(true);
         }
-        $chart = $chartBuilder->createChart(Chart::TYPE_BAR);
+        $chart = $chartBuilder->createChart(Chart::TYPE_POLAR_AREA);
         $chart->setData([
             'labels' => $chartLabels,
             'datasets' => [
@@ -130,32 +132,132 @@ class ChampionController extends AbstractController
                     'backgroundColor'   => $chartColor,
 //                    'backgroundColor'   => "#fffff",
                     'borderColor'       => "#f7f7f7",
-                    'data' => $chartData,
+                    'data'              => $chartData,
                 ],
             ],
         ]);
+//        dd($chartData, $chartLabels, $champion['id']);
 
         return $this->render('champion/show.html.twig', [
-            'champion'  => $champion,
-            'chart'     => $chart
+            'champion' => $champion,
+            'chart' => $chart
         ]);
     }
 
+    /**
+     * @Route("/champion/stats", name="statAll")
+     * @param ChartBuilderInterface $chartBuilder
+     * @return Response
+     */
+    public function statAll(ChartBuilderInterface $chartBuilder): Response
+    {
+        // Récupere tous les champion de LOL
+        $champions = $this->championApi->getAllChampion()['data'];
+
+        //Récupération des stats de chaque champion
+        $nameChampion = [];
+        $data = [];
+        foreach ($champions as $champion) {
+            $nameChampion[] = $champion['name'];
+            foreach ($champion['stats'] as $label => $value) {
+                if ($label === 'hp') {
+                    $data['HP']['data'][] = $value;
+                    $data['HP']['title'] = 'Statiques Champions point de vie';
+                    $data['HP']['dataset'] = 'Hp';
+                } elseif ($label === 'armor') {
+                    $data['ARMOR']['data'][] = $value;
+                    $data['ARMOR']['title'] = 'Statiques Champions armure';
+                    $data['ARMOR']['dataset'] = 'Armor';
+                } elseif ($label === 'attackrange') {
+                    $data['ATTACKRANGE']['data'][] = $value;
+                    $data['ATTACKRANGE']['title'] = 'Statiques Champions range d\'attaque';
+                    $data['ATTACKRANGE']['dataset'] = 'Attaque Range';
+                } elseif ($label === 'attackdamage') {
+                    $data['ATTACKDOMMAGE']['data'][] = $value;
+                    $data['ATTACKDOMMAGE']['title'] = 'Statiques Champions dommage d\'attaque';
+                    $data['ATTACKDOMMAGE']['dataset'] = 'Attaque Dommage';
+                } elseif ($label === 'mp') {
+                    $data['MP']['data'][] = $value;
+                    $data['MP']['title'] = '';
+                    $data['MP']['dataset'] = 'Mp';
+                } elseif ($label === 'movespeed') {
+                    $data['MOVESPEED']['data'][] = $value;
+                    $data['MOVESPEED']['title'] = 'Statiques vitesse de déplacement';
+                    $data['MOVESPEED']['dataset'] = 'Move Speed';
+                }
+            }
+        }
+        $charts = [];
+        foreach ($data as $label => $value) {
+            $charts[] = $this->buildChart(
+                Chart::TYPE_BAR,
+                $value['data'],
+                $nameChampion,
+                $value['dataset'],
+                $value['title'],
+                $this->randomColor()
+            );
+        }
+
+        return $this->render('champion/statsAll.html.twig', [
+            'charts' => $charts
+        ]);
+    }
+
+
     private function randomColorPart(): int
     {
-//        $rgb = str_pad( dechex( mt_rand( 0, 255 ) ), 2, '0', STR_PAD_LEFT);
         return mt_rand(0, 255);
     }
 
-    private function randomColor(): string
+    private function randomColor(int $opacity = 0): string
     {
-//        rgba(255, 159, 64, 0.2);
-        return "rgba(" . $this->randomColorPart() . ", " . $this->randomColorPart() . ", " . $this->randomColorPart() . ", 0.2)";
+        $valOpacity = $opacity ? ",$opacity" : "";
+        return "rgba(" . $this->randomColorPart() . ", " . $this->randomColorPart() . ", " . $this->randomColorPart()
+            . " $valOpacity)";
     }
 
     private function checkNameChampion(string $name): bool
     {
         $nameChampion = $this->championApi->getAllNameChampion();
         return in_array(ucfirst($name), $nameChampion);
+    }
+
+    private function buildChart(
+        string $type,
+        array $data,
+        $label,
+        $datasetLabel,
+        string $title = '',
+        string $backgroundColor = '#000000'
+    ): Chart {
+
+        $chart = new Chart($type);
+        $chart->setData([
+            'labels' => $label,
+            'datasets' =>
+                [
+                    [
+                        'label' => $datasetLabel,
+                        'backgroundColor' => $backgroundColor,
+                        'data' => $data,
+                    ],
+                ],
+        ]);
+
+        $chart->setOptions([
+            'title' => [
+                'display' => true,
+                'fullSize' => true,
+                'text' => $title,
+                'color' => $backgroundColor,
+            ],
+            'scales' => [
+                'yAxes' => [
+                    ['ticks' => ['min' => 0, 'max' => round(max($data), 0, PHP_ROUND_HALF_EVEN)]],
+                ],
+            ],
+        ]);
+        return $chart;
     }
 }
