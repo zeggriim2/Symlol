@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Change Session Version{% endblock %}
+
+{% block body %}
+    <div class="container">
+        {{ form_start(form) }}
+            <input type="hidden" name="referer" value="{{ app.request.headers.get("referer") }}">
+            {{ form_widget(form) }}        
+            <button type="submit" class="btn btn-primary">Modifier</button>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}

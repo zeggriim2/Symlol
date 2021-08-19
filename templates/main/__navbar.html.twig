@@ -31,12 +31,15 @@
                         <li><a class="dropdown-item" href="#">Another action</a></li>
                     </ul>
                 </li>
-                <select id="select-version" class="select-version form-select" aria-label="Default select example">#}
-{#                    <option selected>Version</option>#}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('app_changeSession') }}">{{ app.session.get('version') }}</a>
+                </li>
+                {#<select id="select-version" class="select-version form-select" aria-label="Default select example">
+{#                    <option selected>Version</option>
                     {% for version in versions %}
                         <option value="{{ version }}" {% if sessionVersion == version %} selected {% endif %}>{{ version }}</option>
                     {% endfor %}
-                </select>
+                </select> #}
             </ul>
         </div>
     </div>
