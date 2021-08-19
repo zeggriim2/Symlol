@@ -121,7 +121,7 @@ class ChampionController extends AbstractController
         foreach ($data as $label => $value) {
             $chartLabels[] = $label;
             $chartData[] = $value;
-            $chartColor[] = $this->randomColor(true);
+            $chartColor[] = $this->randomColor();
         }
         $chart = $chartBuilder->createChart(Chart::TYPE_POLAR_AREA);
         $chart->setData([

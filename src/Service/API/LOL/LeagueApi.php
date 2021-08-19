@@ -14,7 +14,7 @@ class LeagueApi
 
     /**
      * LeagueApi constructor.
-     * 
+     *
      * @param BaseApi $baseApi
      */
     public function __construct(BaseApi $baseApi)
@@ -37,7 +37,13 @@ class LeagueApi
         if (!$this->baseApi->checkPlatform($platform)) {
             return null;
         }
-        $url = $this->baseApi->constructUrl(self::URL, ['platform' => $platform, 'encryptedSummonerId' => $encryptedSummonerId]);
+        $url = $this->baseApi->constructUrl(
+            self::URL,
+            [
+              'platform' => $platform,
+                'encryptedSummonerId' => $encryptedSummonerId
+            ]
+        );
         return $this->baseApi->callApi($url, "GET", [
             'headers' => [
                 'X-Riot-Token' => $this->baseApi->apiKey,

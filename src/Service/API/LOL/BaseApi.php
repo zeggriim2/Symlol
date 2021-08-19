@@ -53,7 +53,7 @@ class BaseApi
     private $cache;
 
     /**
-     * @var \Symfony\Component\HttpFoundation\Session\SessionInterface
+     * @var string
      */
     public $sessionVersion;
 

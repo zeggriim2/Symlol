@@ -49,9 +49,10 @@ class RankController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
             $ladderChallengers = $this->rankApi->getLadder(
-                $data['platform'], 
+                $data['platform'],
                 $data['queue'],
-                $data['league'])['entries'];
+                $data['league']
+            )['entries'];
             $this->descendingSort($ladderChallengers, 'leaguePoints');
 
             $this->addElementInSession($data['platform']);
@@ -78,8 +79,9 @@ class RankController extends AbstractController
         });
     }
 
-    private function addElementInSession($data){
+    private function addElementInSession($data)
+    {
         $session = $this->requestStack->getSession();
-        $session->set('platform', $data);           
+        $session->set('platform', $data);
     }
 }

@@ -21,7 +21,7 @@ class HomeController extends AbstractController
 
     /**
      * @param BaseApi $baseApi
-     * @param SessionHandlerInterface $handler
+     * @param RequestStack $requestStack
      * @return Response
      */
     public function headerNavbar(BaseApi $baseApi, RequestStack $requestStack)

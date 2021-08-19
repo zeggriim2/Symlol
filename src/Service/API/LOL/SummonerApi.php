@@ -44,7 +44,7 @@ class SummonerApi
      */
     public function getSummoner(string $platform, string $name)
     {
-        
+
         $url = $this->baseApi->constructUrl(self::URL, ['platform' => $platform, 'name' => $name]);
         return $this->baseApi->callApi($url, "GET", [
             'headers' => [
