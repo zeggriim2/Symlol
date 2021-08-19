@@ -32,7 +32,6 @@ class ItemApi
     public function getAllItem(): ?array
     {
         $data = [
-//            'version'   => $this->baseApi->getLastVersion(),
             'version'   => $this->baseApi->sessionVersion,
             'lang'      => $this->baseApi->lang
         ];

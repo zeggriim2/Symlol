@@ -35,7 +35,7 @@ class RankApi
             return null;
         }
 
-        $url = $this->constructUrl(self::URL, [
+        $url = $this->baseApi->constructUrl(self::URL, [
             'platform'  => strtolower($platform),
             'queue'     => $queue,
             'leagues'   => $leagues . 'leagues'
@@ -46,18 +46,5 @@ class RankApi
                 'X-Riot-Token' => $this->baseApi->apiKey,
             ]
         ]);
-    }
-
-    /**
-     * @param string $url
-     * @param array<string> $params
-     * @return string
-     */
-    protected function constructUrl(string $url, array $params): string
-    {
-        foreach ($params as $key => $param) {
-            $url = str_replace("{{$key}}", $param, $url);
-        }
-        return $url;
     }
 }

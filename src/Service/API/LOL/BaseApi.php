@@ -89,9 +89,6 @@ class BaseApi
     public function getAllVersion(): array
     {
         return $this->callApi(self::URL_VERSION);
-//        return $this->cache->get('AllVersions', function () {
-//            return $this->callApi(self::URL_VERSION);
-//        });
     }
 
     /**
@@ -113,12 +110,26 @@ class BaseApi
         });
     }
 
+    /**
+     * Appel API sans utilisé le cache
+     *
+     * @param string $url
+     * @param string $method
+     * @param array $options
+     * @return array|null
+     */
     public function callApi(string $url, string $method = "GET", array $options = []): ?array
     {
         return $this->request($url, $method, $options);
     }
 
-    public function checkPlatform(string $platform)
+    /**
+     * Vérifi la plaftform
+     *
+     * @param string $platform
+     * @return bool
+     */
+    public function checkPlatform(string $platform): bool
     {
         return in_array($platform, self::PLATFORM);
     }

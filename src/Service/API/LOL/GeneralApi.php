@@ -103,12 +103,6 @@ class GeneralApi
         return $this->baseApi->callApiCache($url);
     }
 
-//    public function getLastVersion()
-//    {
-//        $versions = $this->getVersions();
-//        return $versions[0];
-//    }
-
     private function buildUrlStatic(string $endUrl): string
     {
         return self::BASE_URL_STATIC . $endUrl;
