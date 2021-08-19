@@ -48,11 +48,13 @@ class RankController extends AbstractController
         $data = [];
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
-            $platform = $data['platform'];
-            $league = $data['league'];
-            $queue = $data['queue'];
-            $ladderChallengers = $this->rankApi->getLadder($platform, $queue, $league)['entries'];
+            $ladderChallengers = $this->rankApi->getLadder(
+                $data['platform'], 
+                $data['queue'],
+                $data['league'])['entries'];
             $this->descendingSort($ladderChallengers, 'leaguePoints');
+
+            $this->addElementInSession($data['platform']);
         }
 
         return $this->render('rank/index.html.twig', [
@@ -74,5 +76,10 @@ class RankController extends AbstractController
         usort($data, function ($item1, $item2) use ($field) {
             return $item2[$field] <=> $item1[$field];
         });
+    }
+
+    private function addElementInSession($data){
+        $session = $this->requestStack->getSession();
+        $session->set('platform', $data);           
     }
 }
