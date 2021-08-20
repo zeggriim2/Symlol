@@ -27,3 +27,8 @@ services:
     App\Service\API\LOL\BaseApi:
         arguments:
             $apiKey: '%APIKEY%'
+            
+    Sentry\Monolog\Handler:
+        arguments:
+            $hub: '@Sentry\State\HubInterface'
+            $level: !php/const Monolog\Logger::INFO
