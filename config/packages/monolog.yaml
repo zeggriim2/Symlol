@@ -4,5 +4,8 @@ monolog:
     file_log:
       type: stream
       path: "%kernel.project_dir%/log/%kernel.environment%/api.log"
-      level: debug
+      level: info
       channels: ['api']
+    sentry:
+      type: service
+      id: Sentry\Monolog\Handler
