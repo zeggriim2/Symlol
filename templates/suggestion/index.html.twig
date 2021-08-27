@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Suggestion!{% endblock %}
+
+{% block body %}
+
+    <div class="container">
+        <button type="button" class="btn btn-outline-primary btn-sm mb-3"><a href="{{ path('suggestion_create') }}">Suggerer une idée.</a></button>
+        {% if suggestions %}
+            {% for suggestion in suggestions %}
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ suggestion.createdAt | date("d/m/Y")  }}</h5>
+                        <p class="card-text">{{ suggestion.idee }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title">Aucune suggestion n'a été soumis.</h5>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

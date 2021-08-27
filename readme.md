@@ -21,6 +21,7 @@ BOOTSTRAP 5
 * Invocateur : 
   * Affichage de la league rattaché par l'invocateur
   * Infos de l'invocateur
+* Ajout d'une rubrique de suggestion d'idée sur la platform
 
 ------
 #### A Faire

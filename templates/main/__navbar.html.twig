@@ -34,12 +34,9 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path('app_changeSession') }}">{{ app.session.get('version') }}</a>
                 </li>
-                {#<select id="select-version" class="select-version form-select" aria-label="Default select example">
-{#                    <option selected>Version</option>
-                    {% for version in versions %}
-                        <option value="{{ version }}" {% if sessionVersion == version %} selected {% endif %}>{{ version }}</option>
-                    {% endfor %}
-                </select> #}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ path('suggestion_list') }}">Suggestion</a>
+                </li>
             </ul>
         </div>
     </div>
