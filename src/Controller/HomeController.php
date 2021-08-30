@@ -36,7 +36,6 @@ class HomeController extends AbstractController
      */
     public function index(): Response
     {
-        dump($this->session->all());
         return $this->render('home/index.html.twig');
     }
 
