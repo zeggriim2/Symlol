@@ -40,6 +40,8 @@ class SuggestionController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
             $suggestion = $form->getData();
+            /** @var $suggestion Suggestion */
+            $suggestion->setUser($this->getUser());
             $entityManager->persist($suggestion);
             $entityManager->flush();
 

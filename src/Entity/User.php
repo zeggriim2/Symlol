@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -36,6 +38,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @ORM\Column(type="string")
      */
     private $password;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Suggestion::class, mappedBy="user")
+     */
+    private $suggestions;
+
+    public function __construct()
+    {
+        $this->suggestions = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -124,5 +136,35 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         // If you store any temporary, sensitive data on the user, clear it here
         // $this->plainPassword = null;
+    }
+
+    /**
+     * @return Collection|Suggestion[]
+     */
+    public function getSuggestions(): Collection
+    {
+        return $this->suggestions;
+    }
+
+    public function addSuggestion(Suggestion $suggestion): self
+    {
+        if (!$this->suggestions->contains($suggestion)) {
+            $this->suggestions[] = $suggestion;
+            $suggestion->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removeSuggestion(Suggestion $suggestion): self
+    {
+        if ($this->suggestions->removeElement($suggestion)) {
+            // set the owning side to null (unless already changed)
+            if ($suggestion->getUser() === $this) {
+                $suggestion->setUser(null);
+            }
+        }
+
+        return $this;
     }
 }

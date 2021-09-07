@@ -10,7 +10,8 @@
             {% for suggestion in suggestions %}
                 <div class="card" style="width: 18rem;">
                     <div class="card-body">
-                        <h5 class="card-title">{{ suggestion.createdAt | date("d/m/Y")  }}</h5>
+                        <h5 class="card-title">{{ suggestion.user.email }}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">{{ suggestion.createdAt | date("d/m/Y")  }}</h6>
                         <p class="card-text">{{ suggestion.idee }}</p>
                     </div>
                 </div>

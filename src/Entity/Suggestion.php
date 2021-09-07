@@ -28,6 +28,17 @@ class Suggestion
     private $createdAt;
 
     /**
+     * @ORM\Column(type="string", length=255)
+     */
+    private $title;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class, inversedBy="suggestions")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $user;
+
+    /**
      * Suggestion constructor.
      */
     public function __construct()
@@ -60,6 +71,30 @@ class Suggestion
     public function setCreatedAt(\DateTimeImmutable $createdAt): self
     {
         $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getTitle(): ?string
+    {
+        return $this->title;
+    }
+
+    public function setTitle(string $title): self
+    {
+        $this->title = $title;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }
