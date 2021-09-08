@@ -28,7 +28,6 @@ class SuggestionController extends AbstractController
     /**
      * @Route("/suggestion/create", name="suggestion_create")
      * @param Request $request
-     * @param ObjectManager $entityManager
      * @return Response
      */
     public function create(Request $request): Response
@@ -49,6 +48,19 @@ class SuggestionController extends AbstractController
         }
         return $this->render("suggestion/create.html.twig", [
             'formSuggestion' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/suggestion/{id}", name="suggestion_show")
+     * @param Suggestion $suggestion
+     * @return Response
+     */
+    public function show(int $id, SuggestionRepository $suggestionRepository)
+    {
+        $suggestion = $suggestionRepository->findOneBy(['id' => $id]);
+        return $this->render('suggestion/show.html.twig', [
+            'suggestion' => $suggestion
         ]);
     }
 }
