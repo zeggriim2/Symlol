@@ -41,6 +41,8 @@ class HomeController extends AbstractController
 
     /**
      * @Route("/changeSession", name="app_changeSession")
+     * @param Request $request
+     * @param BaseApi $baseApi
      * @return Response
      */
     public function changeSession(Request $request, BaseApi $baseApi)
