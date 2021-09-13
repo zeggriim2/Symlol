@@ -52,14 +52,15 @@ class HomeController extends AbstractController
         $form = $this->createFormBuilder()
                     ->add("versions", ChoiceType::class, [
                         "label" => "Versions",
-                        "choices" => array_combine($versions, $versions)
+                        "choices" => array_combine($versions, $versions),
+                        "data" => $this->requestStack->getSession()->get('version')
                     ])
                     ->getForm()
         ;
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()) {
             // On récupère les données
-            $version = $form->getData("versions");
+            $version = $form->getData();
             $this->changeVersionSession('version', $version['versions']);
             return $this->redirect($request->request->get('referer'));
         }
