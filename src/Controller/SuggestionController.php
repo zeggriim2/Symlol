@@ -53,7 +53,8 @@ class SuggestionController extends AbstractController
 
     /**
      * @Route("/suggestion/{id}", name="suggestion_show")
-     * @param Suggestion $suggestion
+     * @param int $id
+     * @param SuggestionRepository $suggestionRepository
      * @return Response
      */
     public function show(int $id, SuggestionRepository $suggestionRepository)

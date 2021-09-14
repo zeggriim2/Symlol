@@ -2,7 +2,6 @@
 
 namespace App\Service\API\LOL;
 
-use phpDocumentor\Reflection\Types\This;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Contracts\Cache\CacheInterface;
