@@ -28,26 +28,31 @@
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <li><a class="dropdown-item" href="{{ path('statAll') }}">Champions</a></li>
-                        <li><a class="dropdown-item" href="#">Another action</a></li>
                     </ul>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path('app_changeSession') }}">{{ app.session.get('version') }}</a>
                 </li>
-                {#<select id="select-version" class="select-version form-select" aria-label="Default select example">
-{#                    <option selected>Version</option>
-                    {% for version in versions %}
-                        <option value="{{ version }}" {% if sessionVersion == version %} selected {% endif %}>{{ version }}</option>
-                    {% endfor %}
-                </select> #}
+                {% if app.user %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('suggestion_list') }}">Suggestion</a>
+                    </li>
+                {% endif %}
+            </ul>
+            <ul class="nav navbar-nav">
+                {% if app.user is not defined %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_logout') }}">Logout</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_login') }}">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('app_register') }}">Register</a>
+                    </li>
+                {% endif %}
             </ul>
         </div>
     </div>
 </nav>
-<script>
-
-    $('.select-version').change(function() {
-        console.log("toto")
-    });
-
-</script>

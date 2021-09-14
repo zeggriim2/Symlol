@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    {{ suggestion.title }}
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1>{{ suggestion.title }}</h1>
+        <p>
+            {{ suggestion.idee | raw }}
+        </p>
+    </div>
+{% endblock %}

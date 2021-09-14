@@ -36,12 +36,13 @@ class HomeController extends AbstractController
      */
     public function index(): Response
     {
-        dump($this->session->all());
         return $this->render('home/index.html.twig');
     }
 
     /**
      * @Route("/changeSession", name="app_changeSession")
+     * @param Request $request
+     * @param BaseApi $baseApi
      * @return Response
      */
     public function changeSession(Request $request, BaseApi $baseApi)
@@ -51,14 +52,16 @@ class HomeController extends AbstractController
         $form = $this->createFormBuilder()
                     ->add("versions", ChoiceType::class, [
                         "label" => "Versions",
-                        "choices" => array_combine($versions, $versions)
+                        "choices" => array_combine($versions, $versions),
+                        // "data" => $this->requestStack->getSession()->get('version')
+                        "data" => $this->session->get('version')
                     ])
                     ->getForm()
         ;
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()) {
             // On récupère les données
-            $version = $form->getData("versions");
+            $version = $form->getData();
             $this->changeVersionSession('version', $version['versions']);
             return $this->redirect($request->request->get('referer'));
         }

@@ -64,7 +64,11 @@
 {#        </div>#}
 {#    </div>#}
 {#</nav>#}
-{% block body %}{% endblock %}
+{% block body %}
+    <div class="container">
+        {{ include('main/__modalSession.html.twig') }}
+    </div>
+{% endblock %}
 <!-- Footer -->
 <footer class="text-center text-lg-start mt-5 ">
     <!-- Copyright -->
