@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Form\SummonerType;
 use App\Service\API\LOL\LeagueApi;
+use App\Service\API\LOL\MatchApi;
 use App\Service\API\LOL\SummonerApi;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -26,17 +27,28 @@ class SummonerController extends AbstractController
      * @var LeagueApi
      */
     private $leagueApi;
+    /**
+     * @var MatchApi
+     */
+    private $matchApi;
 
     /**
      * SummonerController constructor.
      * @param SummonerApi $summonerApi
      * @param LeagueApi $leagueApi
+     * @param MatchApi $matchApi
      * @param RequestStack $requestStack
      */
-    public function __construct(SummonerApi $summonerApi, LeagueApi $leagueApi, RequestStack $requestStack)
+    public function __construct(
+        SummonerApi $summonerApi,
+        LeagueApi $leagueApi,
+        MatchApi $matchApi,
+        RequestStack $requestStack
+    )
     {
         $this->summonerApi = $summonerApi;
         $this->leagueApi = $leagueApi;
+        $this->matchApi = $matchApi;
         $this->requestStack = $requestStack;
     }
 
@@ -75,6 +87,9 @@ class SummonerController extends AbstractController
 
             return $this->redirectToRoute('summoner_index');
         }
+        
+        $match = $this->matchApi->getMatchs($summoner["puuid"],$platform);
+        dump($match);
         $infoSummonerleague = $this->leagueApi->getInfoSummoner($platform, $summoner['id']);
         $leagueSummoner = $this->leagueApi->getLeagueId($platform, $infoSummonerleague[0]['leagueId']);
         $leagues = $this->trieParRank($leagueSummoner['entries']);
