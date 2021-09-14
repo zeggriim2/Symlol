@@ -53,7 +53,8 @@ class HomeController extends AbstractController
                     ->add("versions", ChoiceType::class, [
                         "label" => "Versions",
                         "choices" => array_combine($versions, $versions),
-                        "data" => $this->requestStack->getSession()->get('version')
+                        // "data" => $this->requestStack->getSession()->get('version')
+                        "data" => $this->session->get('version')
                     ])
                     ->getForm()
         ;

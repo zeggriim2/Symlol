@@ -5,8 +5,9 @@
 {% block body %}
 
     <div class="container">
-        <button type="button" class="btn btn-outline-primary btn-sm mb-3"><a href="{{ path('suggestion_create') }}">Suggerer
-                une idée.</a></button>
+        <a class="btn-sm btn btn-outline-primary btn-sm mb-3" href="{{ path('suggestion_create') }}">
+            Suggerer une idée.
+        </a>
         <div class="row">
             {% if suggestions %}
                 {% for suggestion in suggestions %}
@@ -15,7 +16,13 @@
                             <div class="card-body">
                                 <h5 class="card-title">{{ suggestion.user.pseudo }}</h5>
                                 <h6 class="card-subtitle mb-2 text-muted">{{ suggestion.createdAt | date("d/m/Y") }}</h6>
-                                <p class="card-text">{{ suggestion.title | capitalize }}</p>
+                                <p class="card-text">
+                                    {% if suggestion.title | length > 30 %}
+                                        {{ suggestion.title | capitalize | slice(0, 32) ~ ' ...' }} 
+                                    {% else %}
+                                        {{ suggestion.title | capitalize }}
+                                    {% endif %}
+                                </p>
                                 <a href="{{ path('suggestion_show', {'id': suggestion.id}) }}"
                                    class="btn btn-primary btn-sm">Show</a>
                             </div>
