@@ -4,21 +4,24 @@ namespace App\Service\API\LOL;
 
 class MatchApi
 {
-    // private const URL = "https://{platform}.api.riotgames.com/lol/league/v4/entries/by-summoner/{encryptedSummonerId}";
     private const URL = "https://{region}.api.riotgames.com/lol/match/v5/matches/by-puuid/{puuid}/ids?start={start}&count={count}";
-    
+    private const URL_MATCH_ID = "https://{region}.api.riotgames.com/lol/match/v5/matches/{matchId}";
+    private const URL_MATCH_TIMELINE = "https://{region}.api.riotgames.com/lol/match/v5/matches/{matchId}/timeline";
+
     private const START = 0;
 
     private const REGION = [
         "EUW1"  => "EUROPE",
         "EUN1"  => "EUROPE",
+        "RU"    => "EUROPE",
+        "TR1"   => "EUROPE",
         "BR1"   => "AMERICAS",
         "LA1"   => "AMERICAS",
         "LA2"   => "AMERICAS",
         "NA1"   => "AMERICAS",
+        "OC1"   => "AMERICAS",
         "JP1"   => "ASIA",
-        "KR"    => "ASIA",
-        "RU"    => "ASIA"
+        "KR"    => "ASIA"
     ];
   
 
@@ -48,11 +51,7 @@ class MatchApi
      * @throws \Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface
      */
     public function getMatchs(string $puuid, string $platform, int $count = 20): ?array
-    {
-        // if (!$this->baseApi->checkPlatform($platform)) {
-        //     return null;
-        // }
-        
+    {        
         $url = $this->baseApi->constructUrl(
             self::URL,
             [
@@ -62,6 +61,30 @@ class MatchApi
                 'count' => $count,
             ]
         );
+        $matchsId = $this->baseApi->callApi($url, "GET", [
+            'headers' => [
+                'X-Riot-Token' => $this->baseApi->apiKey,
+            ]
+        ]);
+
+        if (!is_null($matchsId)){
+            foreach ($matchsId as $matchId) {
+                $detailMatch[$matchId] = $this->getMatchDetail($matchId, $platform);
+            }
+        }
+
+        return $detailMatch;
+    }
+
+    public function getMatchDetail(string $matchId, string $platform)
+    {
+        $url = $this->baseApi->constructUrl(
+            self::URL_MATCH_ID,
+            [
+                'region'    => self::REGION[$platform],
+                'matchId'   => $matchId
+            ]
+        );
         return $this->baseApi->callApi($url, "GET", [
             'headers' => [
                 'X-Riot-Token' => $this->baseApi->apiKey,
@@ -69,8 +92,20 @@ class MatchApi
         ]);
     }
 
-    public function getMatchDetail(string $id)
+    public function getMatchTimeline(string $matchId, string $platform)
     {
+        $url = $this->baseApi->constructUrl(
+            self::URL_MATCH_TIMELINE,
+            [
+                'region'    => self::REGION[$platform],
+                'matchId'   => $matchId            
+            ]
+        );
 
+        return $this->baseApi->callApi($url, "GET", [
+            'headers' => [
+                'X-Riot-Token' => $this->baseApi->apiKey,
+            ]
+        ]);
     }
 }

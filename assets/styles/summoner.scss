@@ -1,0 +1,31 @@
+.gameContent{
+    display: table;
+    width: 600px;
+    border: 1px solid #a8adb4;
+    border-radius:10px;
+}
+
+.victoire{
+    background-color: #89e692;
+}
+
+.defaite{
+    background-color: #e64c4c;
+}
+
+.gameContent > .gameInfo {
+    text-align: center;
+    display: table-cell;
+    width: 40px;
+}
+
+.gameContent > .gameKDA {
+    display: table-cell;
+}
+
+.gameContent > .gameInfo > .bar {
+    height: 2px;
+    background: #99b9cf;
+    width: 35px;
+    margin: 5px auto;
+}

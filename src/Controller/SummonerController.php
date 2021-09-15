@@ -6,6 +6,7 @@ use App\Form\SummonerType;
 use App\Service\API\LOL\LeagueApi;
 use App\Service\API\LOL\MatchApi;
 use App\Service\API\LOL\SummonerApi;
+use Doctrine\DBAL\Abstraction\Result;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -80,25 +81,31 @@ class SummonerController extends AbstractController
      */
     public function show(string $name): Response
     {
-        $platform = $this->requestStack->getSession()->get('platform');
+        $platform = $this->requestStack->getSession()->get('platform'); // Recup la platform en session
+
         $summoner   = $this->summonerApi->getSummoner($platform, $name);
         if (is_null($summoner)) {
             $this->addFlash('summoner', 'Summoners Non trouvé');
-
             return $this->redirectToRoute('summoner_index');
         }
         
-        $match = $this->matchApi->getMatchs($summoner["puuid"],$platform);
-        dump($match);
+        $matchsDetail       = $this->matchApi->getMatchs($summoner["puuid"],$platform);
         $infoSummonerleague = $this->leagueApi->getInfoSummoner($platform, $summoner['id']);
-        $leagueSummoner = $this->leagueApi->getLeagueId($platform, $infoSummonerleague[0]['leagueId']);
-        $leagues = $this->trieParRank($leagueSummoner['entries']);
+        $leagueSummoner     = $this->leagueApi->getLeagueId($platform, $infoSummonerleague[0]['leagueId']);
+        $leagues            = $this->trieParRank($leagueSummoner['entries']);
         $this->descendingSort($leagues[$infoSummonerleague[0]['rank']], "leaguePoints");
 
+        $matchSummoner = [];
+        foreach ($matchsDetail as $matchId => $data) {
+            $matchSummoner[$matchId] = $data["info"]["participants"][array_search($summoner["puuid"], $data["metadata"]["participants"])];
+        }
+        dump($matchsDetail, $summoner, $matchSummoner);
         return $this->render('summoner/show.html.twig', [
             'summoner'              => $summoner,
             'infoSummonerleague'    => $infoSummonerleague[0],
-            'leagues'                => $leagues[$infoSummonerleague[0]['rank']]
+            'leagues'               => $leagues[$infoSummonerleague[0]['rank']],
+            'matchsDetail'          => $matchsDetail,
+            "matchSummoner"         => $matchSummoner
         ]);
     }
 
@@ -133,4 +140,6 @@ class SummonerController extends AbstractController
         }
         return $league;
     }
+
+
 }
