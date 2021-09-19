@@ -17,6 +17,7 @@ class ItemController extends AbstractController
     /**
      * ItemController constructor.
      * @param ItemApi $itemApi
+     * @return
      */
     public function __construct(ItemApi $itemApi)
     {
@@ -26,6 +27,7 @@ class ItemController extends AbstractController
 
     /**
      * @Route("/item", name="item_index")
+     * @return Response
      */
     public function index(): Response
     {

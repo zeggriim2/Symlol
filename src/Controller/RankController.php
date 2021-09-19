@@ -65,6 +65,10 @@ class RankController extends AbstractController
         ]);
     }
 
+    /**
+     * @param array $data
+     * @param string $field
+     */
     private function ascendingSort(array &$data, string $field)
     {
         usort($data, function ($item1, $item2) use ($field) {
@@ -72,6 +76,10 @@ class RankController extends AbstractController
         });
     }
 
+    /**
+     * @param array $data
+     * @param string $field
+     */
     private function descendingSort(array &$data, string $field)
     {
         usort($data, function ($item1, $item2) use ($field) {
@@ -79,6 +87,9 @@ class RankController extends AbstractController
         });
     }
 
+    /**
+     * @param $data
+     */
     private function addElementInSession($data)
     {
         $session = $this->requestStack->getSession();

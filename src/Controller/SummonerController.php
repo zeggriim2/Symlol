@@ -6,7 +6,6 @@ use App\Form\SummonerType;
 use App\Service\API\LOL\LeagueApi;
 use App\Service\API\LOL\MatchApi;
 use App\Service\API\LOL\SummonerApi;
-use Doctrine\DBAL\Abstraction\Result;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -109,6 +108,10 @@ class SummonerController extends AbstractController
         ]);
     }
 
+    /**
+     * @param array $data
+     * @param string $field
+     */
     private function descendingSort(array &$data, string $field)
     {
         usort($data, function ($item1, $item2) use ($field) {
@@ -116,6 +119,10 @@ class SummonerController extends AbstractController
         });
     }
 
+    /**
+     * @param array $datas
+     * @return array|null
+     */
     private function trieParRank(array $datas): ?array
     {
         $league = [];

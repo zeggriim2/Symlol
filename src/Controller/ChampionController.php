@@ -205,11 +205,18 @@ class ChampionController extends AbstractController
     }
 
 
+    /**
+     * @return int
+     */
     private function randomColorPart(): int
     {
         return mt_rand(0, 255);
     }
 
+    /**
+     * @param int $opacity
+     * @return string
+     */
     private function randomColor(int $opacity = 0): string
     {
         $valOpacity = $opacity ? ",$opacity" : "";
@@ -217,12 +224,25 @@ class ChampionController extends AbstractController
             . " $valOpacity)";
     }
 
+    /**
+     * @param string $name
+     * @return bool
+     */
     private function checkNameChampion(string $name): bool
     {
         $nameChampion = $this->championApi->getAllNameChampion();
         return in_array(ucfirst($name), $nameChampion);
     }
 
+    /**
+     * @param string $type
+     * @param array $data
+     * @param $label
+     * @param $datasetLabel
+     * @param string $title
+     * @param string $backgroundColor
+     * @return Chart
+     */
     private function buildChart(
         string $type,
         array $data,

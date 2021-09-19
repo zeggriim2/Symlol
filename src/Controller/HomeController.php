@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Service\API\LOL\BaseApi;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\FormBuilder;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
@@ -90,6 +89,10 @@ class HomeController extends AbstractController
         ]);
     }
 
+    /**
+     * @param string $name
+     * @param $value
+     */
     private function changeVersionSession(string $name, $value)
     {
         $this->session->set($name, $value);

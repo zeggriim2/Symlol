@@ -5,7 +5,6 @@ namespace App\Controller;
 use App\Entity\Suggestion;
 use App\Form\SuggestionType;
 use App\Repository\SuggestionRepository;
-use Doctrine\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
