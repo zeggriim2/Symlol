@@ -24,6 +24,9 @@
                         {% endif %}
                     {% endfor %}
                     {# {{ dump(matchDetail.info) }} #}
+                    {% set seconde = (matchDetail.info.gameDuration / 1000) |round(0, 'floor')  %}
+                    {% set matchSeconde = seconde % 60 %}
+                    {% set matchMinute = (seconde / 60)|round(0,'floor') %}
                     {% set matchDetailInfo = matchDetail.info.participants[matchIdSummoner] %}
                     {# {{  dump(matchDetail.info.participants[matchIdSummoner]) }} #}
                     <div class="gameContent {% if matchDetailInfo.win %} victoire {% else %} defaite {% endif %} mb-2">
@@ -31,7 +34,7 @@
                             <div class="gameType">{{ matchDetail.info.gameMode }}</div>
                             <div class="bar"></div>
                             <div class="gameResult">{% if matchDetailInfo.win %} Victoire {% else %} Defaite {% endif %}</div>
-                            <div class="gameLength">18:14</div>
+                            <div class="gameLength">{{ matchMinute|trim }}:{{ matchSeconde|trim|number_format(0, '.', ' ') }}</div>
                         </div>
                         <div class="gameKDA">
                             <div class="KDA">
