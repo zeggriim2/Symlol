@@ -33,7 +33,7 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path('app_changeSession') }}">{{ app.session.get('version') }}</a>
                 </li>
-                {% if app.user %}
+                {% if app.user is not null %}
                     <li class="nav-item">
                         <a class="nav-link" href="{{ path('suggestion_list') }}">Suggestion</a>
                     </li>
