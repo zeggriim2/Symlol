@@ -2,6 +2,7 @@
 
 namespace App\EventSubscriber;
 
+use App\Entity\Suggestion;
 use App\Entity\User;
 use EasyCorp\Bundle\EasyAdminBundle\Event\BeforeEntityPersistedEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
@@ -36,4 +37,6 @@ class EasyAdminSubscriber implements EventSubscriberInterface
         $password = $entity->getPassword();
         $entity->setPassword($this->hasher->hashPassword($entity,$password));
     }
+
+
 }
