@@ -33,7 +33,7 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ path('app_changeSession') }}">{{ app.session.get('version') }}</a>
                 </li>
-                {% if app.user %}
+                {% if app.user is not null %}
                     <li class="nav-item">
                         <a class="nav-link" href="{{ path('suggestion_list') }}">Suggestion</a>
                     </li>
@@ -41,6 +41,11 @@
             </ul>
             <ul class="nav navbar-nav">
                 {% if app.user is not null %}
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('admin') }}">Admin</a>
+                        </li>
+                    {% endif %}
                     <li class="nav-item">
                         <a class="nav-link" href="{{ path('app_logout') }}">Logout</a>
                     </li>
