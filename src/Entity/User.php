@@ -57,6 +57,11 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->suggestions = new ArrayCollection();
     }
 
+    public function __toString()
+    {
+        return (string) $this->getEmail();
+    }
+
     public function getId(): ?int
     {
         return $this->id;
