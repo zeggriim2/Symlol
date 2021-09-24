@@ -35,6 +35,7 @@ class ChampionController extends AbstractController
     {
         $this->championApi = $championApi;
         $this->logger = $logger;
+        
     }
 
 
