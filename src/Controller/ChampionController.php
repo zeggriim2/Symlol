@@ -34,7 +34,6 @@ class ChampionController extends AbstractController
     public function __construct(ChampionApi $championApi, LoggerInterface $logger){
         $this->championApi = $championApi;
         $this->logger = $logger;
-
     }
 
 
