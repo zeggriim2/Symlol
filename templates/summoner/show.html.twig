@@ -14,7 +14,43 @@
                     V {{ infoSummonerleague.losses }}D</h5>
             </div>
         </div>
-        <div class="row justify-content-end">
+        <div class="row">
+            <div class="col-5">
+                {% for matchDetail in matchsDetail %}
+                    {% set matchIdSummoner = "" %}
+                    {% for key, value in matchDetail.metadata['participants'] %}
+                        {% if value == summoner.puuid %}
+                            {% set matchIdSummoner = key %}                            
+                        {% endif %}
+                    {% endfor %}
+                    {# {{ dump(matchDetail.info) }} #}
+                    {% set seconde = (matchDetail.info.gameDuration / 1000) |round(0, 'floor')  %}
+                    {% set matchSeconde = seconde % 60 %}
+                    {% set matchMinute = (seconde / 60)|round(0,'floor') %}
+                    {% set matchDetailInfo = matchDetail.info.participants[matchIdSummoner] %}
+                    {# {{  dump(matchDetail.info.participants[matchIdSummoner]) }} #}
+                    <div class="gameContent {% if matchDetailInfo.win %} victoire {% else %} defaite {% endif %} mb-2">
+                        <div class="gameInfo">
+                            <div class="gameType">{{ matchDetail.info.gameMode }}</div>
+                            <div class="bar"></div>
+                            <div class="gameResult">{% if matchDetailInfo.win %} Victoire {% else %} Defaite {% endif %}</div>
+                            <div class="gameLength">{{ matchMinute|trim }}:{{ matchSeconde|trim|number_format(0, '.', ' ') }}</div>
+                        </div>
+                        <div class="gameKDA">
+                            <div class="KDA">
+                                <span class="kill">{{ matchDetailInfo.kills }}</span> /
+                                <span class="death">{{ matchDetailInfo.deaths }}</span> /
+                                <span class="assist">{{ matchDetailInfo.assists }}</span>
+                            </div>
+                            <div class="multiKill"></div>
+                        </div>
+                        <div class="gameItems">
+                            {# <img src="" alt="">
+                            <img src="https://ddragon.leagueoflegends.com/cdn/11.18.1/img/item/1029.png" class="card-img-top" alt="..." draggable="true"> #}
+                        </div>
+                    </div>
+                {% endfor %}                
+            </div>
             <div class="col-7 col align-self-end">
                 <table id="table_league_summoner" class="table table-striped" style="width:100%">
                     <thead>

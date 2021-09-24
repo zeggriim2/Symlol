@@ -2,11 +2,11 @@
 
 namespace App\Service\API\LOL;
 
-class LeagueApi 
+class LeagueApi
 {
     private const URL = "https://{platform}.api.riotgames.com/lol/league/v4/entries/by-summoner/{encryptedSummonerId}";
     private const URL_LEAGUE_ID = "https://{platform}.api.riotgames.com/lol/league/v4/leagues/{leagueId}";
-
+  
     /**
      * @var BaseApi
      */
@@ -14,6 +14,8 @@ class LeagueApi
 
     /**
      * LeagueApi constructor.
+     *
+     * @param BaseApi $baseApi
      */
     public function __construct(BaseApi $baseApi)
     {
@@ -35,21 +37,13 @@ class LeagueApi
         if (!$this->baseApi->checkPlatform($platform)) {
             return null;
         }
-        $url = $this->constructUrl(self::URL, ['platform' => $platform, 'encryptedSummonerId' => $encryptedSummonerId]);
-        return $this->baseApi->callApi($url, "GET", [
-            'headers' => [
-                'X-Riot-Token' => $this->baseApi->apiKey,
+        $url = $this->baseApi->constructUrl(
+            self::URL,
+            [
+              'platform' => $platform,
+                'encryptedSummonerId' => $encryptedSummonerId
             ]
-        ]);
-    }
-
-    public function getLeagueId(string $platform, string $leagueId): ?array
-    {
-        if (!$this->baseApi->checkPlatform($platform)) {
-            return null;
-        }
-
-        $url = $this->constructUrl(self::URL_LEAGUE_ID, ['platform' => $platform, 'leagueId' => $leagueId]);
+        );
         return $this->baseApi->callApi($url, "GET", [
             'headers' => [
                 'X-Riot-Token' => $this->baseApi->apiKey,
@@ -58,15 +52,23 @@ class LeagueApi
     }
 
     /**
-     * @param string $url
-     * @param array<string> $params
-     * @return string
+     * Récupère l'ID de la League
+     *
+     * @param string $platform
+     * @param string $leagueId
+     * @return array|null
      */
-    protected function constructUrl(string $url, array $params): string
+    public function getLeagueId(string $platform, string $leagueId): ?array
     {
-        foreach ($params as $key => $param) {
-            $url = str_replace("{{$key}}", $param, $url);
+        if (!$this->baseApi->checkPlatform($platform)) {
+            return null;
         }
-        return $url;
+
+        $url = $this->baseApi->constructUrl(self::URL_LEAGUE_ID, ['platform' => $platform, 'leagueId' => $leagueId]);
+        return $this->baseApi->callApi($url, "GET", [
+            'headers' => [
+                'X-Riot-Token' => $this->baseApi->apiKey,
+            ]
+        ]);
     }
 }

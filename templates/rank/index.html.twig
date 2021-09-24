@@ -3,20 +3,71 @@
 {% block title %}Hello RankController!{% endblock %}
 
 {% block body %}
-<div class="container">
-    {{ form_start(formRank) }}
-    <div class="my-custom-class-for-errors">
-        {{ form_errors(formRank) }}
-    </div>
+    <div class="container">
+        {{ form_start(formRank) }}
+        <div class="my-custom-class-for-errors">
+            {{ form_errors(formRank) }}
+        </div>
 
-    <div class="row">
-        <div class="col">
-            {{ form_row(formRank.queue) }}
+        <div class="row">
+            <div class="col" id="some-custom-id">
+                {{ form_row(formRank.league) }}
+            </div>
+            <div class="col">
+                {{ form_row(formRank.queue) }}
+            </div>
+            <div class="col" id="some-custom-id">
+                {{ form_row(formRank.platform) }}
+            </div>
         </div>
-        <div class="col" id="some-custom-id">
-            {{ form_row(formRank.platform) }}
-        </div>
+        {{ form_end(formRank) }}
+        {% if ladderChallengers %}
+            {% if title %}
+                {% if title.queue == 'RANKED_SOLO_5x5'%}
+                    {% set sessionQueue = 'Solo' %}
+                {% elseif  title.queue == 'RANKED_FLEX_SR' %}
+                    {% set sessionQueue = 'Flex' %}
+                {% endif %}
+            {% endif %}
+            <h2>Classement {{ sessionQueue }} <span class="title_league">"{{ title.league|capitalize }}"</span></h2>
+            <table id="table_ladder" class="table " style="width:100%">
+                <thead>
+                <tr>
+                    <th scope="col">Place</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">LP</th>
+                    <th scope="col">Rank</th>
+                    <th scope="col">Wins</th>
+                    <th scope="col">Losses</th>
+                    <th scope="col">Win Ratio</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for ladderChallenger in ladderChallengers %}
+                    {# {{ dump(ladderChallenger) }} #}
+                    <tr>
+                        <th scope="row">{{ loop.index }}</th>
+                        <td><a class="link-info"
+                               href="{{ path('summoner_show',{'name': ladderChallenger.summonerName}) }}">{{ ladderChallenger.summonerName |capitalize }}</a>
+                        </td>
+                        <td>{{ ladderChallenger.leaguePoints }}</td>
+                        <td>{{ title.league }} {{ ladderChallenger.rank }}</td>
+                        <td>{{ ladderChallenger.wins }}</td>
+                        <td>{{ ladderChallenger.losses }}</td>
+                        {% set total = ladderChallenger.wins + ladderChallenger.losses %}
+                        {% set ratio = ((100 * ladderChallenger.wins) / total)|round %}
+                        <td>
+                            <div class="progress">
+                                <div class="progress-bar progress-bar-striped" role="progressbar"
+                                     style="width: {{ ratio }}%" aria-valuenow="{{ ratio }}" aria-valuemin="0"
+                                     aria-valuemax="100">{{ ratio }}%
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
     </div>
-    {{ form_end(formRank) }}
-</div>
 {% endblock %}

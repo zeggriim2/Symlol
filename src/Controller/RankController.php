@@ -24,6 +24,8 @@ class RankController extends AbstractController
 
     /**
      * RankController constructor.
+     * @param RequestStack $requestStack
+     * @param RankApi $rankApi
      */
     public function __construct(RequestStack $requestStack, RankApi $rankApi)
     {
@@ -34,43 +36,39 @@ class RankController extends AbstractController
 
     /**
      * @Route("/rank", name="rank_index")
+     * @param Request $request
+     * @return Response
      */
     public function index(Request $request): Response
     {
         $form = $this->createForm(RankType::class);
         $form->handleRequest($request);
 
+        $ladderChallengers = [];
+        $data = [];
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
-            $keyData = array_keys($data);
-            $this->requestStack->getSession()->set($keyData[0], $data['queue']);
-            $this->requestStack->getSession()->set($keyData[1], $data['platform']);
-            return $this->redirectToRoute("rank_ladder");
+            $ladderChallengers = $this->rankApi->getLadder(
+                $data['platform'],
+                $data['queue'],
+                $data['league']
+            )['entries'];
+            $this->descendingSort($ladderChallengers, 'leaguePoints');
+
+            $this->addElementInSession($data['platform']);
         }
 
         return $this->render('rank/index.html.twig', [
-            'formRank' => $form->createView(),
+            'formRank'          => $form->createView(),
+            'ladderChallengers' => $ladderChallengers,
+            'title'             => $data
         ]);
     }
 
     /**
-     *
-     * @Route("/rank/ladder", name="rank_ladder")
+     * @param array $data
+     * @param string $field
      */
-    public function ladder(): Response
-    {
-        $queue = $this->requestStack->getSession()->get('queue');
-        $platform = $this->requestStack->getSession()->get('platform');
-
-        $ladderChallengers = $this->rankApi->getChallenger($platform, $queue)['entries'];
-
-        $this->descendingSort($ladderChallengers, 'leaguePoints');
-
-        return $this->render('rank/ladder.html.twig', [
-            'ladderChallengers' => $ladderChallengers
-        ]);
-    }
-
     private function ascendingSort(array &$data, string $field)
     {
         usort($data, function ($item1, $item2) use ($field) {
@@ -78,10 +76,23 @@ class RankController extends AbstractController
         });
     }
 
+    /**
+     * @param array $data
+     * @param string $field
+     */
     private function descendingSort(array &$data, string $field)
     {
         usort($data, function ($item1, $item2) use ($field) {
             return $item2[$field] <=> $item1[$field];
         });
+    }
+
+    /**
+     * @param $data
+     */
+    private function addElementInSession($data)
+    {
+        $session = $this->requestStack->getSession();
+        $session->set('platform', $data);
     }
 }

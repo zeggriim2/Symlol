@@ -44,24 +44,12 @@ class SummonerApi
      */
     public function getSummoner(string $platform, string $name)
     {
-        $url = $this->constructUrl(self::URL, ['platform' => $platform, 'name' => $name]);
+
+        $url = $this->baseApi->constructUrl(self::URL, ['platform' => $platform, 'name' => $name]);
         return $this->baseApi->callApi($url, "GET", [
             'headers' => [
                 'X-Riot-Token' => $this->baseApi->apiKey,
             ]
         ]);
-    }
-
-    /**
-     * @param string $url
-     * @param array<string> $params
-     * @return string
-     */
-    protected function constructUrl(string $url, array $params)
-    {
-        foreach ($params as $key => $param) {
-            $url = str_replace("{{$key}}", $param, $url);
-        }
-        return $url;
     }
 }

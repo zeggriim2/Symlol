@@ -4,6 +4,7 @@ $primary: #f68d2a;
 // Variable
 
 @import "~bootstrap/scss/bootstrap";
+@import "summoner";
 @import "custom";
 // Fixer son footer en bas de page avec Flexbox
 
@@ -20,4 +21,17 @@ body{
 
 .progress{
   background-color: $progress-red;
+  color: blue;
+}
+
+.progress-bar{
+  background-color: $blue;
+}
+
+.title_league{
+  color: $primary;
+}
+
+.case{
+  height: 110px;
 }

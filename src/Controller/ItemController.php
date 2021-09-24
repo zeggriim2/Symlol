@@ -16,6 +16,8 @@ class ItemController extends AbstractController
 
     /**
      * ItemController constructor.
+     * @param ItemApi $itemApi
+     * @return
      */
     public function __construct(ItemApi $itemApi)
     {
@@ -25,16 +27,16 @@ class ItemController extends AbstractController
 
     /**
      * @Route("/item", name="item_index")
+     * @return Response
      */
     public function index(): Response
     {
         $items = $this->itemApi->getAllItem();
         $nameItems = [];
         foreach ($items['data'] as $item) {
-//            $nameItems[] = ['name'  => $item['name']];
             $nameItems[] = $item['name'];
         }
-//        $nameItems = json_encode($nameItems, JSON_UNESCAPED_UNICODE );
+
         return $this->render('item/index.html.twig', [
             'items'     => $items,
             'nameItems' => $nameItems

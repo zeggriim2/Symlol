@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+    Création d'un suggestion
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        {{ form_start(formSuggestion) }}
+            {{ form_widget(formSuggestion) }}
+            <button type="submit" class="btn btn-outline-primary">Soumettre</button>
+        {{ form_end(formSuggestion) }}
+    </div>
+{% endblock %}
+
+
+

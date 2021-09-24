@@ -13,6 +13,7 @@ class ItemApi
 
     /**
      * ItemApi constructor.
+     * @param BaseApi $baseApi
      */
     public function __construct(BaseApi $baseApi)
     {
@@ -31,10 +32,10 @@ class ItemApi
     public function getAllItem(): ?array
     {
         $data = [
-            'version'   => $this->baseApi->getLastVersion(),
+            'version'   => $this->baseApi->sessionVersion,
             'lang'      => $this->baseApi->lang
         ];
         $url = $this->baseApi->constructUrl(self::URL_ITEMS, $data);
-        return $this->baseApi->callApi($url);
+        return $this->baseApi->callApiCache($url);
     }
 }

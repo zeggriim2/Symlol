@@ -5,7 +5,7 @@ Repository: League Of Legends global statistics website. Check your Summoner.
 ------
 ### Version des différents outils utilisé.
 
-PHP 7.4,
+PHP >=7.4,
 YARN 1.14,
 NODE 14.17(LTS à ce jour), 
 BOOTSTRAP 5
@@ -21,9 +21,7 @@ BOOTSTRAP 5
 * Invocateur : 
   * Affichage de la league rattaché par l'invocateur
   * Infos de l'invocateur
+* Ajout d'une rubrique de suggestion d'idée sur la platform
 
-------
-#### A Faire
-
-* Créer un handle pour gérer ces propres Log (Fait partiellement)
-* Réaliser un système de pagination dans la liste des champions
+#### Visuel
+![dashboard statistique](https://user-images.githubusercontent.com/51760726/127852433-3fb22009-8047-4984-b23f-363f49350b63.PNG)
