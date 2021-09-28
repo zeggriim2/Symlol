@@ -25,6 +25,7 @@ class SummonerApi
 
     /**
      * SummonerApi constructor.
+     * @param BaseApi $baseApi
      */
     public function __construct(BaseApi $baseApi)
     {

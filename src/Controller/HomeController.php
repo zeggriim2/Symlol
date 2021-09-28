@@ -16,7 +16,7 @@ class HomeController extends AbstractController
 
     /**
      *
-     * @var SessionInterface 
+     * @var SessionInterface
      */
     private $session;
 
@@ -46,7 +46,7 @@ class HomeController extends AbstractController
      */
     public function changeSession(Request $request, BaseApi $baseApi)
     {
-        $versions = $baseApi->getAllVersion();     
+        $versions = $baseApi->getAllVersion();
 
         $form = $this->createFormBuilder()
                     ->add("versions", ChoiceType::class, [
@@ -58,14 +58,14 @@ class HomeController extends AbstractController
                     ->getForm()
         ;
         $form->handleRequest($request);
-        if($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) {
             // On récupère les données
             $version = $form->getData();
             $this->changeVersionSession('version', $version['versions']);
             return $this->redirect($request->request->get('referer'));
         }
-        
-        return $this->render("home/changeVersion.html.twig",[
+
+        return $this->render("home/changeVersion.html.twig", [
             'form' => $form->createView()
         ]);
     }
@@ -78,13 +78,13 @@ class HomeController extends AbstractController
     {
         $versions = $baseApi->getAllVersion();
         // Mise en Session de la derniere version
-    
-        if(!$this->session->has('version')){
+
+        if (!$this->session->has('version')) {
             $this->changeVersionSession("version", $versions[0]);
             // $this->session->set("version", $versions[0]);
         }
-        
-        return $this->render('main/__navbar.html.twig',[
+
+        return $this->render('main/__navbar.html.twig', [
             'versions' => $versions
         ]);
     }

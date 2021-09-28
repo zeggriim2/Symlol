@@ -23,7 +23,7 @@ class MatchApi
         "JP1"   => "ASIA",
         "KR"    => "ASIA"
     ];
-  
+
 
     /**
      * @var BaseApi
@@ -51,7 +51,7 @@ class MatchApi
      * @throws \Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface
      */
     public function getMatchs(string $puuid, string $platform, int $count = 20): ?array
-    {        
+    {
         $url = $this->baseApi->constructUrl(
             self::URL,
             [
@@ -67,7 +67,7 @@ class MatchApi
             ]
         ]);
 
-        if (!is_null($matchsId)){
+        if (!is_null($matchsId)) {
             foreach ($matchsId as $matchId) {
                 $detailMatch[$matchId] = $this->getMatchDetail($matchId, $platform);
             }
@@ -98,7 +98,7 @@ class MatchApi
             self::URL_MATCH_TIMELINE,
             [
                 'region'    => self::REGION[$platform],
-                'matchId'   => $matchId            
+                'matchId'   => $matchId
             ]
         );
 
