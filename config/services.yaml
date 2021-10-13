@@ -6,6 +6,7 @@
 parameters:
     locale: 'fr'
     APIKEY: '%env(APIKEY)%'
+    logo_world: "/uploads/logo"
 services:
     # default configuration for services in *this* file
     _defaults:

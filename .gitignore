@@ -33,3 +33,7 @@ yarn-error.log
 /phpcs.xml.old
 ###< squizlabs/php_codesniffer ###
 /log
+
+###> upload Logo ###
+/public/uploads/*
+###> upload Logo ###

@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello WorldController!{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+    .list-match{
+        background: none;
+        list-style-type: none;
+    }
+
+    .match-row .badge{
+        font-size: 1.3rem;
+    }
+
+    .match-row{
+        height: 60px;
+        background-color: #f4f4f4;
+    }
+    {# ul{
+        display: block;
+    } #}
+
+    li{
+        
+    }
+
+    .badge{
+        background-color: #718cff;
+    }
+    </style>
+    
+{% endblock %}
+
+{% block body %}
+<div class="container-fluid mt-5">
+    <ul class="list-match">
+        <li>
+            <div class="match-row">
+                <div class="badge">14h00</div>
+                <div class="versus-part">
+                    <div class="team">
+                        <div class="team-name">Toto</div>
+                        <div class="team-logo">
+                            <img src="{{ asset('uploads/logo/100THIEVES.png') }}" alt="toto" width="50" height="50">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </li>
+    </ul>
+</div>
+{% endblock %}
