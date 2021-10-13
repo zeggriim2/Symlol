@@ -14,12 +14,15 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-#[AsCommand(
-    name: 'app:generateGame',
-    description: 'Add a short description for your command',
-)]
+//#[AsCommand(
+//    name: 'outil:generateGame',
+//    description: 'Add a short description for your command',
+//)]
 class GenerateGameCommand extends Command
 {
+
+    protected static $defaultName = "outil:generateGame";
+    protected static $defaultDescription = "Genere les games entre les différentes equipe par groupe associé";
 
     private $manager;
 
@@ -35,18 +38,20 @@ class GenerateGameCommand extends Command
     {
         $twoLegged = $input->getArgument('twoLegged');
         $groups = $this->manager->getRepository(Group::class)->findAll();
-        
+
         foreach ($groups as $group) {
             $equipes = $this->manager->getRepository(Equipe::class)->findBy(['groupe' => $group->getId()]);
-            // $equipe = $this->manager->getRepository(Equipe::class)->findGroupEquipe($group->getName());
             foreach ($equipes as $key => $equipe1) {
                 foreach ($equipes as $equipe2) {
                     if($equipe1->getId() != $equipe2->getId()){
-                        $game = new Game();
-                        $game->setEquipe1($equipe1);
-                        $game->setEquipe2($equipe2);
+                        if(!$this->manager->getRepository(Game::class)->duelExistBetweenTwoEquipe($equipe1, $equipe2)) {
+                            $game = new Game();
+                            $game->setEquipe1($equipe1)
+                                ->setEquipe2($equipe2)
+                            ;
 
-                        $this->manager->persist($game);
+                            $this->manager->persist($game);
+                        }
                     }
                     
                 }

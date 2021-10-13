@@ -2,8 +2,10 @@
 
 namespace App\Repository;
 
+use App\Entity\Equipe;
 use App\Entity\Game;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\AbstractQuery;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -17,6 +19,18 @@ class GameRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Game::class);
+    }
+
+    public function duelExistBetweenTwoEquipe(Equipe $equipe1, Equipe $equip2)
+    {
+        return $this->createQueryBuilder('g')
+                ->andWhere("g.equipe1 = :eq1")
+                ->andWhere("g.equipe2 = :eq2")
+                ->setParameter("eq1",$equipe1)
+                ->setParameter("eq2",$equip2)
+                ->getQuery()
+                ->getResult()
+            ;
     }
 
     // /**

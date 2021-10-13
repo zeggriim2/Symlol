@@ -36,4 +36,5 @@ yarn-error.log
 
 ###> upload Logo ###
 /public/uploads/*
+!/public/uploads/logo/FUNFPLUSPHOENIX.png
 ###> upload Logo ###
