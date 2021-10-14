@@ -8,7 +8,6 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
-use Faker\Factory;
 
 class EquipeFixtures extends Fixture implements DependentFixtureInterface, FixtureGroupInterface
 {
@@ -82,7 +81,6 @@ class EquipeFixtures extends Fixture implements DependentFixtureInterface, Fixtu
     public function load(ObjectManager $manager)
     {
         $groups = $manager->getRepository(Group::class)->findAll();
-        $faker = Factory::create("fr_FR");
 
 
         foreach ($groups as $key => $group){
@@ -91,7 +89,7 @@ class EquipeFixtures extends Fixture implements DependentFixtureInterface, Fixtu
                     $equipe = new Equipe();
                     $equipe->setName($nameEquipe)
                         ->setGroupe($group)
-                        ->setLogo("FUNFPLUSPHOENIX.png")
+                        ->setLogo("FUNPLUSPHOENIX.png")
                     ;
                     $manager->persist($equipe);
                     unset($this->EQUIPE[$key]);
