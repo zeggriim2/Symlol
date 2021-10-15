@@ -59,7 +59,7 @@ class Game
         return $this->id;
     }
 
-    public function getEquipe1(): ?Equipe
+    public function getEquipe1(): Equipe
     {
         return $this->equipe1;
     }
@@ -71,7 +71,7 @@ class Game
         return $this;
     }
 
-    public function getEquipe2(): ?Equipe
+    public function getEquipe2(): Equipe
     {
         return $this->equipe2;
     }

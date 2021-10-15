@@ -2,10 +2,11 @@
 $progress-red: #ee5a52;
 $primary: #f68d2a;
 // Variable
-
+@import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;1,400&display=swap');
 @import "~bootstrap/scss/bootstrap";
 @import "summoner";
 @import "custom";
+@import "world";
 // Fixer son footer en bas de page avec Flexbox
 
 

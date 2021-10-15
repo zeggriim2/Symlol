@@ -86,12 +86,12 @@ class EquipeFixtures extends Fixture implements DependentFixtureInterface, Fixtu
         foreach ($groups as $key => $group){
             foreach ($this->EQUIPE as $nameEquipe => $data) {
                 if ($group->getName() === $data['group']){
-                    $equipe = new Equipe();
-                    $equipe->setName($nameEquipe)
+                    $equip = new Equipe();
+                    $equip->setName($nameEquipe)
                         ->setGroupe($group)
                         ->setLogo("FUNPLUSPHOENIX.png")
                     ;
-                    $manager->persist($equipe);
+                    $manager->persist($equip);
                     unset($this->EQUIPE[$key]);
                 }
             }

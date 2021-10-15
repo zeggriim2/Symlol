@@ -2,6 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Game;
+use App\Repository\GameRepository;
+use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -10,11 +13,20 @@ class WorldController extends AbstractController
 {
     /**
      * @Route("/world", name="world_index")
+     * @param GameRepository $gameRepository
+     * @return Response
      */
-    public function index(): Response
+    public function index(
+        GameRepository $gameRepository
+    ): Response
     {
+//        $games = $this->getDoctrine()->getRepository(Game::class)->findAll();
+        $games = $gameRepository->findBy([],['dateGame' => 'ASC']);
+//        foreach ($games as $game){
+//            dump($game->getDateGame()->format("d/m/Y H:i:s"));
+//        }
         return $this->render('world/index.html.twig', [
-            'controller_name' => 'WorldController',
+            'games' => $games,
         ]);
     }
 }
