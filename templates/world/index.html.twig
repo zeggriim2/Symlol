@@ -31,9 +31,9 @@
                                 </div>
                             </div>
                             <div class="score-versus">
-                                <div class="score ">{{ game.scoreEquipe1 }}</div>
+                                <div class="score {% if game.scoreEquipe1 %} winning {% endif %}">{{ game.scoreEquipe1 }}</div>
                                 <div class="score-vs">vs</div>
-                                <div class="score winning ">{{ game.scoreEquipe2 }}</div>
+                                <div class="score {% if game.scoreEquipe2 %} winning {% endif %}">{{ game.scoreEquipe2 }}</div>
                             </div>
                             <div class="team">
                                 <div class="team-logo">
