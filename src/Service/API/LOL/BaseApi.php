@@ -72,12 +72,12 @@ class BaseApi
         CacheInterface $cache,
         RequestStack $requestStack
     ) {
-        $this->httpClient   = $httpClient;
-        $this->apiLogger    = $apiLogger;
-        $this->apiKey       = $apiKey;
-        $this->lang         = "fr_FR";
-        $this->cache        = $cache;
-        $this->sessionVersion = $requestStack->getSession()->get('version');
+        $this->httpClient       = $httpClient;
+        $this->apiLogger        = $apiLogger;
+        $this->apiKey           = $apiKey;
+        $this->lang             = "fr_FR";
+        $this->cache            = $cache;
+        $this->sessionVersion   = $requestStack->getSession()->get('version');
     }
 
     public function getLastVersion(): string
