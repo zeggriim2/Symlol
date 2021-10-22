@@ -10,6 +10,7 @@ use EasyCorp\Bundle\EasyAdminBundle\Field\TextField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\ImageField;
 use EasyCorp\Bundle\EasyAdminBundle\Field\AssociationField;
 use EasyCorp\Bundle\EasyAdminBundle\Controller\AbstractCrudController;
+use EasyCorp\Bundle\EasyAdminBundle\Field\DateTimeField;
 
 class EquipeCrudController extends AbstractCrudController
 {
@@ -26,7 +27,9 @@ class EquipeCrudController extends AbstractCrudController
             TextField::new('name'),
             TextField::new('imageFile')->setFormType(VichImageType::class)->onlyWhenCreating()->onlyOnForms(),
             ImageField::new('logo')->setBasePath('/uploads/logo')->onlyOnIndex(),
-            AssociationField::new('groupe')
+            AssociationField::new('groupe'),
+            DateTimeField::new('createdAt')->onlyOnIndex(),
+            DateTimeField::new('updatedAt')->onlyOnIndex()
         ];
     }
 }
