@@ -1,0 +1,59 @@
+{% extends 'base.html.twig' %}
+
+{% set dateGame = '' %}
+
+{% block title %}Hello WorldController!{% endblock %}
+
+{% block body %}
+<div class="container-fluid mt-5">
+
+    <div class="row">
+        <div class="col-8">
+            <ul class="list-matchs-comp">
+                {% for game in games %}
+                    {% if game.dateGame | date('d/m/Y') != dateGame %}
+                        {% set dateGame = game.dateGame | date('d/m/Y')%}
+                        <h3 class="my-3 ms-4">{{ game.dateGame | date('D d F') }}</h3>
+                    {% endif %}
+                <li>
+                    <div class="match-row finished">
+                        {% if game.scoreEquipe1 != 0 or game.scoreEquipe2 != 0 %}
+                            <div class="badge">Terminé</div>
+                        {% else %}
+                            <div class="badge">{{ game.dateGame | date('H:i') }}</div>
+                        {% endif %}
+
+                        <div class="versus-part">
+                            <div class="team">
+                                <div class="team-name">{{ game.equipe1.name }}</div>
+                                <div class="team-logo">
+                                    <img src="{{ vich_uploader_asset(game.equipe1, "imageFile") }}" alt="{{ game.equipe1.name }}" width="50" height="50">
+                                </div>
+                            </div>
+                            <div class="score-versus">
+                                <div class="score {% if game.scoreEquipe1 %} winning {% endif %}">{{ game.scoreEquipe1 }}</div>
+                                <div class="score-vs">vs</div>
+                                <div class="score {% if game.scoreEquipe2 %} winning {% endif %}">{{ game.scoreEquipe2 }}</div>
+                            </div>
+                            <div class="team">
+                                <div class="team-logo">
+                                    <img src="{{ vich_uploader_asset(game.equipe2, "imageFile") }}" alt="DWG KIA" width="50" height="50">
+                                </div>
+                                <div class="team-name">{{ game.equipe1.name }}</div>
+                            </div>
+                        </div>
+                        <div class="tournament-part">
+                            {%  set group = "Groupe " ~ game.equipe1.groupe %}
+                            <div class="step" title="{{ group }}">{{ group }}</div>
+                            <div class="logo-tn">
+                                <img src="https://cdn.pandascore.co/images/league/image/297/220px-Worlds_2020.png" alt="Group A" width="40" height="100%">
+                            </div>
+                        </div>
+                    </div>
+                </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+</div>
+{% endblock %}

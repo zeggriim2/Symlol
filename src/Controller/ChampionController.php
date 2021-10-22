@@ -31,7 +31,8 @@ class ChampionController extends AbstractController
      * @param ChampionApi $championApi
      * @param LoggerInterface $logger
      */
-    public function __construct(ChampionApi $championApi, LoggerInterface $logger){
+    public function __construct(ChampionApi $championApi, LoggerInterface $logger)
+    {
         $this->championApi = $championApi;
         $this->logger = $logger;
     }
@@ -110,10 +111,6 @@ class ChampionController extends AbstractController
             }
         }
 
-//        if (isset($data)) {
-//            arsort($data);
-//        }
-
         $chartLabels = [];
         $chartColor = [];
         $chartData = [];
@@ -145,10 +142,9 @@ class ChampionController extends AbstractController
 
     /**
      * @Route("/champion/stats", name="statAll")
-     * @param ChartBuilderInterface $chartBuilder
      * @return Response
      */
-    public function statAll(ChartBuilderInterface $chartBuilder): Response
+    public function statAll(): Response
     {
         // Récupere tous les champion de LOL
         $champions = $this->championApi->getAllChampion()['data'];

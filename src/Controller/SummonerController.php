@@ -44,8 +44,7 @@ class SummonerController extends AbstractController
         LeagueApi $leagueApi,
         MatchApi $matchApi,
         RequestStack $requestStack
-    )
-    {
+    ) {
         $this->summonerApi = $summonerApi;
         $this->leagueApi = $leagueApi;
         $this->matchApi = $matchApi;
@@ -87,8 +86,8 @@ class SummonerController extends AbstractController
             $this->addFlash('summoner', 'Summoners Non trouvé');
             return $this->redirectToRoute('summoner_index');
         }
-        
-        $matchsDetail       = $this->matchApi->getMatchs($summoner["puuid"],$platform);
+
+        $matchsDetail       = $this->matchApi->getMatchs($summoner["puuid"], $platform);
         $infoSummonerleague = $this->leagueApi->getInfoSummoner($platform, $summoner['id']);
         $leagueSummoner     = $this->leagueApi->getLeagueId($platform, $infoSummonerleague[0]['leagueId']);
         $leagues            = $this->trieParRank($leagueSummoner['entries']);
@@ -147,6 +146,4 @@ class SummonerController extends AbstractController
         }
         return $league;
     }
-
-
 }
