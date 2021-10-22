@@ -20,11 +20,8 @@ class WorldController extends AbstractController
         GameRepository $gameRepository
     ): Response
     {
-//        $games = $this->getDoctrine()->getRepository(Game::class)->findAll();
         $games = $gameRepository->findBy([],['dateGame' => 'ASC']);
-//        foreach ($games as $game){
-//            dump($game->getDateGame()->format("d/m/Y H:i:s"));
-//        }
+        
         return $this->render('world/index.html.twig', [
             'games' => $games,
         ]);
