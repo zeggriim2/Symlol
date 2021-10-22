@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=GameRepository::class)
+ * @ORM\HasLifecycleCallbacks()
  */
 class Game
 {
@@ -47,9 +48,13 @@ class Game
      */
     private $createAt;
 
+    /**
+     * @ORM\Column(type="datetime_immutable")
+     */
+    private $updatedAt;
+
     public function __construct()
     {
-        $this->createAt = new \DateTimeImmutable();
         $this->ScoreEquipe1 = 0;
         $this->ScoreEquipe2 = 0;
     }
@@ -130,4 +135,30 @@ class Game
 
         return $this;
     }
+
+    public function getUpdatedAt(): ?\DateTimeImmutable
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(\DateTimeImmutable $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+    * @ORM\PrePersist
+    * @ORM\PreUpdate
+    */
+    public function updateTimesStamps():void
+    {
+        if($this->getCreateAt() === null) {
+            $this->setCreateAt(new \DateTimeImmutable());
+        }
+
+        $this->setUpdatedAt(new \DateTimeImmutable());
+    }
+
 }

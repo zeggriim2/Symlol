@@ -12,6 +12,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 /**
  * @ORM\Entity(repositoryClass=EquipeRepository::class)
  * @Vich\Uploadable
+ * @ORM\HasLifecycleCallbacks()
  */
 class Equipe
 {
@@ -54,6 +55,16 @@ class Equipe
      * @ORM\OneToMany(targetEntity=Game::class, mappedBy="equipe2")
      */
     private $gamesEquipe2;
+
+    /**
+     * @ORM\Column(type="datetime_immutable")
+     */
+    private $createdAt;
+
+    /**
+     * @ORM\Column(type="datetime_immutable")
+     */
+    private $updatedAt;
 
     public function __construct()
     {
@@ -184,5 +195,42 @@ class Equipe
         }
 
         return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeImmutable $createdAt): self
+    {
+        $this->createdAt = $createdAt;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeImmutable
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(\DateTimeImmutable $updatedAt): self
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * @ORM\PrePersist
+     * @ORM\PreUpdate
+     */
+    public function updateTimesStamps():void
+    {
+        if ($this->getCreatedAt() === null) {
+            $this->setCreatedAt(new \DateTimeImmutable());
+        }
+
+        $this->updatedAt = new \DateTimeImmutable();
     }
 }
