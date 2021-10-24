@@ -30,7 +30,6 @@ class GenerateGameCommand extends Command
     {
         $this
             ->addArgument('twoLegged',InputArgument::OPTIONAL,'match aller-retour',false)
-            ->addOption('option1', null, InputOption::VALUE_NONE, 'Option description')
         ;
     }
 
@@ -44,7 +43,7 @@ class GenerateGameCommand extends Command
             foreach ($equipes as $key => $equipe1) {
                 foreach ($equipes as $equipe2) {
                     if($equipe1->getId() != $equipe2->getId()){
-                        if(!$this->manager->getRepository(Game::class)->duelExistBetweenTwoEquipe($equipe1, $equipe2)) {
+                        if(!$this->duelExistBetweenTwoEquipe()) {
                             $game = new Game();
                             $game->setEquipe1($equipe1)
                                 ->setEquipe2($equipe2)
@@ -62,19 +61,15 @@ class GenerateGameCommand extends Command
         }
         $this->manager->flush();
         $io = new SymfonyStyle($input, $output);
-        // $arg1 = $input->getArgument('arg1');
-
-        // if ($arg1) {
-        //     $io->note(sprintf('You passed an argument: %s', $arg1));
-        // }
-
-        // if ($input->getOption('option1')) {
-        //     // ...
-        // }
 
         $io->success('You have a new command! Now make it your own! Pass --help to see your options.');
 
         return Command::SUCCESS;
+    }
+
+    private function duelExistBetweenTwoEquipe(Equipe $equipe1,Equipe $equipe2)
+    {
+        return $this->manager->getRepository(Game::class)->duelExistBetweenTwoEquipe($equipe1, $equipe2);
     }
 
     public function __construct(EntityManagerInterface $manager)
