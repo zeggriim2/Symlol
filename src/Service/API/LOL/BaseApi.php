@@ -4,6 +4,7 @@ namespace App\Service\API\LOL;
 
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Contracts\Cache\CacheInterface;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
@@ -52,9 +53,9 @@ class BaseApi
     private $cache;
 
     /**
-     * @var string
+     * @var RequestStack
      */
-    public $sessionVersion;
+    public $requestStack;
 
 
     /**
@@ -77,7 +78,7 @@ class BaseApi
         $this->apiKey       = $apiKey;
         $this->lang         = "fr_FR";
         $this->cache        = $cache;
-        $this->sessionVersion = $requestStack->getSession()->get('version');
+        $this->requestStack = $requestStack;
     }
 
     public function getLastVersion(): string
@@ -130,7 +131,7 @@ class BaseApi
      */
     public function checkPlatform(string $platform): bool
     {
-        return in_array($platform, self::PLATFORM);
+        return in_array(strtoupper($platform), self::PLATFORM);
     }
 
     /**
@@ -144,6 +145,11 @@ class BaseApi
             $url = str_replace("{{$key}}", $param, $url);
         }
         return $url;
+    }
+
+    public function getVersionSession()
+    {
+        return $this->requestStack->getSession()->get('version');
     }
 
     /**
