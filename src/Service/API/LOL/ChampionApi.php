@@ -28,7 +28,7 @@ class ChampionApi
     {
         $data = [
             // "version"   => $this->baseApi->getLastVersion(),
-            "version"   => $this->baseApi->sessionVersion,
+            "version"   => $this->baseApi->getVersionSession(),
             "lang"      => $this->baseApi->lang
         ];
 
@@ -48,7 +48,7 @@ class ChampionApi
     public function getChampion(string $name): ?array
     {
         $data = [
-            "version"   => $this->baseApi->sessionVersion,
+            "version"   => $this->baseApi->getVersionSession(),
             "lang"      => $this->baseApi->lang,
             "name"      => $name
         ];
