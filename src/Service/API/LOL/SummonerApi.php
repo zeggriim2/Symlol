@@ -5,18 +5,20 @@ namespace App\Service\API\LOL;
 class SummonerApi
 {
 
-    private const URL = "https://{platform}.api.riotgames.com/lol/summoner/v4/summoners/by-name/{name}";
+    private const URL_NAME = "https://{platform}.api.riotgames.com/lol/summoner/v4/summoners/by-name/{name}";
+    private const URL_ACCOUNT = "https://{platform}.api.riotgames.com/lol/summoner/v4/summoners/by-account/{encryptedAccountId}";
+
     public const PLATFORM = [
-        'EUW1'  => "EUW1", //Europe West
-        'BR1'   => "BR1", // Brazil
-        'EUN1'  => "EUN1", // Europe Nordic et East
-        'JP1'   => "JP1", // Japon
-        'KR'    => "KR", // Korea
-        'LA1'   => "LA1",
-        'LA2'   => "LA2",
-        'NA1'   => "NA1",
-        'OC1'   => "OC1",
-        'RU'    => "RU", // Russie
+        'EUW1' => "EUW1", //Europe West
+        'BR1' => "BR1", // Brazil
+        'EUN1' => "EUN1", // Europe Nordic et East
+        'JP1' => "JP1", // Japon
+        'KR' => "KR", // Korea
+        'LA1' => "LA1",
+        'LA2' => "LA2",
+        'NA1' => "NA1",
+        'OC1' => "OC1",
+        'RU' => "RU", // Russie
     ];
     /**
      * @var BaseApi
@@ -43,14 +45,18 @@ class SummonerApi
      * @throws \Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface
      * @throws \Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface
      */
-    public function getSummoner(string $platform, string $name)
+    public function getSummonerBySummonerName(string $platform, string $name)
     {
-
         $url = $this->baseApi->constructUrl(self::URL, ['platform' => $platform, 'name' => $name]);
         return $this->baseApi->callApi($url, "GET", [
             'headers' => [
                 'X-Riot-Token' => $this->baseApi->apiKey,
             ]
         ]);
+    }
+
+    public function getSummonerByAccountID()
+    {
+
     }
 }

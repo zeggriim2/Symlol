@@ -81,7 +81,7 @@ class SummonerController extends AbstractController
     {
         $platform = $this->requestStack->getSession()->get('platform'); // Recup la platform en session
 
-        $summoner   = $this->summonerApi->getSummoner($platform, $name);
+        $summoner   = $this->summonerApi->getSummonerBySummonerName($platform, $name);
         if (is_null($summoner)) {
             $this->addFlash('summoner', 'Summoners Non trouvé');
             return $this->redirectToRoute('summoner_index');
