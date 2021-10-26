@@ -10,7 +10,7 @@ use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 class LeagueApi
 {
     private const URL_CHALLENGER_LEAGUE_QUEUE = "https://{platform}.api.riotgames.com/lol/league/v4/challengerleagues/by-queue/{queue}";
-    private const URL_MASTER_LEAGUE_QUEUE ="https://{platform}.api.riotgames.com/lol/league/v4/masterleagues/by-queue/{queue}";
+    private const URL_MASTER_LEAGUE_QUEUE = "https://{platform}.api.riotgames.com/lol/league/v4/masterleagues/by-queue/{queue}";
     private const URL_GRANDMASTER_LEAGUE_QUEUE ="https://{platform}.api.riotgames.com/lol/league/v4/grandmasterleagues/by-queue/{queue}";
     private const URL_LEAGUE_SUMMONER_ID = "https://{platform}.api.riotgames.com/lol/league/v4/entries/by-summoner/{encryptedSummonerId}";
     private const URL_LEAGUE_ID = "https://{platform}.api.riotgames.com/lol/league/v4/leagues/{leagueId}";
