@@ -47,7 +47,7 @@ class SummonerApi
      */
     public function getSummonerBySummonerName(string $platform, string $name)
     {
-        $url = $this->baseApi->constructUrl(self::URL, ['platform' => $platform, 'name' => $name]);
+        $url = $this->baseApi->constructUrl(self::URL_NAME, ['platform' => $platform, 'name' => $name]);
         return $this->baseApi->callApi($url, "GET", [
             'headers' => [
                 'X-Riot-Token' => $this->baseApi->apiKey,
