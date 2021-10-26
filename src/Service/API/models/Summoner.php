@@ -3,13 +3,12 @@
 namespace App\Service\API\models;
 
 class Summoner {
-
+    private string $id;
     private string $accountId;
+    private string $puuid;
+    private string $name;
     private int $profileIconId;
     private int $revisionDate;
-    private string $name;
-    private string $id;
-    private string $puuid;
     private int $summonerLevel;
 
     /**
