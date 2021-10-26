@@ -6,7 +6,6 @@ use App\Service\API\models\MatchEntity;
 use App\Service\API\models\MatchTimeLine;
 use App\Service\API\models\Summoner;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
-use Symfony\Component\Serializer\SerializerInterface;
 
 class MatchApi
 {
@@ -67,7 +66,7 @@ class MatchApi
      * @return array|null
      */
     public function getListIdMatchBySummonerPuuid(
-        Summoner $summoner,
+        string $summonerPuuid,
         string $platform,
         int $start = 0,
         int $count = 20
@@ -77,7 +76,7 @@ class MatchApi
             self::URL_LIST_MATCH_BY_PUUID,
             [
                 "region" => self::REGION[strtoupper($platform)],
-                'puuid'     => $summoner->getPuuid(),
+                'puuid'     => $summonerPuuid,
                 'start'     => $start,
                 'count'     => $count,
             ]
@@ -90,7 +89,7 @@ class MatchApi
         ]);
     }
 
-    public function getMatch(
+    public function getMatchByMatchId(
         string $matchId,
         string $platform
     ): MatchEntity
@@ -111,6 +110,30 @@ class MatchApi
         return $this->denormalizer->denormalize($match, MatchEntity::class);
     }
 
+
+    public function getMatchTimeline(
+        string $matchId,
+        string $platform
+    ): MatchTimeLine
+    {
+        $url = $this->baseApi->constructUrl(
+            self::URL_MATCH_TIMELINE,
+            [
+                'region'    => self::REGION[strtoupper($platform)],
+                'matchId'   => $matchId
+            ]
+        );
+
+        $match = $this->baseApi->callApi($url, "GET", [
+            'headers' => [
+                'X-Riot-Token' => $this->baseApi->apiKey,
+            ]
+        ]);
+
+        return $this->denormalizer->denormalize($match, MatchTimeLine::class);
+    }
+
+
     /**
      * @param string $puuid
      * @param string $platform
@@ -126,7 +149,7 @@ class MatchApi
     ): ?array
     {
         $url = $this->baseApi->constructUrl(
-            self::URL,
+            self::URL_LIST_MATCH_BY_PUUID,
             [
                 'region'    => self::REGION[$platform],
                 'puuid'     => $puuid,
@@ -168,25 +191,5 @@ class MatchApi
         ]);
     }
 
-    public function getMatchTimeline(
-        string $matchId,
-        string $platform
-    ): MatchTimeLine
-    {
-        $url = $this->baseApi->constructUrl(
-            self::URL_MATCH_TIMELINE,
-            [
-                'region'    => self::REGION[strtoupper($platform)],
-                'matchId'   => $matchId
-            ]
-        );
 
-        $match = $this->baseApi->callApi($url, "GET", [
-            'headers' => [
-                'X-Riot-Token' => $this->baseApi->apiKey,
-            ]
-        ]);
-//        dd($match);
-        return $this->denormalizer->denormalize($match, MatchTimeLine::class);
-    }
 }
