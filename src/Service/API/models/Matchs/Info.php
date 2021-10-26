@@ -16,7 +16,7 @@ class Info {
     /**
      * @var Participant[]
      */
-    private $participants;
+    private array $participants;
     private string $platformId;
     private int $queueId;
     /**
