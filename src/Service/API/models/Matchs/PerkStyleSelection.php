@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Service\API\models\Match;
+namespace App\Service\API\models\Matchs;
 
 class PerkStyleSelection {
     private int $perk;

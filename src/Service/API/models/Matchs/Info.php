@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Service\API\models\Match;
+namespace App\Service\API\models\Matchs;
 
 class Info {
     private int $gameCreation;
@@ -16,7 +16,7 @@ class Info {
     /**
      * @var Participant[]
      */
-    private array $participants;
+    private $participants;
     private string $platformId;
     private int $queueId;
     /**

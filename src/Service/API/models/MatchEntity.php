@@ -2,10 +2,11 @@
 
 namespace App\Service\API\models;
 
-use App\Service\API\models\Match\Info;
-use App\Service\API\models\Match\Metadata;
+use App\Service\API\models\Matchs\Info;
+use App\Service\API\models\Matchs\Metadata;
 
-class Match {
+class MatchEntity
+{
 
     /**
      * @var Metadata
@@ -27,9 +28,9 @@ class Match {
 
     /**
      * @param Metadata $metadata
-     * @return Match
+     * @return MatchEntity
      */
-    public function setMetadata(Metadata $metadata): Match
+    public function setMetadata(Metadata $metadata): MatchEntity
     {
         $this->metadata = $metadata;
         return $this;
@@ -45,9 +46,9 @@ class Match {
 
     /**
      * @param Info $info
-     * @return Match
+     * @return MatchEntity
      */
-    public function setInfo(Info $info): Match
+    public function setInfo(Info $info): MatchEntity
     {
         $this->info = $info;
         return $this;
