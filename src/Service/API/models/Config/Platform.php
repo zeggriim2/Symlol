@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Service\API\models;
+namespace App\Service\API\models\Config;
 
 class Platform {
 
