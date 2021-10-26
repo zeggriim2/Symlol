@@ -2,6 +2,11 @@
 
 namespace App\Service\API\LOL;
 
+use App\Service\API\models\Summoner;
+use Symfony\Component\Serializer\Exception\ExceptionInterface;
+use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
+use Symfony\Component\Serializer\SerializerInterface;
+
 class SummonerApi
 {
 
@@ -23,25 +28,35 @@ class SummonerApi
         'OC1' => "OC1",
         'RU' => "RU", // Russie
     ];
+
     /**
      * @var BaseApi
      */
     private $baseApi;
 
     /**
+     * @var SerializerInterface
+     */
+    private DenormalizerInterface $denormalizer;
+
+    /**
      * SummonerApi constructor.
      * @param BaseApi $baseApi
+     * @param DenormalizerInterface $denormalizer
      */
-    public function __construct(BaseApi $baseApi)
+    public function __construct(
+        BaseApi $baseApi,
+        DenormalizerInterface $denormalizer
+    )
     {
         $this->baseApi = $baseApi;
+        $this->denormalizer = $denormalizer;
     }
-
 
     /**
      * @param string $platform
      * @param string $name
-     * @return array<mixed>|null
+     * @return Summoner
      */
     public function getSummonerBySummonerName(string $platform, string $name)
     {
@@ -53,11 +68,12 @@ class SummonerApi
             ]
         );
 
-        return $this->baseApi->callApi($url, "GET", [
+        $summoner =  $this->baseApi->callApi($url, "GET", [
             'headers' => [
                 'X-Riot-Token' => $this->baseApi->apiKey,
             ]
         ]);
+        return $this->denormalize($summoner);
     }
 
     /**
@@ -65,7 +81,7 @@ class SummonerApi
      *
      * @param string $platform
      * @param string $accountId
-     * @return array|null
+     * @return Summoner
      */
     public function getSummonerByAccountID(string $platform,string $accountId)
     {
@@ -77,14 +93,19 @@ class SummonerApi
             ]
         );
 
-        return $this->baseApi->callApi($url);
+        $summoner =  $this->baseApi->callApi($url, "GET", [
+            'headers' => [
+                'X-Riot-Token' => $this->baseApi->apiKey,
+            ]
+        ]);
+        return $this->denormalize($summoner);
     }
 
     /**
      * Get Summoner by PUUID
      * @param string $platform
      * @param string $puuid
-     * @return array|null
+     * @return Summoner
      */
     public function getSummonerByPuuid(string $platform,string $puuid)
     {
@@ -96,14 +117,19 @@ class SummonerApi
             ]
         );
 
-        return $this->baseApi->callApi($url);
+        $summoner =  $this->baseApi->callApi($url, "GET", [
+            'headers' => [
+                'X-Riot-Token' => $this->baseApi->apiKey,
+            ]
+        ]);
+        return $this->denormalize($summoner);
     }
 
     /**
      * Get Summoner by Summoner ID
      * @param string $platform
      * @param string $summonerId
-     * @return array|null
+     * @return Summoner
      */
     public function getSummonerBySummonerId(string $platform,string $summonerId)
     {
@@ -115,6 +141,19 @@ class SummonerApi
             ]
         );
 
-        return $this->baseApi->callApi($url);
+        $summoner =  $this->baseApi->callApi($url, "GET", [
+            'headers' => [
+                'X-Riot-Token' => $this->baseApi->apiKey,
+            ]
+        ]);
+        return $this->denormalize($summoner);
+    }
+
+    private function denormalize(array $data): Summoner
+    {
+        try {
+            return $this->denormalizer->denormalize($data, Summoner::class);
+        } catch (ExceptionInterface $e) {
+        }
     }
 }

@@ -5,6 +5,7 @@ namespace App\Service\API\LOL;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Contracts\Cache\CacheInterface;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
@@ -30,12 +31,12 @@ class BaseApi
     /**
      * @var HttpClientInterface
      */
-    protected $httpClient;
+    protected HttpClientInterface $httpClient;
 
     /**
      * @var string
      */
-    public $lang;
+    public string $lang;
 
     /**
      * @var mixed
@@ -45,17 +46,17 @@ class BaseApi
     /**
      * @var LoggerInterface
      */
-    private $apiLogger;
+    private LoggerInterface $apiLogger;
 
     /**
      * @var CacheInterface
      */
-    private $cache;
+    private CacheInterface $cache;
 
     /**
      * @var RequestStack
      */
-    public $requestStack;
+    public RequestStack $requestStack;
 
 
     /**
