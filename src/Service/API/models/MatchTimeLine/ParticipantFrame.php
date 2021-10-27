@@ -27,9 +27,9 @@ class ParticipantFrame
 
     /**
      * @param ChampionStat $championStats
-     * @return participantFrame
+     * @return ParticipantFrame
      */
-    public function setChampionStats(ChampionStat $championStats): participantFrame
+    public function setChampionStats(ChampionStat $championStats): ParticipantFrame
     {
         $this->championStats = $championStats;
         return $this;
@@ -45,9 +45,9 @@ class ParticipantFrame
 
     /**
      * @param int $currentGold
-     * @return participantFrame
+     * @return ParticipantFrame
      */
-    public function setCurrentGold(int $currentGold): participantFrame
+    public function setCurrentGold(int $currentGold): ParticipantFrame
     {
         $this->currentGold = $currentGold;
         return $this;
@@ -63,9 +63,9 @@ class ParticipantFrame
 
     /**
      * @param DamageStat $damageStats
-     * @return participantFrame
+     * @return ParticipantFrame
      */
-    public function setDamageStats(DamageStat $damageStats): participantFrame
+    public function setDamageStats(DamageStat $damageStats): ParticipantFrame
     {
         $this->damageStats = $damageStats;
         return $this;
@@ -81,9 +81,9 @@ class ParticipantFrame
 
     /**
      * @param int $goldPerSecond
-     * @return participantFrame
+     * @return ParticipantFrame
      */
-    public function setGoldPerSecond(int $goldPerSecond): participantFrame
+    public function setGoldPerSecond(int $goldPerSecond): ParticipantFrame
     {
         $this->goldPerSecond = $goldPerSecond;
         return $this;
@@ -99,9 +99,9 @@ class ParticipantFrame
 
     /**
      * @param int $jungleMinionsKilled
-     * @return participantFrame
+     * @return ParticipantFrame
      */
-    public function setJungleMinionsKilled(int $jungleMinionsKilled): participantFrame
+    public function setJungleMinionsKilled(int $jungleMinionsKilled): ParticipantFrame
     {
         $this->jungleMinionsKilled = $jungleMinionsKilled;
         return $this;
@@ -117,9 +117,9 @@ class ParticipantFrame
 
     /**
      * @param int $level
-     * @return participantFrame
+     * @return ParticipantFrame
      */
-    public function setLevel(int $level): participantFrame
+    public function setLevel(int $level): ParticipantFrame
     {
         $this->level = $level;
         return $this;
@@ -135,9 +135,9 @@ class ParticipantFrame
 
     /**
      * @param int $minionsKilled
-     * @return participantFrame
+     * @return ParticipantFrame
      */
-    public function setMinionsKilled(int $minionsKilled): participantFrame
+    public function setMinionsKilled(int $minionsKilled): ParticipantFrame
     {
         $this->minionsKilled = $minionsKilled;
         return $this;
@@ -153,9 +153,9 @@ class ParticipantFrame
 
     /**
      * @param int $participantId
-     * @return participantFrame
+     * @return ParticipantFrame
      */
-    public function setParticipantId(int $participantId): participantFrame
+    public function setParticipantId(int $participantId): ParticipantFrame
     {
         $this->participantId = $participantId;
         return $this;
@@ -171,9 +171,9 @@ class ParticipantFrame
 
     /**
      * @param Position $position
-     * @return participantFrame
+     * @return ParticipantFrame
      */
-    public function setPosition(Position $position): participantFrame
+    public function setPosition(Position $position): ParticipantFrame
     {
         $this->position = $position;
         return $this;
@@ -189,9 +189,9 @@ class ParticipantFrame
 
     /**
      * @param int $timeEnemySpentControlled
-     * @return participantFrame
+     * @return ParticipantFrame
      */
-    public function setTimeEnemySpentControlled(int $timeEnemySpentControlled): participantFrame
+    public function setTimeEnemySpentControlled(int $timeEnemySpentControlled): ParticipantFrame
     {
         $this->timeEnemySpentControlled = $timeEnemySpentControlled;
         return $this;
@@ -207,9 +207,9 @@ class ParticipantFrame
 
     /**
      * @param int $totalGold
-     * @return participantFrame
+     * @return ParticipantFrame
      */
-    public function setTotalGold(int $totalGold): participantFrame
+    public function setTotalGold(int $totalGold): ParticipantFrame
     {
         $this->totalGold = $totalGold;
         return $this;
@@ -225,9 +225,9 @@ class ParticipantFrame
 
     /**
      * @param int $xp
-     * @return participantFrame
+     * @return ParticipantFrame
      */
-    public function setXp(int $xp): participantFrame
+    public function setXp(int $xp): ParticipantFrame
     {
         $this->xp = $xp;
         return $this;

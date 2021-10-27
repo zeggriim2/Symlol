@@ -137,7 +137,7 @@ class BaseApi
 
     /**
      * @param string $url
-     * @param array<string> $params
+     * @param array<string|int> $params
      * @return string
      */
     public function constructUrl(string $url, array $params)

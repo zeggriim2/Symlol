@@ -146,7 +146,7 @@ class MatchApi
         $url = $this->baseApi->constructUrl(
             self::URL_LIST_MATCH_BY_PUUID,
             [
-                'region'    => self::REGION[$platform],
+                'region'    => self::REGION[strtoupper($platform)],
                 'puuid'     => $puuid,
                 'start'     => $start,
                 'count'     => $count,
@@ -158,10 +158,12 @@ class MatchApi
             ]
         ]);
 
-        if (!is_null($matchsId)) {
-            foreach ($matchsId as $matchId) {
-                $detailMatch[$matchId] = $this->getMatchDetail($matchId, $platform);
-            }
+        if (is_null($matchsId)) {
+            return null;
+        }
+        $detailMatch = [];
+        foreach ($matchsId as $matchId) {
+            $detailMatch[$matchId] = $this->getMatchDetail($matchId, $platform);
         }
 
         return $detailMatch;
@@ -170,7 +172,7 @@ class MatchApi
     public function getMatchDetail(
         string $matchId,
         string $platform
-    ) {
+    ): ?array {
         $url = $this->baseApi->constructUrl(
             self::URL_MATCH_ID,
             [

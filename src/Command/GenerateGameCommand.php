@@ -43,7 +43,7 @@ class GenerateGameCommand extends Command
             foreach ($equipes as $key => $equipe1) {
                 foreach ($equipes as $equipe2) {
                     if ($equipe1->getId() != $equipe2->getId()) {
-                        if (!$this->duelExistBetweenTwoEquipe()) {
+                        if (!$this->duelExistBetweenTwoEquipe($equipe1, $equipe2)) {
                             $game = new Game();
                             $game->setEquipe1($equipe1)
                                 ->setEquipe2($equipe2)

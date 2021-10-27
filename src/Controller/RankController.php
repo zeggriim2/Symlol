@@ -15,12 +15,12 @@ class RankController extends AbstractController
     /**
      * @var RequestStack
      */
-    private $requestStack;
+    private RequestStack $requestStack;
 
     /**
      * @var RankApi
      */
-    private $rankApi;
+    private RankApi $rankApi;
 
     /**
      * RankController constructor.
@@ -88,7 +88,7 @@ class RankController extends AbstractController
     }
 
     /**
-     * @param $data
+     * @param mixed $data
      */
     private function addElementInSession($data)
     {

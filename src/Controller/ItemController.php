@@ -17,7 +17,6 @@ class ItemController extends AbstractController
     /**
      * ItemController constructor.
      * @param ItemApi $itemApi
-     * @return
      */
     public function __construct(ItemApi $itemApi)
     {
