@@ -2,18 +2,26 @@
 
 namespace App\Service\API\LOL;
 
+use App\Service\API\models\ddragon\GameMode;
+use App\Service\API\models\ddragon\GameType;
+use App\Service\API\models\ddragon\Map;
+use App\Service\API\models\ddragon\Queue;
+use App\Service\API\models\ddragon\Season;
+use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
+
 class GeneralApi
 {
-
-    private const BASE_URL_STATIC = "http://static.developer.riotgames.com/docs/lol/";
     private const API_URL_SEASONS = "seasons.json";
     private const API_URL_QUEUES = "queues.json";
     private const API_URL_MAPS = "maps.json";
     private const API_URL_GAMEMODES = "gameModes.json";
     private const API_URL_GAMETYPES = "gameTypes.json";
 
-    private const BASE_URL_DDRAGON = "https://ddragon.leagueoflegends.com/api/";
+    private const API_URL_LANGUAGES = "languages.json";
     private const API_URL_VERSIONS = "versions.json";
+
+    private const BASE_URL_STATIC = "http://static.developer.riotgames.com/docs/lol/";
+    private const BASE_URL_DDRAGON = "https://ddragon.leagueoflegends.com/api/";
 
     public const LIEN_URL = [
         self::BASE_URL_STATIC => [
@@ -24,49 +32,64 @@ class GeneralApi
             self::API_URL_GAMETYPES
         ],
         self::BASE_URL_DDRAGON => [
-            self::API_URL_VERSIONS
+            self::API_URL_VERSIONS,
+            self::API_URL_LANGUAGES
         ]
     ];
     /**
      * @var BaseApi
      */
     private $baseApi;
+    /**
+     * @var DenormalizerInterface
+     */
+    private DenormalizerInterface $denormalizer;
 
     /**
      * GeneralApi constructor.
+     * @param BaseApi $baseApi
+     * @param DenormalizerInterface $denormalizer
      */
-    public function __construct(BaseApi $baseApi)
+    public function __construct(
+        BaseApi $baseApi,
+        DenormalizerInterface $denormalizer
+    )
     {
         $this->baseApi = $baseApi;
+        $this->denormalizer = $denormalizer;
     }
 
 
     /**
-     * @return array<mixed>|null
-     * @throws \Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface
-     * @throws \Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface
-     * @throws \Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface
-     * @throws \Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface
-     * @throws \Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface
+     * Recupere la liste des saisons
+     *
+     * @return Season[]|null
      */
     public function getSeason(): ?array
     {
         $url = $this->buildUrlStatic(self::API_URL_SEASONS);
-        return $this->baseApi->callApi($url);
+        $listSeason = $this->baseApi->callApi($url);
+
+        if ($listSeason === null){
+            return null;
+        }
+
+        return $this->denormalize($listSeason, Season::class);
     }
 
     /**
      * @return array<mixed>|null
-     * @throws \Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface
-     * @throws \Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface
-     * @throws \Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface
-     * @throws \Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface
-     * @throws \Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface
      */
     public function getQueues(): ?array
     {
         $url = $this->buildUrlStatic(self::API_URL_QUEUES);
-        return $this->baseApi->callApi($url);
+        $listQueue = $this->baseApi->callApi($url);
+
+        if ($listQueue === null){
+            return null;
+        }
+
+        return $this->denormalize($listQueue, Queue::class);
     }
 
     /**
@@ -75,7 +98,13 @@ class GeneralApi
     public function getMaps(): ?array
     {
         $url = $this->buildUrlStatic(self::API_URL_MAPS);
-        return $this->baseApi->callApi($url);
+        $listMap = $this->baseApi->callApi($url);
+
+        if ($listMap === null){
+            return $listMap;
+        }
+
+        return $this->denormalize($listMap, Map::class);
     }
 
     /**
@@ -83,7 +112,14 @@ class GeneralApi
      */
     public function getsGameModes(): ?array
     {
-        return $this->baseApi->callApi(self::API_URL_GAMEMODES);
+        $url = $this->buildUrlStatic(self::API_URL_GAMEMODES);
+        $listGameMode = $this->baseApi->callApi($url);
+
+        if ($listGameMode === null){
+            return null;
+        }
+
+        return $this->denormalize($listGameMode, GameMode::class);
     }
 
     /**
@@ -91,7 +127,14 @@ class GeneralApi
      */
     public function getsGameTypes()
     {
-        return $this->baseApi->callApi(self::API_URL_GAMETYPES);
+        $url = $this->buildUrlStatic(self::API_URL_GAMETYPES);
+        $listGameType = $this->baseApi->callApi($url);
+
+        if ($listGameType === null){
+            return null;
+        }
+
+        return $this->denormalize($listGameType, GameType::class);
     }
 
     /**
@@ -103,6 +146,16 @@ class GeneralApi
         return $this->baseApi->callApiCache($url);
     }
 
+    /**
+     * @return array<mixed>|null
+     */
+    public function getAllLanguages()
+    {
+        $url = $this->buildUrlDdragon(self::API_URL_LANGUAGES);
+        return $this->baseApi->callApiCache($url);
+    }
+
+
     private function buildUrlStatic(string $endUrl): string
     {
         return self::BASE_URL_STATIC . $endUrl;
@@ -111,5 +164,17 @@ class GeneralApi
     private function buildUrlDdragon(string $endUrl): string
     {
         return self::BASE_URL_DDRAGON . $endUrl;
+    }
+
+    private function denormalize(
+        array $listes,
+        string $instance
+    ): array
+    {
+        $listeObj = [];
+        foreach ($listes as $gameMode){
+            $listeObj[] = $this->denormalizer->denormalize($gameMode, $instance);
+        }
+        return $listeObj;
     }
 }

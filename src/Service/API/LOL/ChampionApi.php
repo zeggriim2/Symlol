@@ -45,6 +45,7 @@ class ChampionApi
         ];
 
         $url = $this->baseApi->constructUrl(self::URL_CHAMPIONS, $data);
+
         return $this->baseApi->callApiCache($url);
     }
 
