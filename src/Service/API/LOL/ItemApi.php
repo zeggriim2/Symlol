@@ -32,7 +32,7 @@ class ItemApi
     public function getAllItem(): ?array
     {
         $data = [
-            'version'   => $this->baseApi->sessionVersion,
+            'version'   => $this->baseApi->getVersionSession(),
             'lang'      => $this->baseApi->lang
         ];
         $url = $this->baseApi->constructUrl(self::URL_ITEMS, $data);

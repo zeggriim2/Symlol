@@ -26,8 +26,8 @@ class GameRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('g')
                 ->andWhere("g.equipe1 = :eq1")
                 ->andWhere("g.equipe2 = :eq2")
-                ->setParameter("eq1",$equipe1)
-                ->setParameter("eq2",$equip2)
+                ->setParameter("eq1", $equipe1)
+                ->setParameter("eq2", $equip2)
                 ->getQuery()
                 ->getResult()
             ;

@@ -12,6 +12,7 @@ class RankApi
 
     /**
      * RankApi constructor.
+     * @param BaseApi $baseApi
      */
     public function __construct(BaseApi $baseApi)
     {
@@ -22,12 +23,8 @@ class RankApi
     /**
      * @param string $platform
      * @param string $queue
+     * @param string $leagues
      * @return array<mixed>|null
-     * @throws \Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface
-     * @throws \Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface
-     * @throws \Symfony\Contracts\HttpClient\Exception\RedirectionExceptionInterface
-     * @throws \Symfony\Contracts\HttpClient\Exception\ServerExceptionInterface
-     * @throws \Symfony\Contracts\HttpClient\Exception\TransportExceptionInterface
      */
     public function getLadder(string $platform, string $queue, string $leagues): ?array
     {

@@ -152,13 +152,12 @@ class Game
     * @ORM\PrePersist
     * @ORM\PreUpdate
     */
-    public function updateTimesStamps():void
+    public function updateTimesStamps(): void
     {
-        if($this->getCreateAt() === null) {
+        if ($this->getCreateAt() === null) {
             $this->setCreateAt(new \DateTimeImmutable());
         }
 
         $this->setUpdatedAt(new \DateTimeImmutable());
     }
-
 }

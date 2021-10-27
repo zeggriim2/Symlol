@@ -83,9 +83,9 @@ class EquipeFixtures extends Fixture implements DependentFixtureInterface, Fixtu
         $groups = $manager->getRepository(Group::class)->findAll();
 
 
-        foreach ($groups as $key => $group){
+        foreach ($groups as $key => $group) {
             foreach ($this->EQUIPE as $nameEquipe => $data) {
-                if ($group->getName() === $data['group']){
+                if ($group->getName() === $data['group']) {
                     $equip = new Equipe();
                     $equip->setName($nameEquipe)
                         ->setGroupe($group)

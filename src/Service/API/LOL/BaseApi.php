@@ -4,6 +4,8 @@ namespace App\Service\API\LOL;
 
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\Serializer\SerializerInterface;
 use Symfony\Contracts\Cache\CacheInterface;
 use Symfony\Contracts\HttpClient\Exception\ClientExceptionInterface;
 use Symfony\Contracts\HttpClient\Exception\DecodingExceptionInterface;
@@ -29,12 +31,12 @@ class BaseApi
     /**
      * @var HttpClientInterface
      */
-    protected $httpClient;
+    protected HttpClientInterface $httpClient;
 
     /**
      * @var string
      */
-    public $lang;
+    public string $lang;
 
     /**
      * @var mixed
@@ -44,17 +46,17 @@ class BaseApi
     /**
      * @var LoggerInterface
      */
-    private $apiLogger;
+    private LoggerInterface $apiLogger;
 
     /**
      * @var CacheInterface
      */
-    private $cache;
+    private CacheInterface $cache;
 
     /**
-     * @var string
+     * @var RequestStack
      */
-    public $sessionVersion;
+    public RequestStack $requestStack;
 
 
     /**
@@ -77,7 +79,7 @@ class BaseApi
         $this->apiKey       = $apiKey;
         $this->lang         = "fr_FR";
         $this->cache        = $cache;
-        $this->sessionVersion = $requestStack->getSession()->get('version');
+        $this->requestStack = $requestStack;
     }
 
     public function getLastVersion(): string
@@ -130,12 +132,12 @@ class BaseApi
      */
     public function checkPlatform(string $platform): bool
     {
-        return in_array($platform, self::PLATFORM);
+        return in_array(strtoupper($platform), self::PLATFORM);
     }
 
     /**
      * @param string $url
-     * @param array<string> $params
+     * @param array<string|int> $params
      * @return string
      */
     public function constructUrl(string $url, array $params)
@@ -144,6 +146,11 @@ class BaseApi
             $url = str_replace("{{$key}}", $param, $url);
         }
         return $url;
+    }
+
+    public function getVersionSession()
+    {
+        return $this->requestStack->getSession()->get('version');
     }
 
     /**

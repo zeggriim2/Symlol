@@ -232,8 +232,8 @@ class ChampionController extends AbstractController
     /**
      * @param string $type
      * @param array $data
-     * @param $label
-     * @param $datasetLabel
+     * @param array $label
+     * @param string $datasetLabel
      * @param string $title
      * @param string $backgroundColor
      * @return Chart
@@ -241,8 +241,8 @@ class ChampionController extends AbstractController
     private function buildChart(
         string $type,
         array $data,
-        $label,
-        $datasetLabel,
+        array $label,
+        string $datasetLabel,
         string $title = '',
         string $backgroundColor = '#000000'
     ): Chart {

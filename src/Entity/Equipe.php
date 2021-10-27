@@ -34,9 +34,9 @@ class Equipe
     private $logo;
 
     /**
-     * 
+     *
      * @Vich\UploadableField(mapping="logo_equipe_world", fileNameProperty="logo")
-     * 
+     *
      * @var File|null
      */
     private $imageFile;
@@ -225,7 +225,7 @@ class Equipe
      * @ORM\PrePersist
      * @ORM\PreUpdate
      */
-    public function updateTimesStamps():void
+    public function updateTimesStamps(): void
     {
         if ($this->getCreatedAt() === null) {
             $this->setCreatedAt(new \DateTimeImmutable());
