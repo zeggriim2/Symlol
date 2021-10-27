@@ -2,7 +2,8 @@
 
 namespace App\Service\API\models\Matchs;
 
-class Info {
+class Info
+{
     private int $gameCreation;
     private int $gameDuration;
     private int $gameEndTimestamp;

@@ -2,7 +2,8 @@
 
 namespace App\Service\API\models;
 
-class Summoner {
+class Summoner
+{
     private string $id;
     private string $accountId;
     private string $puuid;
@@ -136,6 +137,4 @@ class Summoner {
         $this->summonerLevel = $summonerLevel;
         return $this;
     }
-
-
 }

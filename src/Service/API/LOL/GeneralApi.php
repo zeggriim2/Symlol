@@ -53,8 +53,7 @@ class GeneralApi
     public function __construct(
         BaseApi $baseApi,
         DenormalizerInterface $denormalizer
-    )
-    {
+    ) {
         $this->baseApi = $baseApi;
         $this->denormalizer = $denormalizer;
     }
@@ -70,7 +69,7 @@ class GeneralApi
         $url = $this->buildUrlStatic(self::API_URL_SEASONS);
         $listSeason = $this->baseApi->callApi($url);
 
-        if ($listSeason === null){
+        if ($listSeason === null) {
             return null;
         }
 
@@ -85,7 +84,7 @@ class GeneralApi
         $url = $this->buildUrlStatic(self::API_URL_QUEUES);
         $listQueue = $this->baseApi->callApi($url);
 
-        if ($listQueue === null){
+        if ($listQueue === null) {
             return null;
         }
 
@@ -100,7 +99,7 @@ class GeneralApi
         $url = $this->buildUrlStatic(self::API_URL_MAPS);
         $listMap = $this->baseApi->callApi($url);
 
-        if ($listMap === null){
+        if ($listMap === null) {
             return $listMap;
         }
 
@@ -115,7 +114,7 @@ class GeneralApi
         $url = $this->buildUrlStatic(self::API_URL_GAMEMODES);
         $listGameMode = $this->baseApi->callApi($url);
 
-        if ($listGameMode === null){
+        if ($listGameMode === null) {
             return null;
         }
 
@@ -130,7 +129,7 @@ class GeneralApi
         $url = $this->buildUrlStatic(self::API_URL_GAMETYPES);
         $listGameType = $this->baseApi->callApi($url);
 
-        if ($listGameType === null){
+        if ($listGameType === null) {
             return null;
         }
 
@@ -169,10 +168,9 @@ class GeneralApi
     private function denormalize(
         array $listes,
         string $instance
-    ): array
-    {
+    ): array {
         $listeObj = [];
-        foreach ($listes as $gameMode){
+        foreach ($listes as $gameMode) {
             $listeObj[] = $this->denormalizer->denormalize($gameMode, $instance);
         }
         return $listeObj;

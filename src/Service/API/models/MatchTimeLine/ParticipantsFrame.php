@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Service\API\models\MatchTimeLine;
-
 
 class ParticipantsFrame
 {

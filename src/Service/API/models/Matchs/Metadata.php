@@ -2,7 +2,8 @@
 
 namespace App\Service\API\models\Matchs;
 
-class Metadata {
+class Metadata
+{
     private string $dataVersion;
     private string $matchId;
     /**
@@ -63,6 +64,4 @@ class Metadata {
         $this->participants = $participants;
         return $this;
     }
-
-
 }

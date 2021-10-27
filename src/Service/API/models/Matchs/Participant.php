@@ -2,7 +2,8 @@
 
 namespace App\Service\API\models\Matchs;
 
-class Participant {
+class Participant
+{
     private int $assists;
     private int $baronKills;
     private int $bountyLevel;

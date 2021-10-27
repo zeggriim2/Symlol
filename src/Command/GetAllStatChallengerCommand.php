@@ -26,13 +26,13 @@ class GetAllStatChallengerCommand extends Command
     protected function configure(): void
     {
         $this
-            ->addArgument('twoLegged',InputArgument::OPTIONAL,'match aller-retour',false)
+            ->addArgument('twoLegged', InputArgument::OPTIONAL, 'match aller-retour', false)
         ;
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
-        $ladderChallenger = $this->rankApi->getLadder(Platform::EUW1, Queue::RANK_SOLO,"challenger");
+        $ladderChallenger = $this->rankApi->getLadder(Platform::EUW1, Queue::RANK_SOLO, "challenger");
 
         $io = new SymfonyStyle($input, $output);
 
@@ -41,7 +41,7 @@ class GetAllStatChallengerCommand extends Command
         return Command::SUCCESS;
     }
 
-    private function duelExistBetweenTwoEquipe(Equipe $equipe1,Equipe $equipe2)
+    private function duelExistBetweenTwoEquipe(Equipe $equipe1, Equipe $equipe2)
     {
         return $this->manager->getRepository(Game::class)->duelExistBetweenTwoEquipe($equipe1, $equipe2);
     }
@@ -49,8 +49,7 @@ class GetAllStatChallengerCommand extends Command
     public function __construct(
         EntityManagerInterface $manager,
         RankApi $rankApi
-    )
-    {
+    ) {
         $this->rankApi = $rankApi;
         $this->manager = $manager;
         parent::__construct();

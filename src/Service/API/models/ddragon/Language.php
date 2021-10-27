@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Service\API\models\ddragon;
-
 
 class Language
 {
@@ -34,5 +32,4 @@ class Language
     public const MALAYSIA_CHINESE = "zh_MY";
     public const CHINESE_S = "zh_CN";
     public const TAWAN = "zh_TW";
-
 }

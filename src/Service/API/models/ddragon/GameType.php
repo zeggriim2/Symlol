@@ -1,12 +1,10 @@
 <?php
 
-
 namespace App\Service\API\models\ddragon;
-
 
 class GameType
 {
-    private string  $gameType;
+    private string $gameType;
     private string $description;
 
     /**

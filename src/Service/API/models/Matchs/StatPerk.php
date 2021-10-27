@@ -2,7 +2,8 @@
 
 namespace App\Service\API\models\Matchs;
 
-class StatPerk {
+class StatPerk
+{
     private int $defense;
     private int $flex;
     private int $offense;

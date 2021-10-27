@@ -49,8 +49,7 @@ class MatchApi
     public function __construct(
         BaseApi $baseApi,
         DenormalizerInterface $denormalizer
-    )
-    {
+    ) {
         $this->baseApi = $baseApi;
         $this->denormalizer = $denormalizer;
     }
@@ -70,8 +69,7 @@ class MatchApi
         string $platform,
         int $start = 0,
         int $count = 20
-    ): array
-    {
+    ): array {
         $url = $this->baseApi->constructUrl(
             self::URL_LIST_MATCH_BY_PUUID,
             [
@@ -82,7 +80,7 @@ class MatchApi
             ]
         );
 
-        return  $this->baseApi->callApi($url,"GET", [
+        return  $this->baseApi->callApi($url, "GET", [
             'headers' => [
                 'X-Riot-Token' => $this->baseApi->apiKey,
             ]
@@ -92,8 +90,7 @@ class MatchApi
     public function getMatchByMatchId(
         string $matchId,
         string $platform
-    ): MatchEntity
-    {
+    ): MatchEntity {
         $url = $this->baseApi->constructUrl(
             self::URL_MATCH_ID,
             [
@@ -102,7 +99,7 @@ class MatchApi
             ]
         );
 
-        $match =  $this->baseApi->callApi($url,"GET", [
+        $match =  $this->baseApi->callApi($url, "GET", [
             'headers' => [
                 'X-Riot-Token' => $this->baseApi->apiKey,
             ]
@@ -114,8 +111,7 @@ class MatchApi
     public function getMatchTimeline(
         string $matchId,
         string $platform
-    ): MatchTimeLine
-    {
+    ): MatchTimeLine {
         $url = $this->baseApi->constructUrl(
             self::URL_MATCH_TIMELINE,
             [
@@ -146,8 +142,7 @@ class MatchApi
         string $platform,
         int $start = 0,
         int $count = 20
-    ): ?array
-    {
+    ): ?array {
         $url = $this->baseApi->constructUrl(
             self::URL_LIST_MATCH_BY_PUUID,
             [
@@ -175,8 +170,7 @@ class MatchApi
     public function getMatchDetail(
         string $matchId,
         string $platform
-    )
-    {
+    ) {
         $url = $this->baseApi->constructUrl(
             self::URL_MATCH_ID,
             [
@@ -190,6 +184,4 @@ class MatchApi
             ]
         ]);
     }
-
-
 }

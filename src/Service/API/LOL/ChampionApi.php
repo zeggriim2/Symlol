@@ -26,8 +26,7 @@ class ChampionApi
     public function __construct(
         BaseApi $baseApi,
         DenormalizerInterface $denormalizer
-    )
-    {
+    ) {
         $this->baseApi = $baseApi;
         $this->denormalizer = $denormalizer;
     }
@@ -82,8 +81,7 @@ class ChampionApi
 
     public function getChampionRotation(
         string $platform
-    ): ChampionRotation
-    {
+    ): ChampionRotation {
         $url = $this->baseApi->constructUrl(
             self::URL_CHAMPION_ROTATION,
             [

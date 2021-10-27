@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Service\API\LOL;
-
 
 use App\Service\API\models\PlatformData;
 use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
@@ -29,16 +27,14 @@ class StatusApi
     public function __construct(
         BaseApi $baseApi,
         DenormalizerInterface $denormalizer
-    )
-    {
+    ) {
         $this->baseApi = $baseApi;
         $this->denormalizer = $denormalizer;
     }
 
     public function getStatusPlatform(
         string $platform
-    ): PlatformData
-    {
+    ): PlatformData {
         $url = $this->baseApi->constructUrl(
             self::URL_STATUS_PLATFORM,
             [

@@ -47,8 +47,7 @@ class SummonerApi
     public function __construct(
         BaseApi $baseApi,
         DenormalizerInterface $denormalizer
-    )
-    {
+    ) {
         $this->baseApi = $baseApi;
         $this->denormalizer = $denormalizer;
     }
@@ -83,7 +82,7 @@ class SummonerApi
      * @param string $accountId
      * @return Summoner
      */
-    public function getSummonerByAccountID(string $platform,string $accountId)
+    public function getSummonerByAccountID(string $platform, string $accountId)
     {
         $url = $this->baseApi->constructUrl(
             self::URL_ACCOUNT,
@@ -107,7 +106,7 @@ class SummonerApi
      * @param string $puuid
      * @return Summoner
      */
-    public function getSummonerByPuuid(string $platform,string $puuid)
+    public function getSummonerByPuuid(string $platform, string $puuid)
     {
         $url = $this->baseApi->constructUrl(
             self::URL_PUUID,
@@ -131,7 +130,7 @@ class SummonerApi
      * @param string $summonerId
      * @return Summoner
      */
-    public function getSummonerBySummonerId(string $platform,string $summonerId)
+    public function getSummonerBySummonerId(string $platform, string $summonerId)
     {
         $url = $this->baseApi->constructUrl(
             self::URL_SUMMONER_ID,

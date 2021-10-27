@@ -2,8 +2,8 @@
 
 namespace App\Service\API\models\Config;
 
-class Platform {
-
+class Platform
+{
     public const BR1 = "br1";
     public const EUN1 = "eun1";
     public const EUW1 = "euw1";

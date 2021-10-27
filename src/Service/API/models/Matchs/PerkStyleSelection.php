@@ -2,7 +2,8 @@
 
 namespace App\Service\API\models\Matchs;
 
-class PerkStyleSelection {
+class PerkStyleSelection
+{
     private int $perk;
     private int $var1;
     private int $var2;

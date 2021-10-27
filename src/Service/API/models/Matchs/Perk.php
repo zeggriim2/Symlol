@@ -2,7 +2,8 @@
 
 namespace App\Service\API\models\Matchs;
 
-class Perk {
+class Perk
+{
     private StatPerk $statPerks;
     /**
      * @var PerkStyle[]

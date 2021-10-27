@@ -11,7 +11,7 @@ class LeagueApi
 {
     private const URL_CHALLENGER_LEAGUE_QUEUE = "https://{platform}.api.riotgames.com/lol/league/v4/challengerleagues/by-queue/{queue}";
     private const URL_MASTER_LEAGUE_QUEUE = "https://{platform}.api.riotgames.com/lol/league/v4/masterleagues/by-queue/{queue}";
-    private const URL_GRANDMASTER_LEAGUE_QUEUE ="https://{platform}.api.riotgames.com/lol/league/v4/grandmasterleagues/by-queue/{queue}";
+    private const URL_GRANDMASTER_LEAGUE_QUEUE = "https://{platform}.api.riotgames.com/lol/league/v4/grandmasterleagues/by-queue/{queue}";
     private const URL_LEAGUE_SUMMONER_ID = "https://{platform}.api.riotgames.com/lol/league/v4/entries/by-summoner/{encryptedSummonerId}";
     private const URL_LEAGUE_ID = "https://{platform}.api.riotgames.com/lol/league/v4/leagues/{leagueId}";
     private const URL_LEAGUE = "https://{platform}.api.riotgames.com/lol/league/v4/entries/{queue}/{tier}/{division}";
@@ -35,8 +35,7 @@ class LeagueApi
     public function __construct(
         BaseApi $baseApi,
         DenormalizerInterface $denormalizer
-    )
-    {
+    ) {
         $this->baseApi = $baseApi;
         $this->denormalizer = $denormalizer;
     }
@@ -44,8 +43,7 @@ class LeagueApi
     public function getLeagueChallenger(
         string $platform,
         string $queue
-    ): LeagueList
-    {
+    ): LeagueList {
         $url = $this->baseApi->constructUrl(
             self::URL_CHALLENGER_LEAGUE_QUEUE,
             [
@@ -54,7 +52,7 @@ class LeagueApi
             ]
         );
 
-        $leagueChallenger = $this->baseApi->callApi($url,"GET", [
+        $leagueChallenger = $this->baseApi->callApi($url, "GET", [
             'headers' => [
                 'X-Riot-Token' => $this->baseApi->apiKey,
             ]
@@ -67,8 +65,7 @@ class LeagueApi
     public function getLeagueGrandMaster(
         string $platform,
         string $queue
-    ): LeagueList
-    {
+    ): LeagueList {
         $url = $this->baseApi->constructUrl(
             self::URL_GRANDMASTER_LEAGUE_QUEUE,
             [
@@ -77,7 +74,7 @@ class LeagueApi
             ]
         );
 
-        $leagueGrandMaster = $this->baseApi->callApi($url,"GET", [
+        $leagueGrandMaster = $this->baseApi->callApi($url, "GET", [
                 'headers' => [
                     'X-Riot-Token' => $this->baseApi->apiKey,
                 ]
@@ -90,8 +87,7 @@ class LeagueApi
     public function getLeagueMaster(
         string $platform,
         string $queue
-    ): LeagueList
-    {
+    ): LeagueList {
         $url = $this->baseApi->constructUrl(
             self::URL_MASTER_LEAGUE_QUEUE,
             [
@@ -100,7 +96,7 @@ class LeagueApi
             ]
         );
 
-        $leagueMaster = $this->baseApi->callApi($url,"GET", [
+        $leagueMaster = $this->baseApi->callApi($url, "GET", [
             'headers' => [
                 'X-Riot-Token' => $this->baseApi->apiKey,
             ]
@@ -117,8 +113,7 @@ class LeagueApi
     public function getLeagueBySummonerId(
         string $summunerId,
         string $platform
-    ): array
-    {
+    ): array {
         $url = $this->baseApi->constructUrl(
             self::URL_LEAGUE_SUMMONER_ID,
             [
@@ -127,15 +122,15 @@ class LeagueApi
             ]
         );
 
-        $leagues = $this->baseApi->callApi($url,"GET", [
+        $leagues = $this->baseApi->callApi($url, "GET", [
             'headers' => [
                 'X-Riot-Token' => $this->baseApi->apiKey,
             ]
         ]);
 
         $leagueObj = [];
-        foreach ($leagues as $league){
-            $leagueObj[] = $this->denormalizer->denormalize($league,LeagueEntry::class);
+        foreach ($leagues as $league) {
+            $leagueObj[] = $this->denormalizer->denormalize($league, LeagueEntry::class);
         }
 
         return $leagueObj;
@@ -147,8 +142,7 @@ class LeagueApi
         string $queue,
         string $tier,
         string $division
-    )
-    {
+    ) {
         $url = $this->baseApi->constructUrl(
             self::URL_LEAGUE,
             [
@@ -159,14 +153,14 @@ class LeagueApi
             ]
         );
 
-        $leagues = $this->baseApi->callApi($url,"GET", [
+        $leagues = $this->baseApi->callApi($url, "GET", [
             'headers' => [
                 'X-Riot-Token' => $this->baseApi->apiKey,
             ]
         ]);
         $leagueObj = [];
-        foreach ($leagues as $league){
-            $leagueObj[] = $this->denormalizer->denormalize($league,LeagueEntry::class);
+        foreach ($leagues as $league) {
+            $leagueObj[] = $this->denormalizer->denormalize($league, LeagueEntry::class);
         }
 
         return $leagueObj;
@@ -177,8 +171,7 @@ class LeagueApi
     public function getLeagueByLeagueId(
         string $platform,
         string $leagueId
-    ): LeagueList
-    {
+    ): LeagueList {
         $url = $this->baseApi->constructUrl(
             self::URL_LEAGUE_ID,
             [
@@ -205,8 +198,7 @@ class LeagueApi
     public function getInfoSummoner(
         string $platform,
         string $encryptedSummonerId
-    ): ?array
-    {
+    ): ?array {
         if (!$this->baseApi->checkPlatform($platform)) {
             return null;
         }
@@ -234,8 +226,7 @@ class LeagueApi
     public function getLeagueId(
         string $platform,
         string $leagueId
-    ): ?array
-    {
+    ): ?array {
         if (!$this->baseApi->checkPlatform($platform)) {
             return null;
         }

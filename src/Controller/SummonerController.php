@@ -94,10 +94,10 @@ class SummonerController extends AbstractController
 
         $infoSummonerleague = $this->leagueApi->getLeagueBySummonerId($summoner->getId(), $platform);
 
-        $listMatchId      = $this->matchApi->getListIdMatchBySummonerPuuid($summoner->getPuuid(),$platform);
+        $listMatchId      = $this->matchApi->getListIdMatchBySummonerPuuid($summoner->getPuuid(), $platform);
         $matchSummoner = [];
-        foreach ($listMatchId as $key => $matchId){
-            $matchSummoner[$matchId] =  $this->matchApi->getMatchByMatchId($matchId,$platform);
+        foreach ($listMatchId as $key => $matchId) {
+            $matchSummoner[$matchId] =  $this->matchApi->getMatchByMatchId($matchId, $platform);
         }
 
         $leagueSummoner     = $this->leagueApi->getLeagueByLeagueId($platform, $infoSummonerleague[0]->getLeagueId());

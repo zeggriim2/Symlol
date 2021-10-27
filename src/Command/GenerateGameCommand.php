@@ -29,7 +29,7 @@ class GenerateGameCommand extends Command
     protected function configure(): void
     {
         $this
-            ->addArgument('twoLegged',InputArgument::OPTIONAL,'match aller-retour',false)
+            ->addArgument('twoLegged', InputArgument::OPTIONAL, 'match aller-retour', false)
         ;
     }
 
@@ -42,8 +42,8 @@ class GenerateGameCommand extends Command
             $equipes = $this->manager->getRepository(Equipe::class)->findBy(['groupe' => $group->getId()]);
             foreach ($equipes as $key => $equipe1) {
                 foreach ($equipes as $equipe2) {
-                    if($equipe1->getId() != $equipe2->getId()){
-                        if(!$this->duelExistBetweenTwoEquipe()) {
+                    if ($equipe1->getId() != $equipe2->getId()) {
+                        if (!$this->duelExistBetweenTwoEquipe()) {
                             $game = new Game();
                             $game->setEquipe1($equipe1)
                                 ->setEquipe2($equipe2)
@@ -52,9 +52,8 @@ class GenerateGameCommand extends Command
                             $this->manager->persist($game);
                         }
                     }
-                    
                 }
-                if(!$twoLegged){
+                if (!$twoLegged) {
                     unset($equipes[$key]);
                 }
             }
@@ -67,7 +66,7 @@ class GenerateGameCommand extends Command
         return Command::SUCCESS;
     }
 
-    private function duelExistBetweenTwoEquipe(Equipe $equipe1,Equipe $equipe2)
+    private function duelExistBetweenTwoEquipe(Equipe $equipe1, Equipe $equipe2)
     {
         return $this->manager->getRepository(Game::class)->duelExistBetweenTwoEquipe($equipe1, $equipe2);
     }

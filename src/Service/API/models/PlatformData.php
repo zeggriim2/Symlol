@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Service\API\models;
-
 
 use App\Service\API\models\Status\Status;
 

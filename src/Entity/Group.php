@@ -126,13 +126,13 @@ class Group
     * @ORM\PrePersist
     * @ORM\PreUpdate
     */
-    public function updateTimesStamps():void
+    public function updateTimesStamps(): void
     {
 
-        if($this->getCreatedAt() === null) {
+        if ($this->getCreatedAt() === null) {
             $this->setCreatedAt(new \DateTimeImmutable());
         }
-        
+
         $this->updatedAt = new \DateTimeImmutable();
     }
 }

@@ -2,7 +2,8 @@
 
 namespace App\Service\API\models\Matchs;
 
-class PerkStyle {
+class PerkStyle
+{
 
     private string $description;
     /**

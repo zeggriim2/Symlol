@@ -9,7 +9,7 @@ use Doctrine\Persistence\ObjectManager;
 
 class GroupFixtures extends Fixture implements FixtureGroupInterface
 {
-    const GROUPS = ["A", "B", "C", "D"];
+    private const GROUPS = ["A", "B", "C", "D"];
 
     public function load(ObjectManager $manager)
     {
