@@ -12,7 +12,7 @@ class ItemController extends AbstractController
     /**
      * @var ItemApi
      */
-    private $itemApi;
+    private ItemApi $itemApi;
 
     /**
      * ItemController constructor.

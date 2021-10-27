@@ -22,20 +22,20 @@ class SummonerController extends AbstractController
     /**
      * @var SummonerApi
      */
-    private $summonerApi;
+    private SummonerApi $summonerApi;
 
     /**
      * @var RequestStack
      */
-    private $requestStack;
+    private RequestStack $requestStack;
     /**
      * @var LeagueApi
      */
-    private $leagueApi;
+    private LeagueApi $leagueApi;
     /**
      * @var MatchApi
      */
-    private $matchApi;
+    private MatchApi $matchApi;
 
     /**
      * SummonerController constructor.
@@ -81,6 +81,8 @@ class SummonerController extends AbstractController
 
     /**
      * @Route("/{name}", name="summoner_show")
+     * @param string $name
+     * @return Response
      */
     public function show(string $name): Response
     {
