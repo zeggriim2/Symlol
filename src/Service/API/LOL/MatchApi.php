@@ -58,7 +58,7 @@ class MatchApi
      * Obtenir une liste d'identifiants de match par puuid
      * Par défaut il en retourne 20
      *
-     * @param Summoner $summoner
+     * @param string $summonerPuuid
      * @param string $platform
      * @param int $start
      * @param int $count
@@ -69,7 +69,7 @@ class MatchApi
         string $platform,
         int $start = 0,
         int $count = 20
-    ): array {
+    ): ?array {
         $url = $this->baseApi->constructUrl(
             self::URL_LIST_MATCH_BY_PUUID,
             [

@@ -203,7 +203,7 @@ class LeagueApi
             return null;
         }
         $url = $this->baseApi->constructUrl(
-            self::URL,
+            self::URL_LEAGUE_SUMMONER_ID,
             [
               'platform' => $platform,
                 'encryptedSummonerId' => $encryptedSummonerId

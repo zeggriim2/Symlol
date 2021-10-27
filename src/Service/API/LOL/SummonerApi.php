@@ -35,7 +35,7 @@ class SummonerApi
     private $baseApi;
 
     /**
-     * @var SerializerInterface
+     * @var DenormalizerInterface
      */
     private DenormalizerInterface $denormalizer;
 
@@ -55,10 +55,14 @@ class SummonerApi
     /**
      * @param string $platform
      * @param string $name
-     * @return Summoner
+     * @return Summoner|null
      */
-    public function getSummonerBySummonerName(string $platform, string $name)
+    public function getSummonerBySummonerName(
+        string $platform,
+        string $name
+    ): ?Summoner
     {
+
         $url = $this->baseApi->constructUrl(
             self::URL_NAME,
             [
@@ -72,7 +76,8 @@ class SummonerApi
                 'X-Riot-Token' => $this->baseApi->apiKey,
             ]
         ]);
-        return $this->denormalize($summoner);
+        return $summoner ? $this->denormalize($summoner): $summoner;
+//        return $this->denormalize($summoner);
     }
 
     /**
@@ -150,9 +155,6 @@ class SummonerApi
 
     private function denormalize(array $data): Summoner
     {
-        try {
-            return $this->denormalizer->denormalize($data, Summoner::class);
-        } catch (ExceptionInterface $e) {
-        }
+        return $this->denormalizer->denormalize($data, Summoner::class);
     }
 }

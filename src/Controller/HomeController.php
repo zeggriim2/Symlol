@@ -91,7 +91,7 @@ class HomeController extends AbstractController
 
     /**
      * @param string $name
-     * @param $value
+     * @param mixed $value
      */
     private function changeVersionSession(string $name, $value)
     {
