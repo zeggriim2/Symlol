@@ -124,8 +124,7 @@ class SummonerController extends AbstractController
     private function descendingSort(array &$data, string $field)
     {
         usort($data, function ($item1, $item2) use ($field) {
-            $method = "get$field";
-            return $item2->$method() <=> $item1->$method();
+            return $item2[$field] <=> $item1[$field];
         });
     }
 
@@ -137,7 +136,7 @@ class SummonerController extends AbstractController
     {
         $league = [];
         foreach ($datas as $key => $summonerRank) {
-            switch ($summonerRank->getRank()) {
+            switch ($summonerRank['rank']) {
                 case "I":
                     $league['I'][] = $summonerRank;
                     break;
