@@ -40,6 +40,7 @@ Lors de l'inscription, des constraints de Validation on été créé et mise en 
 * Password :
     * Doit contenir 6 caractères
     * Ne doit pas être vide
+    
 ![register](https://user-images.githubusercontent.com/51760726/140040440-e74ea107-db4f-4157-8594-1adaf0b5b454.png)
 
 ------

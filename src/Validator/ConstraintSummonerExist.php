@@ -7,7 +7,7 @@ use Symfony\Component\Validator\Constraint;
 class ConstraintSummonerExist extends Constraint
 {
     public $message = "Ce Summoner {{ nameSummoner }} n'existe pas sur cette platform {{ platform }}";
-    public $toto = 'strict'; 
+    public $toto = 'strict';
 
     public function __construct($options = null, array $groups = null, $payload = null)
     {
@@ -16,6 +16,6 @@ class ConstraintSummonerExist extends Constraint
 
     public function validatedBy()
     {
-        return static::class."Validator";
+        return static::class . "Validator";
     }
 }
