@@ -34,8 +34,6 @@ class ConstraintSummonerExistValidator extends ConstraintValidator
                         ->addViolation()
                         ;
         }
-
-        return;
     }
 
 

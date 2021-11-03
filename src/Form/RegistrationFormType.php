@@ -21,15 +21,14 @@ class RegistrationFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            // ->add('pseudo', TextType::class)
             ->add('pseudo', TextType::class, [
                 "label" => "Summoner League Of Legends",
                 "constraints" => [
-                    new ConstraintSummonerExist(["toto" => "tata"])
+                    new ConstraintSummonerExist()
                 ]
             ])
             ->add('platform', ChoiceType::class, [
-                'mapped' => false,
+                // 'mapped' => false,
                 'choices'  => [
                     'EUW1' => "EUW1",
                     'BR1' => "BR1",
@@ -42,7 +41,7 @@ class RegistrationFormType extends AbstractType
                     'RU' => "RU",
                 ],
             ])
-            ->add('email', EmailType::class)
+            ->add('email', EmailType::class, )
             ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,
                 'constraints' => [
@@ -57,9 +56,7 @@ class RegistrationFormType extends AbstractType
                 'mapped' => false,
                 'attr' => ['autocomplete' => 'new-password'],
                 'constraints' => [
-                    new NotBlank([
-                        'message' => 'Please enter a password',
-                    ]),
+                    new NotBlank(),
                     new Length([
                         'min' => 6,
                         'minMessage' => 'Your password should be at least {{ limit }} characters',
