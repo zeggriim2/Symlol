@@ -20,17 +20,28 @@ class ConstraintSummonerExistValidator extends ConstraintValidator
         if (!$constraint instanceof ConstraintSummonerExist) {
             throw new UnexpectedTypeException($constraint, ContainsAlphanumeric::class);
         }
-        $platform = $this->requestStack->getMainRequest()->request->all()['registration_form']['platform'];
-        if (is_null($this->SummonerExiste($value, $platform))){
-            throw new UnexpectedValueException('test', 'string');
+
+        if(!is_string($value)){
+            throw new UnexpectedValueException($value,"string");
+            
         }
+        $platform = $this->requestStack->getMainRequest()->request->all()['registration_form']['platform'];
+
+        if (is_null($this->SummonerExiste($value, $platform))){
+            $this->context->buildViolation($constraint->message)
+                        ->setParameter("{{ nameSummoner }}", $value)
+                        ->setParameter("{{ platform }}", $platform)
+                        ->addViolation()
+                        ;
+        }
+
+        return;
     }
 
 
     private function SummonerExiste($value, $platform)
     {
-            $return = $this->summonerApi->getSummonerBySummonerName($platform, $value);
-        dd($return);
+        return $this->summonerApi->getSummonerBySummonerName($platform, $value);        
     }
 
     public function __construct(

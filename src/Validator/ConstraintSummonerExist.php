@@ -6,7 +6,7 @@ use Symfony\Component\Validator\Constraint;
 
 class ConstraintSummonerExist extends Constraint
 {
-    public $message = "Test d'un message";
+    public $message = "Ce Summoner {{ nameSummoner }} n'existe pas sur cette platform {{ platform }}";
     public $toto = 'strict'; 
 
     public function __construct($options = null, array $groups = null, $payload = null)

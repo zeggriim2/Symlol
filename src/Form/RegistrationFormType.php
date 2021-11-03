@@ -23,6 +23,7 @@ class RegistrationFormType extends AbstractType
         $builder
             // ->add('pseudo', TextType::class)
             ->add('pseudo', TextType::class, [
+                "label" => "Summoner League Of Legends",
                 "constraints" => [
                     new ConstraintSummonerExist(["toto" => "tata"])
                 ]
