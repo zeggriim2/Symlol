@@ -22,6 +22,7 @@ class UserCrudController extends AbstractCrudController
             TextField::new('email'),
             TextField::new('pseudo'),
             TextField::new('password')->onlyWhenCreating(),
+            TextField::new('platform'),
             ArrayField::new('roles'),
         ];
     }

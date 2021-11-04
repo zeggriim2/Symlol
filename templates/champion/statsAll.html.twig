@@ -4,7 +4,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.5.0/chart.min.js"></script>
 
     <div class="container-fluid">
-        <h2 class="my-3">Dashboard Statistiques</h2>
+        <h2 class="my-3">Dashboard Statistiques <span class="titleVersionStat">"{{ app.session.get('version') }}"</span></h2>
         <div class="row">
             {% if charts %}
                 {% for chart in charts%}

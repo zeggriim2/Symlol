@@ -102,7 +102,6 @@ class ChampionController extends AbstractController
         }
 
         $champion = $this->championApi->getChampion($name)['data'][$name];
-//        dd($champion);
 
         $data = null;
         foreach ($champion['stats'] as $key => $value) {

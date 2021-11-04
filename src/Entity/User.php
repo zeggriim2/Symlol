@@ -27,6 +27,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     /**
      * @ORM\Column(type="string", length=180, unique=true)
      * @Assert\Email(message="The email '{{ value }}' is not a valid email.")
+     * @Assert\NotBlank()
      */
     private $email;
 
@@ -51,6 +52,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      * @Assert\NotBlank()
      */
     private $pseudo;
+
+    /**
+     * @ORM\Column(type="string", length=10)
+     * @Assert\NotBlank()
+     */
+    private $platform;
 
     public function __construct()
     {
@@ -189,6 +196,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setPseudo(string $pseudo): self
     {
         $this->pseudo = $pseudo;
+
+        return $this;
+    }
+
+    public function getPlatform(): ?string
+    {
+        return $this->platform;
+    }
+
+    public function setPlatform(string $platform): self
+    {
+        $this->platform = $platform;
 
         return $this;
     }

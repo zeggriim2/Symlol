@@ -60,8 +60,7 @@ class SummonerApi
     public function getSummonerBySummonerName(
         string $platform,
         string $name
-    ): ?Summoner
-    {
+    ): ?Summoner {
 
         $url = $this->baseApi->constructUrl(
             self::URL_NAME,
@@ -76,7 +75,7 @@ class SummonerApi
                 'X-Riot-Token' => $this->baseApi->apiKey,
             ]
         ]);
-        return $summoner ? $this->denormalize($summoner): $summoner;
+        return $summoner ? $this->denormalize($summoner) : $summoner;
 //        return $this->denormalize($summoner);
     }
 

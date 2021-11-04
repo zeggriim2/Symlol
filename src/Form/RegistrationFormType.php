@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use App\Entity\User;
+use App\Validator\ConstraintSummonerExist;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -13,13 +14,33 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\IsTrue;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 class RegistrationFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('pseudo', TextType::class)
+            ->add('pseudo', TextType::class, [
+                "label" => "Summoner League Of Legends",
+                "constraints" => [
+                    new ConstraintSummonerExist()
+                ]
+            ])
+            ->add('platform', ChoiceType::class, [
+                // 'mapped' => false,
+                'choices'  => [
+                    'EUW1' => "EUW1",
+                    'BR1' => "BR1",
+                    'EUN1' => "EUN1",
+                    'KR' => "KR",
+                    'LA1' => "LA1",
+                    'LA2' => "LA2",
+                    'NA1' => "NA1",
+                    'OC1' => "OC1",
+                    'RU' => "RU",
+                ],
+            ])
             ->add('email', EmailType::class)
             ->add('agreeTerms', CheckboxType::class, [
                 'mapped' => false,
@@ -35,9 +56,7 @@ class RegistrationFormType extends AbstractType
                 'mapped' => false,
                 'attr' => ['autocomplete' => 'new-password'],
                 'constraints' => [
-                    new NotBlank([
-                        'message' => 'Please enter a password',
-                    ]),
+                    new NotBlank(),
                     new Length([
                         'min' => 6,
                         'minMessage' => 'Your password should be at least {{ limit }} characters',
