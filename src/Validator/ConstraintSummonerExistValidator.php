@@ -18,7 +18,7 @@ class ConstraintSummonerExistValidator extends ConstraintValidator
     {
 
         if (!$constraint instanceof ConstraintSummonerExist) {
-            throw new UnexpectedTypeException($constraint, ContainsAlphanumeric::class);
+            throw new UnexpectedTypeException($constraint, ConstraintSummonerExist::class);
         }
 
         if (!is_string($value)) {
