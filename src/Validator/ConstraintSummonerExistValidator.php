@@ -11,12 +11,11 @@ use Symfony\Component\Validator\Exception\UnexpectedValueException;
 
 class ConstraintSummonerExistValidator extends ConstraintValidator
 {
-    private $summonerApi;
-    private $requestStack;
+    private SummonerApi $summonerApi;
+    private RequestStack $requestStack;
 
     public function validate($value, Constraint $constraint)
     {
-
         if (!$constraint instanceof ConstraintSummonerExist) {
             throw new UnexpectedTypeException($constraint, ConstraintSummonerExist::class);
         }
@@ -24,6 +23,7 @@ class ConstraintSummonerExistValidator extends ConstraintValidator
         if (!is_string($value)) {
             throw new UnexpectedValueException($value, "string");
         }
+
         $platform = $this->requestStack->getMainRequest()->request->all()['registration_form']['platform'];
 
         if (is_null($this->summonerExiste($value, $platform))) {
