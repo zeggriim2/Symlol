@@ -5,6 +5,39 @@
 
     <div class="container-fluid">
         <h2 class="my-3">Dashboard Statistiques</h2>
+        <div class="row justify-content-center">
+            <div class="col-3">
+                {{ form(form) }}
+            </div>
+            <div class="col-9">
+                <div class="row justify-content-center">
+                    <div class="card px-0 mx-2 mb-3 text-center" style="max-width: 18rem;">
+                        <div class="card-header" style="height: 65px;">Champion ayant le plus de points de vie</div>
+                        <div class="card-body">
+                            <h5 class="card-title">{{ championMoreHp['name'] }}</h5>
+                        </div>
+                    </div>
+                    <div class="card px-0 mx-2 mb-3 text-center" style="max-width: 18rem;">
+                        <div class="card-header" style="height: 65px;">Champion ayant le plus de mana</div>
+                        <div class="card-body">
+                            <h5 class="card-title">{{ championMoreMp['name'] }}</h5>
+                        </div>
+                    </div>
+                    <div class="card px-0 mx-2 mb-3 text-center" style="max-width: 18rem;">
+                        <div class="card-header" style="height: 65px;">Champion ayant le plus d'armure</div>
+                        <div class="card-body">
+                            <h5 class="card-title">{{ championMoreArmor['name'] }}</h5>
+                        </div>
+                    </div>
+                    <div class="card px-0 mx-2 mb-3 text-center" style="max-width: 18rem;">
+                        <div class="card-header" style="height: 65px;">Champion ayant le plus d'attaque</div>
+                        <div class="card-body">
+                            <h5 class="card-title">{{ championMoreAttack['name'] }}</h5>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="row">
             {% if charts %}
                 {% for chart in charts%}
