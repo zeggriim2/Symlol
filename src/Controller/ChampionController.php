@@ -164,9 +164,9 @@ class ChampionController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $data = $form->getData();
-            $this->requestStack->getSession()->set('level', $data['level']);
+            $this->requestStack->getSession()->set('StatChampionlevel', $data['level']);
         }
-        $level = $this->requestStack->getSession()->get('level');
+        $level = $this->requestStack->getSession()->get('StatChampionlevel');
 
         //Top des champions à chaque stats
         $championMoreHp = [
