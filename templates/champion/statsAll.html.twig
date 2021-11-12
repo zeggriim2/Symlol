@@ -7,7 +7,10 @@
         <h2 class="my-3">Dashboard Statistiques</h2>
         <div class="row justify-content-center">
             <div class="col-3">
-                {{ form(form) }}
+                {{ form_start(form) }}
+                    {{ form_row(form.level) }}
+                    <button type="submit" class=" btn btn-primary">Valider</button>
+                {{ form_end(form) }}
             </div>
             <div class="col-9">
                 <div class="row justify-content-center">
