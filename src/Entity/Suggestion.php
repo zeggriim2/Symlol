@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\SuggestionRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=SuggestionRepository::class)
@@ -19,6 +20,7 @@ class Suggestion
 
     /**
      * @ORM\Column(type="text")
+     * @Assert\NotBlank()
      */
     private $idee;
 
@@ -29,6 +31,7 @@ class Suggestion
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
      */
     private $title;
 
