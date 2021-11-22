@@ -178,13 +178,12 @@ class BaseApi
                 'url' => $url,
                 'options'   => $options
             ]);
-            
-            if($formatReturn === self::FORMAT_RETURN_ARRAY){
+
+            if ($formatReturn === self::FORMAT_RETURN_ARRAY) {
                 return $response->toArray();
-            }else{
+            } else {
                 return $response->getContent();
             }
-            
         } elseif (in_array($codeHttp, self::CODE_HTTP_INFO)) {
             // Ecriture dans les logs
             $this->apiLogger->info("API INFO", [

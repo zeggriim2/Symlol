@@ -14,7 +14,7 @@ class ChampionApi
      * @var BaseApi
      */
     private $baseApi;
-    
+
     /**
      * @var DenormalizerInterface
      */

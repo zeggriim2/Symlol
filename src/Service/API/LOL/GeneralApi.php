@@ -88,7 +88,7 @@ class GeneralApi
         if ($listQueue === null) {
             return null;
         }
-        
+
         return $listQueue;
         // return $this->denormalize($listQueue, Queue::class);
     }

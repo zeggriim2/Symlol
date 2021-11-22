@@ -172,7 +172,6 @@ class MatchApi
                 'X-Riot-Token' => $this->baseApi->apiKey,
             ]
         ]);
-        
         return $matchsId;
         // if (is_null($matchsId)) {
         //     return null;
