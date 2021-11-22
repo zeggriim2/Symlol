@@ -87,29 +87,29 @@ class SummonerController extends AbstractController
     public function show(string $name): Response
     {
         $platform = $this->requestStack->getSession()->get('platform'); // Recup la platform en session
-
         $summoner = $this->summonerApi->getSummonerBySummonerName($platform, $name);
+        
         if (is_null($summoner)) {
             $this->addFlash('summoner', 'Summoners Non trouvé');
             return $this->redirectToRoute('summoner_index');
         }
+        
 
-        $infoSummonerleague = $this->leagueApi->getLeagueBySummonerId($summoner->getId(), $platform);
-
-        $listMatchId      = $this->matchApi->getListIdMatchBySummonerPuuid($summoner->getPuuid(), $platform);
+        $infoSummonerleague = $this->leagueApi->getLeagueBySummonerId($summoner['id'], $platform);
+        $listMatchId      = $this->matchApi->getListIdMatchBySummonerPuuid($summoner['puuid'], $platform);
         $matchSummoner = [];
         foreach ($listMatchId as $key => $matchId) {
             $matchSummoner[$matchId] =  $this->matchApi->getMatchByMatchId($matchId, $platform);
         }
 
-        $leagueSummoner     = $this->leagueApi->getLeagueByLeagueId($platform, $infoSummonerleague[0]->getLeagueId());
+        $leagueSummoner     = $this->leagueApi->getLeagueByLeagueId($platform, $infoSummonerleague[0]['leagueId']);
         $leagues            = $this->trieParRank($leagueSummoner->getEntries());
-        $this->descendingSort($leagues[$infoSummonerleague[0]->getRank()], "leaguePoints");
+        $this->descendingSort($leagues[$infoSummonerleague[0]['rank']], "leaguePoints");
 
         return $this->render('summoner/show.html.twig', [
             'summoner'              => $summoner,
             'infoSummonerleague'    => $infoSummonerleague[0],
-            'leagues'               => $leagues[$infoSummonerleague[0]->getRank()],
+            'leagues'               => $leagues[$infoSummonerleague[0]['rank']],
             'matchsDetail'          => $matchSummoner,
             "matchSummoner"         => $matchSummoner
         ]);
