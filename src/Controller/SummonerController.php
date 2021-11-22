@@ -22,20 +22,20 @@ class SummonerController extends AbstractController
     /**
      * @var SummonerApi
      */
-    private $summonerApi;
+    private SummonerApi $summonerApi;
 
     /**
      * @var RequestStack
      */
-    private $requestStack;
+    private RequestStack $requestStack;
     /**
      * @var LeagueApi
      */
-    private $leagueApi;
+    private LeagueApi $leagueApi;
     /**
      * @var MatchApi
      */
-    private $matchApi;
+    private MatchApi $matchApi;
 
     /**
      * SummonerController constructor.
@@ -81,33 +81,35 @@ class SummonerController extends AbstractController
 
     /**
      * @Route("/{name}", name="summoner_show")
+     * @param string $name
+     * @return Response
      */
     public function show(string $name): Response
     {
         $platform = $this->requestStack->getSession()->get('platform'); // Recup la platform en session
-
         $summoner = $this->summonerApi->getSummonerBySummonerName($platform, $name);
+
         if (is_null($summoner)) {
             $this->addFlash('summoner', 'Summoners Non trouvé');
             return $this->redirectToRoute('summoner_index');
         }
 
-        $infoSummonerleague = $this->leagueApi->getLeagueBySummonerId($summoner->getId(), $platform);
 
-        $listMatchId      = $this->matchApi->getListIdMatchBySummonerPuuid($summoner->getPuuid(), $platform);
+        $infoSummonerleague = $this->leagueApi->getLeagueBySummonerId($summoner['id'], $platform);
+        $listMatchId      = $this->matchApi->getListIdMatchBySummonerPuuid($summoner['puuid'], $platform);
         $matchSummoner = [];
         foreach ($listMatchId as $key => $matchId) {
             $matchSummoner[$matchId] =  $this->matchApi->getMatchByMatchId($matchId, $platform);
         }
 
-        $leagueSummoner     = $this->leagueApi->getLeagueByLeagueId($platform, $infoSummonerleague[0]->getLeagueId());
+        $leagueSummoner     = $this->leagueApi->getLeagueByLeagueId($platform, $infoSummonerleague[0]['leagueId']);
         $leagues            = $this->trieParRank($leagueSummoner->getEntries());
-        $this->descendingSort($leagues[$infoSummonerleague[0]->getRank()], "leaguePoints");
+        $this->descendingSort($leagues[$infoSummonerleague[0]['rank']], "leaguePoints");
 
         return $this->render('summoner/show.html.twig', [
             'summoner'              => $summoner,
             'infoSummonerleague'    => $infoSummonerleague[0],
-            'leagues'               => $leagues[$infoSummonerleague[0]->getRank()],
+            'leagues'               => $leagues[$infoSummonerleague[0]['rank']],
             'matchsDetail'          => $matchSummoner,
             "matchSummoner"         => $matchSummoner
         ]);
@@ -122,8 +124,7 @@ class SummonerController extends AbstractController
     private function descendingSort(array &$data, string $field)
     {
         usort($data, function ($item1, $item2) use ($field) {
-            $method = "get$field";
-            return $item2->$method() <=> $item1->$method();
+            return $item2[$field] <=> $item1[$field];
         });
     }
 
@@ -135,7 +136,7 @@ class SummonerController extends AbstractController
     {
         $league = [];
         foreach ($datas as $key => $summonerRank) {
-            switch ($summonerRank->getRank()) {
+            switch ($summonerRank['rank']) {
                 case "I":
                     $league['I'][] = $summonerRank;
                     break;

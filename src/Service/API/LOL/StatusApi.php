@@ -32,9 +32,14 @@ class StatusApi
         $this->denormalizer = $denormalizer;
     }
 
+    /**
+     *
+     * @param string $platform
+     * @return array|null
+     */
     public function getStatusPlatform(
         string $platform
-    ): PlatformData {
+    ): ?array {
         $url = $this->baseApi->constructUrl(
             self::URL_STATUS_PLATFORM,
             [
@@ -48,6 +53,7 @@ class StatusApi
             ]
         ]);
 
-        return $this->denormalizer->denormalize($statusPlatform, PlatformData::class);
+        return $statusPlatform;
+        // return $this->denormalizer->denormalize($statusPlatform, PlatformData::class);
     }
 }

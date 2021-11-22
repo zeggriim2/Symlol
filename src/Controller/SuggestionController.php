@@ -10,12 +10,15 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+/**
+ * @Route("/suggestion")
+ */
 class SuggestionController extends AbstractController
 {
     /**
      * @param SuggestionRepository $suggestionRepository
      * @return Response
-     * @Route("/suggestion", name="suggestion_list")
+     * @Route("/", name="suggestion_list")
      */
     public function list(SuggestionRepository $suggestionRepository): Response
     {
@@ -25,7 +28,7 @@ class SuggestionController extends AbstractController
     }
 
     /**
-     * @Route("/suggestion/create", name="suggestion_create")
+     * @Route("/create", name="suggestion_create")
      * @param Request $request
      * @return Response
      */
@@ -51,7 +54,7 @@ class SuggestionController extends AbstractController
     }
 
     /**
-     * @Route("/suggestion/{id}", name="suggestion_show")
+     * @Route("/{id<\d+>}", name="suggestion_show")
      * @param int $id
      * @param SuggestionRepository $suggestionRepository
      * @return Response

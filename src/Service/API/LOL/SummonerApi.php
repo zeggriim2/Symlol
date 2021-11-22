@@ -55,13 +55,12 @@ class SummonerApi
     /**
      * @param string $platform
      * @param string $name
-     * @return Summoner|null
+     * @return array|null
      */
     public function getSummonerBySummonerName(
         string $platform,
         string $name
-    ): ?Summoner
-    {
+    ): ?array {
 
         $url = $this->baseApi->constructUrl(
             self::URL_NAME,
@@ -76,7 +75,8 @@ class SummonerApi
                 'X-Riot-Token' => $this->baseApi->apiKey,
             ]
         ]);
-        return $summoner ? $this->denormalize($summoner): $summoner;
+        return $summoner;
+        // return $summoner ? $this->denormalize($summoner) : $summoner;
 //        return $this->denormalize($summoner);
     }
 
@@ -85,9 +85,9 @@ class SummonerApi
      *
      * @param string $platform
      * @param string $accountId
-     * @return Summoner
+     * @return array|null
      */
-    public function getSummonerByAccountID(string $platform, string $accountId)
+    public function getSummonerByAccountID(string $platform, string $accountId): ?array
     {
         $url = $this->baseApi->constructUrl(
             self::URL_ACCOUNT,
@@ -102,16 +102,18 @@ class SummonerApi
                 'X-Riot-Token' => $this->baseApi->apiKey,
             ]
         ]);
-        return $this->denormalize($summoner);
+
+        return $summoner;
+        // return $this->denormalize($summoner);
     }
 
     /**
      * Get Summoner by PUUID
      * @param string $platform
      * @param string $puuid
-     * @return Summoner
+     * @return array|null
      */
-    public function getSummonerByPuuid(string $platform, string $puuid)
+    public function getSummonerByPuuid(string $platform, string $puuid): ?array
     {
         $url = $this->baseApi->constructUrl(
             self::URL_PUUID,
@@ -126,16 +128,18 @@ class SummonerApi
                 'X-Riot-Token' => $this->baseApi->apiKey,
             ]
         ]);
-        return $this->denormalize($summoner);
+
+        return $summoner;
+        // return $this->denormalize($summoner);
     }
 
     /**
      * Get Summoner by Summoner ID
      * @param string $platform
      * @param string $summonerId
-     * @return Summoner
+     * @return array|null
      */
-    public function getSummonerBySummonerId(string $platform, string $summonerId)
+    public function getSummonerBySummonerId(string $platform, string $summonerId): ?array
     {
         $url = $this->baseApi->constructUrl(
             self::URL_SUMMONER_ID,
@@ -150,7 +154,9 @@ class SummonerApi
                 'X-Riot-Token' => $this->baseApi->apiKey,
             ]
         ]);
-        return $this->denormalize($summoner);
+
+        return $summoner;
+        // return $this->denormalize($summoner);
     }
 
     private function denormalize(array $data): Summoner

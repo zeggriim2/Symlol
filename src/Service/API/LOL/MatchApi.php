@@ -87,10 +87,16 @@ class MatchApi
         ]);
     }
 
+    /**
+     *
+     * @param string $matchId
+     * @param string $platform
+     * @return array|null
+     */
     public function getMatchByMatchId(
         string $matchId,
         string $platform
-    ): MatchEntity {
+    ): ?array {
         $url = $this->baseApi->constructUrl(
             self::URL_MATCH_ID,
             [
@@ -104,14 +110,22 @@ class MatchApi
                 'X-Riot-Token' => $this->baseApi->apiKey,
             ]
         ]);
-        return $this->denormalizer->denormalize($match, MatchEntity::class);
+
+        return $match;
+        // return $this->denormalizer->denormalize($match, MatchEntity::class);
     }
 
 
+    /**
+     *
+     * @param string $matchId
+     * @param string $platform
+     * @return array|null
+     */
     public function getMatchTimeline(
         string $matchId,
         string $platform
-    ): MatchTimeLine {
+    ): ?array {
         $url = $this->baseApi->constructUrl(
             self::URL_MATCH_TIMELINE,
             [
@@ -126,7 +140,8 @@ class MatchApi
             ]
         ]);
 
-        return $this->denormalizer->denormalize($match, MatchTimeLine::class);
+        return $match;
+        // return $this->denormalizer->denormalize($match, MatchTimeLine::class);
     }
 
 
@@ -157,18 +172,25 @@ class MatchApi
                 'X-Riot-Token' => $this->baseApi->apiKey,
             ]
         ]);
+        return $matchsId;
+        // if (is_null($matchsId)) {
+        //     return null;
+        // }
+        // $detailMatch = [];
+        // foreach ($matchsId as $matchId) {
+        //     $detailMatch[$matchId] = $this->getMatchDetail($matchId, $platform);
+        // }
 
-        if (is_null($matchsId)) {
-            return null;
-        }
-        $detailMatch = [];
-        foreach ($matchsId as $matchId) {
-            $detailMatch[$matchId] = $this->getMatchDetail($matchId, $platform);
-        }
-
-        return $detailMatch;
+        // return $detailMatch;
     }
 
+
+    /**
+     *
+     * @param string $matchId
+     * @param string $platform
+     * @return array|null
+     */
     public function getMatchDetail(
         string $matchId,
         string $platform

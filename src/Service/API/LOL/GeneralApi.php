@@ -73,7 +73,8 @@ class GeneralApi
             return null;
         }
 
-        return $this->denormalize($listSeason, Season::class);
+        return $listSeason;
+        // return $this->denormalize($listSeason, Season::class);
     }
 
     /**
@@ -88,7 +89,8 @@ class GeneralApi
             return null;
         }
 
-        return $this->denormalize($listQueue, Queue::class);
+        return $listQueue;
+        // return $this->denormalize($listQueue, Queue::class);
     }
 
     /**
@@ -103,7 +105,8 @@ class GeneralApi
             return $listMap;
         }
 
-        return $this->denormalize($listMap, Map::class);
+        return $listMap;
+        // return $this->denormalize($listMap, Map::class);
     }
 
     /**
@@ -118,13 +121,14 @@ class GeneralApi
             return null;
         }
 
-        return $this->denormalize($listGameMode, GameMode::class);
+        return $listGameMode;
+        // return $this->denormalize($listGameMode, GameMode::class);
     }
 
     /**
      * @return array<mixed>|null
      */
-    public function getsGameTypes()
+    public function getsGameTypes(): ?array
     {
         $url = $this->buildUrlStatic(self::API_URL_GAMETYPES);
         $listGameType = $this->baseApi->callApi($url);
@@ -133,13 +137,14 @@ class GeneralApi
             return null;
         }
 
-        return $this->denormalize($listGameType, GameType::class);
+        return $listGameType;
+        // return $this->denormalize($listGameType, GameType::class);
     }
 
     /**
      * @return array<mixed>|null
      */
-    public function getVersions()
+    public function getVersions(): ?array
     {
         $url = $this->buildUrlDdragon(self::API_URL_VERSIONS);
         return $this->baseApi->callApiCache($url);
@@ -148,7 +153,7 @@ class GeneralApi
     /**
      * @return array<mixed>|null
      */
-    public function getAllLanguages()
+    public function getAllLanguages(): ?array
     {
         $url = $this->buildUrlDdragon(self::API_URL_LANGUAGES);
         return $this->baseApi->callApiCache($url);

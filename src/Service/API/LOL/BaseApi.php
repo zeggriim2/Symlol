@@ -28,6 +28,9 @@ class BaseApi
     private const CODE_HTTP_SUCCESS = [200,201,202];
     private const CODE_HTTP_ERREUR  = [400, 401,402,403,404];
 
+    private const FORMAT_RETURN_ARRAY = "ARRAY";
+    private const FORMAT_RETURN_CONTENT = "CONTENT";
+
     /**
      * @var HttpClientInterface
      */
@@ -164,18 +167,25 @@ class BaseApi
      * @throws ServerExceptionInterface
      * @throws TransportExceptionInterface
      */
-    private function request(string $url, string $method, array $options): ?array
+    private function request(string $url, string $method, array $options, $formatReturn = 'ARRAY'): ?array
     {
         $response = $this->httpClient->request($method, $url, $options);
         $codeHttp = $response->getStatusCode();
         if (in_array($codeHttp, self::CODE_HTTP_SUCCESS)) {
+            // Ecriture dans les logs
             $this->apiLogger->info("API SUCCESS", [
                 'code' => $codeHttp,
                 'url' => $url,
                 'options'   => $options
             ]);
-            return $response->toArray();
+
+            if ($formatReturn === self::FORMAT_RETURN_ARRAY) {
+                return $response->toArray();
+            } else {
+                return $response->getContent();
+            }
         } elseif (in_array($codeHttp, self::CODE_HTTP_INFO)) {
+            // Ecriture dans les logs
             $this->apiLogger->info("API INFO", [
                 'code' => $codeHttp,
                 'url' => $url,
@@ -183,6 +193,7 @@ class BaseApi
             ]);
             return null;
         } elseif (in_array($codeHttp, self::CODE_HTTP_ERREUR)) {
+            // Ecriture dans les logs
             $this->apiLogger->error("API ERREUR", [
                 'code' => $codeHttp,
                 'url' => $url,

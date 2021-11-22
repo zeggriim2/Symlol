@@ -20,7 +20,6 @@ class WorldController extends AbstractController
         GameRepository $gameRepository
     ): Response {
         $games = $gameRepository->findBy([], ['dateGame' => 'ASC']);
-
         return $this->render('world/index.html.twig', [
             'games' => $games,
         ]);
