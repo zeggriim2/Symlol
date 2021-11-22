@@ -14,6 +14,7 @@ class ChampionApi
      * @var BaseApi
      */
     private $baseApi;
+    
     /**
      * @var DenormalizerInterface
      */
@@ -79,9 +80,13 @@ class ChampionApi
         return $nameChampions;
     }
 
+    /**
+     * @param string $platform
+     * @return array
+     */
     public function getChampionRotation(
         string $platform
-    ): ChampionRotation {
+    ): array {
         $url = $this->baseApi->constructUrl(
             self::URL_CHAMPION_ROTATION,
             [
@@ -94,7 +99,7 @@ class ChampionApi
                 'X-Riot-Token' => $this->baseApi->apiKey,
             ]
         ]);
-
-        return $this->denormalizer->denormalize($championRotation, ChampionRotation::class);
+        return $championRotation;
+        // return $this->denormalizer->denormalize($championRotation, ChampionRotation::class);
     }
 }

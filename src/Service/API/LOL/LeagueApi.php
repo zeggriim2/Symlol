@@ -40,10 +40,17 @@ class LeagueApi
         $this->denormalizer = $denormalizer;
     }
 
+
+    /**
+     *
+     * @param string $platform
+     * @param string $queue
+     * @return array|null
+     */
     public function getLeagueChallenger(
         string $platform,
         string $queue
-    ): LeagueList {
+    ): ?array {
         $url = $this->baseApi->constructUrl(
             self::URL_CHALLENGER_LEAGUE_QUEUE,
             [
@@ -57,15 +64,22 @@ class LeagueApi
                 'X-Riot-Token' => $this->baseApi->apiKey,
             ]
         ]);
-//        dd($leagueGrandMaster);
 
-        return $this->denormalizer->denormalize($leagueChallenger, LeagueList::class);
+        return $leagueChallenger;
+        // return $this->denormalizer->denormalize($leagueChallenger, LeagueList::class);
     }
 
+
+    /**
+     *
+     * @param string $platform
+     * @param string $queue
+     * @return array|null
+     */
     public function getLeagueGrandMaster(
         string $platform,
         string $queue
-    ): LeagueList {
+    ): ?array {
         $url = $this->baseApi->constructUrl(
             self::URL_GRANDMASTER_LEAGUE_QUEUE,
             [
@@ -79,15 +93,20 @@ class LeagueApi
                     'X-Riot-Token' => $this->baseApi->apiKey,
                 ]
             ]);
-//        dd($leagueGrandMaster);
 
-        return $this->denormalizer->denormalize($leagueGrandMaster, LeagueList::class);
+        return $leagueGrandMaster;
+        // return $this->denormalizer->denormalize($leagueGrandMaster, LeagueList::class);
     }
 
+    /**
+     * @param string $platform
+     * @param string $queue
+     * @return array|null
+     */
     public function getLeagueMaster(
         string $platform,
         string $queue
-    ): LeagueList {
+    ): ?array {
         $url = $this->baseApi->constructUrl(
             self::URL_MASTER_LEAGUE_QUEUE,
             [
@@ -102,18 +121,19 @@ class LeagueApi
             ]
         ]);
 
-        return $this->denormalizer->denormalize($leagueMaster, LeagueList::class);
+        return $leagueMaster;
+        // return $this->denormalizer->denormalize($leagueMaster, LeagueList::class);
     }
 
     /**
      * @param string $summunerId
      * @param string $platform
-     * @return LeagueEntry[]
+     * @return array|null
      */
     public function getLeagueBySummonerId(
         string $summunerId,
         string $platform
-    ): array {
+    ): ?array {
         $url = $this->baseApi->constructUrl(
             self::URL_LEAGUE_SUMMONER_ID,
             [
@@ -128,12 +148,14 @@ class LeagueApi
             ]
         ]);
 
-        $leagueObj = [];
-        foreach ($leagues as $league) {
-            $leagueObj[] = $this->denormalizer->denormalize($league, LeagueEntry::class);
-        }
+        return $leagues;
 
-        return $leagueObj;
+        // $leagueObj = [];
+        // foreach ($leagues as $league) {
+        //     $leagueObj[] = $this->denormalizer->denormalize($league, LeagueEntry::class);
+        // }
+
+        // return $leagueObj;
     }
 
 
