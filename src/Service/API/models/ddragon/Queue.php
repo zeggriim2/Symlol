@@ -6,8 +6,8 @@ class Queue
 {
     private int $queueId;
     private string $map;
-    private string $description;
-    private string $notes;
+    private ?string $description;
+    private ?string $notes;
 
     /**
      * @return int
@@ -57,7 +57,7 @@ class Queue
      * @param string $description
      * @return Queue
      */
-    public function setDescription(string $description): Queue
+    public function setDescription(?string $description): Queue
     {
         $this->description = $description;
         return $this;
@@ -75,7 +75,7 @@ class Queue
      * @param string $notes
      * @return Queue
      */
-    public function setNotes(string $notes): Queue
+    public function setNotes(?string $notes): Queue
     {
         $this->notes = $notes;
         return $this;

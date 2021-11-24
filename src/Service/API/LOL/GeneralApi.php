@@ -62,7 +62,7 @@ class GeneralApi
     /**
      * Recupere la liste des saisons
      *
-     * @return Season[]|null
+     * @return array<Season>|null
      */
     public function getSeason(): ?array
     {
@@ -73,12 +73,11 @@ class GeneralApi
             return null;
         }
 
-        return $listSeason;
-        // return $this->denormalize($listSeason, Season::class);
+        return $this->denormalize($listSeason, Season::class);
     }
 
     /**
-     * @return array<mixed>|null
+     * @return array<Queue>|null
      */
     public function getQueues(): ?array
     {
@@ -89,12 +88,11 @@ class GeneralApi
             return null;
         }
 
-        return $listQueue;
-        // return $this->denormalize($listQueue, Queue::class);
+        return $this->denormalize($listQueue, Queue::class);
     }
 
     /**
-     * @return array<mixed>|null
+     * @return array<Map>|null
      */
     public function getMaps(): ?array
     {
@@ -105,14 +103,13 @@ class GeneralApi
             return $listMap;
         }
 
-        return $listMap;
-        // return $this->denormalize($listMap, Map::class);
+         return $this->denormalize($listMap, Map::class);
     }
 
     /**
-     * @return array<mixed>|null
+     * @return array<GameMode>|null
      */
-    public function getsGameModes(): ?array
+    public function getGameModes(): ?array
     {
         $url = $this->buildUrlStatic(self::API_URL_GAMEMODES);
         $listGameMode = $this->baseApi->callApi($url);
@@ -121,14 +118,13 @@ class GeneralApi
             return null;
         }
 
-        return $listGameMode;
-        // return $this->denormalize($listGameMode, GameMode::class);
+        return $this->denormalize($listGameMode, GameMode::class);
     }
 
     /**
-     * @return array<mixed>|null
+     * @return array<GameType>|null
      */
-    public function getsGameTypes(): ?array
+    public function getGameTypes(): ?array
     {
         $url = $this->buildUrlStatic(self::API_URL_GAMETYPES);
         $listGameType = $this->baseApi->callApi($url);
@@ -137,12 +133,11 @@ class GeneralApi
             return null;
         }
 
-        return $listGameType;
-        // return $this->denormalize($listGameType, GameType::class);
+        return $this->denormalize($listGameType, GameType::class);
     }
 
     /**
-     * @return array<mixed>|null
+     * @return array<string>|null
      */
     public function getVersions(): ?array
     {
@@ -151,7 +146,7 @@ class GeneralApi
     }
 
     /**
-     * @return array<mixed>|null
+     * @return array<string>|null
      */
     public function getAllLanguages(): ?array
     {
@@ -175,8 +170,8 @@ class GeneralApi
         string $instance
     ): array {
         $listeObj = [];
-        foreach ($listes as $gameMode) {
-            $listeObj[] = $this->denormalizer->denormalize($gameMode, $instance);
+        foreach ($listes as $liste) {
+            $listeObj[] = $this->denormalizer->denormalize($liste, $instance);
         }
         return $listeObj;
     }
