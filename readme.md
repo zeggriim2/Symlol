@@ -5,7 +5,7 @@ Repository: League Of Legends global statistics website. Check your Summoner.
 ------
 ### Version des différents outils utilisé.
 
-PHP >=7.4,
+PHP >=8.0,
 YARN 1.14,
 NODE 14.17(LTS à ce jour), 
 BOOTSTRAP 5
