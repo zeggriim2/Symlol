@@ -29,7 +29,10 @@ services:
     App\Service\API\LOL\BaseApi:
         arguments:
             $apiKey: '%APIKEY%'
-            
+
+    App\Service\API\LOL\DataDragon\GeneralApi:
+        public: true
+
     Sentry\Monolog\Handler:
         arguments:
             $hub: '@Sentry\State\HubInterface'

@@ -70,12 +70,6 @@ class GeneralApiTest extends KernelTestCase
         $this->checkAssertInstanceOf(GameType::class, $gameTypes);
     }
 
-    public function testVersions()
-    {
-        $versions = $this->generalApi->getVersions();
-
-    }
-
     private function checkAssertInstanceOf(string $expected, $actuals)
     {
         foreach ($actuals as $actual) {
