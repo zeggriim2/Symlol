@@ -1,6 +1,6 @@
 .PHONY: vendor
 analyze:
-	npm audit --production
+	#npm audit --production
 	npx eslint assets/
 	npx stylelint "assets/styles/**/*.scss"
 	composer valid
