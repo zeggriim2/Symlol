@@ -40,3 +40,11 @@ prepare-build:
 	make database-test
 	make fixtures-test
 	npm run dev
+
+install:
+	cp .env.dist .env.local
+	sed -i -e 's/BRANCH/$(BRANCH)/' .env.local
+	sed -i -e 's/USER/$(DATABASE_USER)/' .env.local
+	sed -i -e 's/PASSWORD/$(DATABASE_PASSWORD)/' .env.local
+	composer install
+	npm install
