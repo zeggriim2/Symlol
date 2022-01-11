@@ -6,6 +6,6 @@ monolog:
       path: "%kernel.project_dir%/log/%kernel.environment%/api.log"
       level: info
       channels: ['api']
-    sentry:
-      type: service
-      id: Sentry\Monolog\Handler
+#    sentry:
+#      type: service
+#      id: Sentry\Monolog\Handler
