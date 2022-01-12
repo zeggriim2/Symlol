@@ -4,7 +4,7 @@ analyze:
 	#npx eslint assets/
 	#npx stylelint "assets/styles/**/*.scss"
 	composer valid
-	composer unused --excludePackage=beberlei/doctrineextensions
+	#composer unused --excludePackage=beberlei/doctrineextensions
 	php bin/console doctrine:schema:valid --skip-sync
 	php bin/phpcs
 	php bin/console lint:twig templates/
