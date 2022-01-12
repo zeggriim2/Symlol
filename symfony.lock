@@ -124,6 +124,9 @@
             "./config/packages/fos_ckeditor.yaml"
         ]
     },
+    "friendsoftwig/twigcs": {
+        "version": "v5.1.0"
+    },
     "guzzlehttp/promises": {
         "version": "1.4.1"
     },
