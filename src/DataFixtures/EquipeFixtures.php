@@ -61,7 +61,8 @@ class EquipeFixtures extends Fixture implements DependentFixtureInterface, Fixtu
             "group" => "C"
         ],
         "MAD LIONS" => [
-            "logo" => "https://cdn.pandascore.co/images/team/image/126536/220px_mad_lions_e.c.__lec_team_logo_profile.png",
+            "logo" =>
+                "https://cdn.pandascore.co/images/team/image/126536/220px_mad_lions_e.c.__lec_team_logo_profile.png",
             "group" => "D"
         ],
         "Team Liquid" => [

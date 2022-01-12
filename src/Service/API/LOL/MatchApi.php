@@ -9,7 +9,8 @@ use Symfony\Component\Serializer\Normalizer\DenormalizerInterface;
 
 class MatchApi
 {
-    private const URL_LIST_MATCH_BY_PUUID = "https://{region}.api.riotgames.com/lol/match/v5/matches/by-puuid/{puuid}/ids?start={start}&count={count}";
+    private const URL_LIST_MATCH_BY_PUUID =
+        "https://{region}.api.riotgames.com/lol/match/v5/matches/by-puuid/{puuid}/ids?start={start}&count={count}";
     private const URL_MATCH_ID = "https://{region}.api.riotgames.com/lol/match/v5/matches/{matchId}";
     private const URL_MATCH_TIMELINE = "https://{region}.api.riotgames.com/lol/match/v5/matches/{matchId}/timeline";
 

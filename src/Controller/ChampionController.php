@@ -194,13 +194,23 @@ class ChampionController extends AbstractController
             //Recherche les champions ayant le plus de HP, le plus d'attaque, le plus d'Armure et le plus de mp
             $tempHpWithLvl = $champion['stats']['hp'] + ($champion['stats']['hpperlevel'] * $level);
             $tempArmorWithLvl = $champion['stats']['armor'] + ($champion['stats']['armorperlevel'] * $level);
-            $tempAttackWithLvl = $champion['stats']['attackdamage'] + ($champion['stats']['attackdamageperlevel'] * $level);
-            $tempMpWithLvl = $champion['partype'] == 'Mana' ? $champion['stats']['mp'] + ($champion['stats']['mpperlevel'] * $level) : 0;
+            $tempAttackWithLvl = $champion['stats']['attackdamage']
+                + ($champion['stats']['attackdamageperlevel'] * $level);
+            $tempMpWithLvl = $champion['partype'] == 'Mana' ? $champion['stats']['mp']
+                + ($champion['stats']['mpperlevel'] * $level) : 0;
 
             $championMoreMp = $this->compareChampionPerStat($championMoreMp, $tempMpWithLvl, $champion['name']);
             $championMoreHp = $this->compareChampionPerStat($championMoreHp, $tempHpWithLvl, $champion['name']);
-            $championMoreAttack = $this->compareChampionPerStat($championMoreAttack, $tempAttackWithLvl, $champion['name']);
-            $championMoreArmor = $this->compareChampionPerStat($championMoreArmor, $tempArmorWithLvl, $champion['name']);
+            $championMoreAttack = $this->compareChampionPerStat(
+                $championMoreAttack,
+                $tempAttackWithLvl,
+                $champion['name']
+            );
+            $championMoreArmor = $this->compareChampionPerStat(
+                $championMoreArmor,
+                $tempArmorWithLvl,
+                $champion['name']
+            );
 
 
             //Mise en place des variables pour les tableaux de statistique
@@ -222,7 +232,8 @@ class ChampionController extends AbstractController
                     $data['ATTACKDOMMAGE']['title'] = 'Statiques Champions dommage d\'attaque';
                     $data['ATTACKDOMMAGE']['dataset'] = 'Attaque Dommage';
                 } elseif ($label === 'mp') {
-                    $data['MP']['data'][] = $champion['partype'] == 'Mana' ? $value + ($champion['stats']['mpperlevel'] * $level) : 0;
+                    $data['MP']['data'][] = $champion['partype'] == 'Mana' ? $value
+                        + ($champion['stats']['mpperlevel'] * $level) : 0;
                     $data['MP']['title'] = 'Statistique Mana';
                     $data['MP']['dataset'] = 'Mana';
                 } elseif ($label === 'movespeed') {
