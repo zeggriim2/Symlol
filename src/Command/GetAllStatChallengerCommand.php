@@ -16,7 +16,6 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class GetAllStatChallengerCommand extends Command
 {
-
     protected static $defaultName = "outil:getAllStatChallenger";
     protected static $defaultDescription = "Genere les games entre les différentes equipe par groupe associé";
 

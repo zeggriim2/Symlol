@@ -4,7 +4,6 @@ namespace App\Service\API\models\Matchs;
 
 class PerkStyle
 {
-
     private string $description;
     /**
      * @var PerkStyleSelection[]

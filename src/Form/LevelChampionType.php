@@ -10,7 +10,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class LevelChampionType extends AbstractType
 {
-    /** CONSTANTE **/    
+    /** CONSTANTE **/
     private const LEVEL_MIN = 1;
     private const LEVEL_MAX = 18;
     /** CONSTANTE **/
@@ -19,7 +19,7 @@ class LevelChampionType extends AbstractType
      */
     private $requestStack;
 
-    
+
     /**
      * LevelChampionType constructor.
      */
@@ -38,9 +38,9 @@ class LevelChampionType extends AbstractType
         ;
     }
 
-    private function generateArrayLevel(): array 
-    { 
-      return array_combine(range(self::LEVEL_MIN,self::LEVEL_MAX), range(self::LEVEL_MIN,self::LEVEL_MAX));
+    private function generateArrayLevel(): array
+    {
+        return array_combine(range(self::LEVEL_MIN, self::LEVEL_MAX), range(self::LEVEL_MIN, self::LEVEL_MAX));
     }
 
     public function configureOptions(OptionsResolver $resolver)

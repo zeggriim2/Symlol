@@ -20,7 +20,6 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 //)]
 class GenerateGameCommand extends Command
 {
-
     protected static $defaultName = "outil:generateGame";
     protected static $defaultDescription = "Genere les games entre les différentes equipe par groupe associé";
 

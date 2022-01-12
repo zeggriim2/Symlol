@@ -157,7 +157,7 @@ class ChampionController extends AbstractController
     {
         // Récupere tous les champion de LOL
         $champions = $this->championApi->getAllChampion()['data'];
-        
+
         //Formulaire pour récupérer les stats par rapport au level des champions
         $form = $this->createForm(LevelChampionType::class);
         $form->handleRequest($request);
@@ -169,20 +169,20 @@ class ChampionController extends AbstractController
 
         //Top des champions à chaque stats
         $championMoreHp = [
-            'name'=> "",
-            'result'=> 0
+            'name' => "",
+            'result' => 0
         ];
         $championMoreAttack = [
-            'name'=> "",
-            'result'=> 0
+            'name' => "",
+            'result' => 0
         ];
         $championMoreArmor = [
-            'name'=> "",
-            'result'=> 0
+            'name' => "",
+            'result' => 0
         ];
         $championMoreMp = [
-            'name'=> "",
-            'result'=> 0
+            'name' => "",
+            'result' => 0
         ];
 
         //Récupération des stats de chaque champion
@@ -192,10 +192,10 @@ class ChampionController extends AbstractController
             $nameChampion[] = $champion['name'];
 
             //Recherche les champions ayant le plus de HP, le plus d'attaque, le plus d'Armure et le plus de mp
-            $tempHpWithLvl = $champion['stats']['hp'] + ($champion['stats']['hpperlevel']*$level);
-            $tempArmorWithLvl = $champion['stats']['armor'] + ($champion['stats']['armorperlevel']*$level);
-            $tempAttackWithLvl = $champion['stats']['attackdamage'] + ($champion['stats']['attackdamageperlevel']*$level);
-            $tempMpWithLvl = $champion['partype'] == 'Mana' ? $champion['stats']['mp'] + ($champion['stats']['mpperlevel']*$level) : 0;
+            $tempHpWithLvl = $champion['stats']['hp'] + ($champion['stats']['hpperlevel'] * $level);
+            $tempArmorWithLvl = $champion['stats']['armor'] + ($champion['stats']['armorperlevel'] * $level);
+            $tempAttackWithLvl = $champion['stats']['attackdamage'] + ($champion['stats']['attackdamageperlevel'] * $level);
+            $tempMpWithLvl = $champion['partype'] == 'Mana' ? $champion['stats']['mp'] + ($champion['stats']['mpperlevel'] * $level) : 0;
 
             $championMoreMp = $this->compareChampionPerStat($championMoreMp, $tempMpWithLvl, $champion['name']);
             $championMoreHp = $this->compareChampionPerStat($championMoreHp, $tempHpWithLvl, $champion['name']);
@@ -203,14 +203,14 @@ class ChampionController extends AbstractController
             $championMoreArmor = $this->compareChampionPerStat($championMoreArmor, $tempArmorWithLvl, $champion['name']);
 
 
-            //Mise en place des variables pour les tableaux de statistique 
+            //Mise en place des variables pour les tableaux de statistique
             foreach ($champion['stats'] as $label => $value) {
                 if ($label === 'hp') {
-                    $data['HP']['data'][] = $value + ($champion['stats']['hpperlevel']*$level);
+                    $data['HP']['data'][] = $value + ($champion['stats']['hpperlevel'] * $level);
                     $data['HP']['title'] = 'Statiques Champions point de vie';
                     $data['HP']['dataset'] = 'Hp';
                 } elseif ($label === 'armor') {
-                    $data['ARMOR']['data'][] = $value + ($champion['stats']['armorperlevel']*$level);
+                    $data['ARMOR']['data'][] = $value + ($champion['stats']['armorperlevel'] * $level);
                     $data['ARMOR']['title'] = 'Statiques Champions armure';
                     $data['ARMOR']['dataset'] = 'Armor';
                 } elseif ($label === 'attackrange') {
@@ -218,11 +218,11 @@ class ChampionController extends AbstractController
                     $data['ATTACKRANGE']['title'] = 'Statiques Champions range d\'attaque';
                     $data['ATTACKRANGE']['dataset'] = 'Attaque Range';
                 } elseif ($label === 'attackdamage') {
-                    $data['ATTACKDOMMAGE']['data'][] = $value + ($champion['stats']['attackdamageperlevel']*$level);
+                    $data['ATTACKDOMMAGE']['data'][] = $value + ($champion['stats']['attackdamageperlevel'] * $level);
                     $data['ATTACKDOMMAGE']['title'] = 'Statiques Champions dommage d\'attaque';
                     $data['ATTACKDOMMAGE']['dataset'] = 'Attaque Dommage';
                 } elseif ($label === 'mp') {
-                    $data['MP']['data'][] = $champion['partype'] == 'Mana' ? $value + ($champion['stats']['mpperlevel']*$level) : 0;
+                    $data['MP']['data'][] = $champion['partype'] == 'Mana' ? $value + ($champion['stats']['mpperlevel'] * $level) : 0;
                     $data['MP']['title'] = 'Statistique Mana';
                     $data['MP']['dataset'] = 'Mana';
                 } elseif ($label === 'movespeed') {
@@ -259,11 +259,10 @@ class ChampionController extends AbstractController
      */
     private function compareChampionPerStat(array $champion, float $temp, string $championName): array
     {
-        if($champion['name'] == "") {
+        if ($champion['name'] == "") {
             $champion['name'] = $championName;
             $champion['result'] = $temp;
-        }
-        else if($champion['result'] < $temp) {
+        } elseif ($champion['result'] < $temp) {
             $champion['name'] = $championName;
             $champion['result'] = $temp;
         }

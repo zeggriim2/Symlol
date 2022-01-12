@@ -9,7 +9,6 @@ use Symfony\Component\Serializer\SerializerInterface;
 
 class SummonerApi
 {
-
     private const URL_NAME = "https://{platform}.api.riotgames.com/lol/summoner/v4/summoners/by-name/{name}";
     private const URL_ACCOUNT = "https://{platform}.api.riotgames.com/lol/summoner/v4/summoners/by-account/{encryptedAccountId}";
     private const URL_PUUID = "https://{platform}.api.riotgames.com/lol/summoner/v4/summoners/by-puuid/{encryptedPUUID}";
