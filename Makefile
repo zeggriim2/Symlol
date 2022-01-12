@@ -6,7 +6,7 @@ analyze:
 	composer valid
 	#composer unused --excludePackage=beberlei/doctrineextensions
 	php bin/console doctrine:schema:valid --skip-sync
-	php bin/phpcs
+	php vendor/bin/phpcs
 	php bin/console lint:twig templates/
 	vendor/bin/twigcs templates/
 	vendor/bin/yaml-lint config/
